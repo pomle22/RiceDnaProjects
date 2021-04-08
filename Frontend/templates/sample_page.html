@@ -1,0 +1,108 @@
+{% extends "includes/base_home.html" %}
+{% block document_container %}
+{% load static  %}
+
+<div class="container style=margin-top: 20px; ">
+  <div class="row">
+    <div class="col-xl-12 col-12 mb-4">
+     
+        <div class="card ">
+        
+            <div class="card-body" >
+              <h2>barchart CHROM:chr1</h2>
+              <div style="width: 100%; height: 100%;">
+                <canvas id="bar-chart-grouped" style="width: 100%; height: auto;"></canvas>
+                <!-- <h2>piechart CHROM:chr1</h2>
+                <canvas id="pie-chart" width="200" height="50"></canvas> -->
+            </div>
+            <div id="js-legend" class="chart-legend"></div>
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+            <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>
+            <script src="http://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js"></script>
+            <script src="js/chartJsControl.js"></script>            
+              <!-- <canvas id="bar-chart-grouped" width="200" height="50"></canvas>
+              <canvas id="pie-chart" width="200" height="50"></canvas>  -->           
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock document_container %}
+{% block script %}
+<script>
+  //Grouped bar chart
+
+// }
+//DataJSON() {
+//   const response = await fetch('/data');
+//   const data = await response.json();
+//   return data;
+// }
+
+// fetchDataJSON().then(data => {
+//   data; // fetched data
+// });
+chartIt();
+async function chartIt(){
+  const dataList = await fetchData();
+  //console.log(dataList['data_AF'][0]);
+  var dataLabels = ["AC"];
+  const mychart = new Chart(document.getElementById("bar-chart-grouped"), {
+  
+    type: 'bar',
+    data: {
+      labels: dataLabels,
+      datasets: [
+        {
+          label: "Rice1",
+          backgroundColor: "#3e95cd",
+          data: [dataList['data_AC'][0]]
+        }
+        // },
+        // {
+        //   label: "Rice2",
+        //   backgroundColor: "#8e5ea2",
+        //   data: [dataList['data2_AC'][0],dataList['data2_AF'][0],dataList['data2_AN'][0]]
+        // }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: ' INFO'
+      }
+    }
+});  
+}; 
+  fetchData();
+  async function fetchData() {
+  const response = await fetch('/data');
+  const data = await response.json();
+  return data;
+  }
+  
+//pie chart
+chartIt2();
+async function chartIt2(){
+  const dataList = await fetchData();
+const mychart =new Chart(document.getElementById("pie-chart"), {
+    type: 'pie',
+    data: {
+      labels: ["chr1"],
+      datasets: [{
+        label: "Population (millions)",
+        backgroundColor: ["#3e95cd", "#8e5ea2"],
+        data: [dataList['data_AC'][0]]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Predicted world population (millions) in 2050'
+      }
+    }
+});
+}
+ </script>
+{% endblock script %}

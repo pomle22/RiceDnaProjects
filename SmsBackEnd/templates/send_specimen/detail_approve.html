@@ -1,0 +1,174 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+<style>
+    th {
+        text-align: center;
+        font-size: 15px;
+        white-space: nowrap;
+    }
+
+    td {
+        white-space: nowrap;
+    }
+
+    h5 {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    label {
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .form-control {
+        font-size: unset;
+    }
+
+    .fa-sm:hover {
+        cursor: pointer;
+    }
+</style>
+
+
+<br>
+<div class="row">
+    <div class="col-lg-12">
+        <!-- start table specimen last create -->
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <strong>Detail send specimen</strong>
+                    </div>
+                    <div class="card-body" style="font-size: 14px;">
+
+                        <h5>Detail</h5>
+                        <br>
+
+                        <!-- from send specimen -->
+
+                        <form method="POST" id="action_send_specimen">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="send_name">Speciemen send name</label>
+                                <input type="text" class="form-control" id="send_name" placeholder="Speciemen send name"
+                                    name="send_name" value="{{ send_specimen.0.send_name }}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="send_detail">Speciemen send detail</label>
+                                <textarea class="form-control" id="send_detail" placeholder="Speciemen send detail"
+                                    name="send_detail" readonly>{{ send_specimen.0.send_detail }}</textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="send_by">Send By</label>
+                                    <input type="text" class="form-control" id="send_by" placeholder="Send By"
+                                        name="send_by" value="{{ send_specimen.0.send_by }}" readonly>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="send_to">Send To</label>
+                                    <input type="text" class="form-control" id="send_to" placeholder="Send To"
+                                        name="send_to" value="{{ send_specimen.0.send_to }}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="date_send">Date send</label>
+                                    <input type="text" class="form-control" id="date_send" name="date_send"
+                                        placeholder="Date send" value="{{ send_specimen.0.date_send|date:'d/m/Y' }}"
+                                        readonly>
+                                    <input type="hidden" id="new_date_send">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="date_action">Date action</label>
+                                    <input type="text" class="form-control" id="date_action" placeholder="Send To"
+                                        name="date_action" value="{{ send_specimen.0.date_action|date:'d/m/Y' }}"
+                                        readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="comment">Comment</label>
+                                {% if send_specimen.0.status == 'Approve' %}
+                                <textarea class="form-control" id="comment" placeholder="Comment" name="comment" readonly>{{ send_specimen.0.comment }}</textarea>
+                                {% else %}
+                                <textarea class="form-control" id="comment" placeholder="Comment" name="comment">{{ send_specimen.0.comment }}</textarea>
+                                {% endif %}
+                            </div>
+
+                            <input type="hidden" id="specimen_send" name="specimen_send" readonly>
+                        </form>
+                        <br>
+                        <h5>List specimen</h5>
+                        <br>
+                        <div class="form-group">
+                            <!-- table all spcimen -->
+                            <div class="table-responsive">
+                                <table width="100%" class="table table-sm table-striped table-bordered"
+                                    id="table_last_create">
+                                    <thead>
+                                        <tr>
+                                            <th>specimen no.</th>
+                                            <th>specimen name</th>
+                                            <th>create by</th>
+                                            <th>date create</th>
+                                            <th>specimen status</th>
+                                            <!-- <th class="pr-0">action</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in specimen %}
+                                        <tr>
+                                            <td class="text-center">{{ forloop.counter }}</td>
+                                            <td>
+                                                <a href="/SmsBackEnd/form_specimen_collection/{{ i.id }}?disable=true"
+                                                    class="tag_a_border_bottom">
+                                                    {{ i.scientific_name }}
+                                                </a>
+                                            </td>
+                                            <td>{{ i.collector }}</td>
+                                            <td>{{ i.date_create|date:'d/m/Y' }}</td>
+                                            <td class="text-center">
+                                                {{ i.status_specimen__status }}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- table all spcimen -->
+                        </div>
+
+                        <!-- from send specimen -->
+                        {% if send_specimen.0.status == 'Sending' %}
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-2">
+                                <button class="btn btn-outline-danger btn-sm float-right mb-2 w-100" name="reject" form="action_send_specimen">Reject</button>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-outline-primary btn-sm float-right w-100" name="approve" form="action_send_specimen">Approve</button>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end table last create -->
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block script%}
+<script>
+    $(document).ready(function () {
+        $('#table_last_create').DataTable({})
+    })
+
+</script>
+{% endblock script%}

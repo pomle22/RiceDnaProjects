@@ -1,0 +1,358 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+
+
+<!--  Traffic  -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="box-title">Create container </h4>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card-body f-13">
+
+
+            <!-- Default horizontal form -->
+            <form action="/SmsBackEnd/new_container/" method="POST">
+              {% csrf_token %}
+              <div class="form-group row">
+
+                <label class="col-md-2">Create : &nbsp;</label>
+                <div class="col-sm-10 ">
+                  <div class="form-check-inline form-check">
+
+                    <!-- Single container -->
+                    <label for="inline-radio1" class="form-check-label ">
+                      <input type="radio" id="single_container" name="container_select"  onclick="check_select_container(this)" value="single_container"
+                        class="form-check-input" checked>Single container
+                    </label>&nbsp;
+                    <!-- End Single container -->
+
+                    <!-- Multiple container -->
+                    <label for="inline-radio2" class="form-check-label ">
+                      <input type="radio" id="multiple_container" name="container_select" onclick="check_select_container(this)" value="multiple_container"
+                        class="form-check-input">Multiple container
+                    </label>&nbsp;
+                    <!-- End Multiple container -->
+
+                    <!-- Container Hierarchy -->
+                    <label for="inline-radio2" class="form-check-label ">
+                      <input type="radio" id="container_hierarchy" name="container_select" onclick="check_select_container(this)" value="container_hierarchy"
+                        class="form-check-input"> Container Hierarchy
+                    </label>
+
+                    <!-- End Containers Hierarchy -->
+                  </div>
+
+                </div>
+
+                <label class="col-md-2">Used For : &nbsp;</label>
+                <div class="col-sm-10 ">
+                  <div class="form-check-inline form-check">
+
+                    <!-- Storage -->
+                    <label for="inline-radio1" class="form-check-label ">
+                      <input type="radio" id="storage" name="use_for" value="storage"
+                        class="form-check-input" checked> Storage
+                    </label>&nbsp;
+                    <!-- End Storage -->
+
+                    <!-- Distribution -->
+                    <label for="inline-radio2" class="form-check-label ">
+                      <input type="radio" id="distribution" name="use_for" value="distribution"
+                        class="form-check-input">Distribution
+                    </label>&nbsp;
+                    <!-- End Distribution -->
+
+                  </div>
+                </div>
+              </div>
+              <!-- Grid row -->
+              <div class="form-group row" id="divnumber_of_container">
+                <!-- Default input -->
+                <label for="parent_site" class="col-sm-2 col-form-label">Number of Containers</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control form-control-sm" name="number_of_container"
+                    id="number_of_container" placeholder="mandatory">
+                </div>
+              </div>
+
+              <!-- Grid row -->
+              <div class="form-group row">
+                <!-- Default input -->
+                <label class="col-sm-2 col-form-label">Type</label>
+                <div class="col-sm-10">
+                  <select name="type_container_id" id="type_container_id" class="form-control-sm form-control">
+                    <option value="-20">-20</option>
+                    <option value="-80">-80</option>
+                    <option value="-150">-150</option>
+                    <option value="-120">-120</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Grid row -->
+              <div class="form-group row" id="divname">
+                <!-- Default input -->
+                <label for="name" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control form-control-sm" name="name" id="name"
+                    placeholder="Name">
+                </div>
+              </div>
+              <!-- Grid row -->
+
+              <!-- Grid row -->
+              <div class="form-group row" id="divqr_code">
+                <!-- Default input -->
+                <label for="qr_code" class="col-sm-2 col-form-label">QR code</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control form-control-sm" name="qr_code" id="qr_code"
+                    placeholder="QR code">
+                </div>
+              </div>
+              <!-- Grid row -->
+
+              <!-- Grid row -->
+
+              <div class="form-group row" id="divparent_site">
+                <!-- Default input -->
+                <label class="col-sm-2 col-form-label">Parent site</label>
+                <div class="col-sm-10">
+                  <select name="parent_site" id="parent_site" class="form-control-sm form-control">
+                    <option value="Chiang_mai">Chiang mai</option>
+                    <option value="Chachoengsao">Chachoengsao</option>
+                    <option value="Bangkok">Bangkok</option>
+                    <option value="Sukhothai">Sukhothai</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Grid row -->
+              <div class="form-group row" id="divdimensionless">
+                <label class="col-md-2">Dimensionless : &nbsp;</label>
+                <div class="col-sm-10 ">
+                  <div class="form-check-inline form-check">
+
+                    <!-- Storage -->
+                    <label for="inline-radio1" class="form-check-label ">
+                      <input type="radio" id="dimension" name="dimensionless" value="yes" class="form-check-input">Yes
+                    </label>&nbsp;
+                    <!-- End Storage -->
+
+                    <!-- Distribution -->
+                    <label for="inline-radio2" class="form-check-label ">
+                      <input type="radio" id="dimension" name="dimensionless" value="no"  class="form-check-input" checked >No
+                    </label>&nbsp;
+                    <!-- End Distribution -->
+
+                  </div>
+                </div>
+              </div>
+              <!-- Grid row -->
+              <div class="form-group row" id="divdimension" >
+                <!-- Default input -->
+                <label class="col-sm-2 col-form-label">Dimension</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control form-control-sm" name="no_of_rows" id="no_of_rows"
+                    placeholder="Rows">
+                </div>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control form-control-sm" name="no_of_cols" id="no_of_cols"
+                    placeholder="Column">
+                </div>
+
+              </div>
+              <!-- Grid row -->
+
+              <!-- Grid row -->
+              <div class="form-group row" id="divcapacity">
+                <!-- Default input -->
+                <label class="col-sm-3 col-form-label"> Approximate Capacity</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control form-control-sm" name="capacity"
+                    id="capacity">
+                </div>
+              </div>
+              <!-- Grid row -->
+              <div class="form-group row" id="divposition_labeling">
+                  <label class="col-md-2">Position Labeling : &nbsp;</label>
+                  <div class="col-sm-10 ">
+                    <div class="form-check-inline form-check">
+  
+                      <!-- Storage -->
+                      <label for="inline-radio1" class="form-check-label ">
+                        <input type="radio" id="position_linear" name="position_label" value="yes" class="form-check-input">Linear
+                      </label>&nbsp;
+                      <!-- End Storage -->
+  
+                      <!-- Distribution -->
+                      <label for="inline-radio2" class="form-check-label ">
+                        <input type="radio" id="position_row_col" name="position_label" value="no" class="form-check-input">Row amd Column
+                      </label>&nbsp;
+                      <!-- End Distribution -->
+  
+                    </div>
+                  </div>
+                </div>
+                <!-- Grid row -->
+              <div class="form-group row" id="divlabeling_schema">
+                <!-- Default input -->
+                <label class="col-sm-2 col-form-label"> Labeling Scheme</label>
+                <div class="col-sm-5">
+                  <label class="f-10">Row Labeling Scheme</label>
+                  <select name="row_labeling_schema" id="row_labeling_schema" class="form-control-sm form-control">
+                    <option value="numbers">Numbers</option>
+                    <option value="alphabets_upper_case">Alphabets Upper Case </option>
+                    <option value="alphabets_lower_case">Alphabets Lower Case </option>
+                    <option value="roman_upper_case">Roman Upper Case</option>
+                    <option value="roman_lower_case">Roman Lower Case</option>
+                  </select>
+                </div>
+                <div class="col-sm-5">
+                  <label class="f-10">Column Labeling Scheme</label>
+                  <select name="col_labeling_schema" id="col_labeling_schema" class="form-control-sm form-control">
+                      <option value="numbers">Numbers</option>
+                      <option value="alphabets_upper_case">Alphabets Upper Case </option>
+                      <option value="alphabets_lower_case">Alphabets Lower Case </option>
+                      <option value="roman_upper_case">Roman Upper Case</option>
+                      <option value="roman_lower_case">Roman Lower Case</option>
+
+                  </select>
+                </div>
+              </div>
+              <!-- Grid row -->
+
+              <!-- Grid row -->
+              <div class="form-group row" id="divpos_labeling_schema">
+                <!-- Default input -->
+                <label class="col-sm-3 col-form-label"> Position Assignment</label>
+                <div class="col-sm-9">
+                  <select name="pos_labeling_schema" id="pos_labeling_schema" class="form-control-sm form-control">
+                    <option value="htop_down_left_right">Horizontal, top down , left to right</option>
+                    <option value="htop_down_right_left">Horizontal, top to down , right to left </option>
+                    <option value="htop_bottomup_left_right">Horizontal, bottom up , left to right</option>
+                    <option value="htop_bottomup_right_left">Horizontal, bottom up , right to left </option>
+                    <option value="vtop_down_left_right">Vertical, top down , left to right</option>
+                    <option value="vtop_down_right_left">Vertical, top to down , right to left </option>
+                    <option value="vtop_bottomup_left_right">Vertical, bottom up , left to right</option>
+                    <option value="vtop_bottomup_right_left">Vertical, bottom up , right to left </option>
+                  </select>
+                </div>
+              </div>
+              <!-- Grid row -->
+
+              <!-- Grid row -->
+              <div class="form-group row" id="divtemperature">
+                <!-- Default input -->
+                <label class="col-sm-3 col-form-label"> Temperature (Celsius)</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control form-control-sm" name="temperature"
+                    id="temperature" placeholder="&#8451;">
+                </div>
+              </div>
+              <!-- Grid row -->
+
+              <!-- Grid row -->
+              <div class="form-group row" id="divstore_specimen">
+                  <label class="col-md-2">Store specimen  ?: &nbsp;</label>
+                  <div class="col-sm-10 ">
+                    <div class="form-check-inline form-check">
+  
+                      <!-- Storage -->
+                      <label for="inline-radio1" class="form-check-label ">
+                        <input type="radio" id="specimen_store_yes" name="store_specimen" value="yes" class="form-check-input">Yes
+                      </label>&nbsp;
+                      <!-- End Storage -->
+  
+                      <!-- Distribution -->
+                      <label for="inline-radio2" class="form-check-label ">
+                        <input type="radio" id="specimen_store_no" name="store_specimen" value="no" class="form-check-input">No
+                      </label>&nbsp;
+                      <!-- End Distribution -->
+  
+                    </div>
+                  </div>
+                </div>
+                <!-- Grid row -->
+
+             <!-- Grid row -->
+             <div class="form-group row" id="divcollection_protocol">
+                <!-- Default input -->
+                <label class="col-sm-2 col-form-label">Collection Protocols</label>
+                <div class="col-sm-10">
+                  <select name="collection_protocol" id="collection_protocol" class="form-control-sm form-control">
+                    <option value="protocol1">Protocol 1</option>
+                    <option value="protocol2">Protocol 2</option>
+                    <option value="protocol3">Protocol 3</option>
+                    <option value="protocol4">Protocol 4</option>
+                  </select>
+                </div>
+              </div>
+              <!-- Grid row -->
+
+              <!-- Grid row -->
+              <div class="form-group row">
+                <!-- Default input -->
+                <label class="col-sm-2 col-form-label">Specimen Types</label>
+                <div class="col-sm-10">
+                  <select name="specimen_type" id="specimen_type" class="form-control-sm form-control">
+                    <option value="0">Seeds</option>
+                    <option value="1">Tissue</option>
+                    <option value="2">Microbe</option>
+                    <option value="3">Human</option>
+                  </select>
+                </div>
+              </div>
+              <!-- Grid row -->
+              <!-- Grid row -->
+              <div class="form-group row ">
+                <div class="col-sm-12 text-right">
+                  <button type="submit" class="btn btn-primary btn-sm">Create</button>
+                  <button type="reset" class="btn btn-primary btn-sm">Cancle</button>
+                </div>
+              </div>
+              <!-- Grid row -->
+            </form>
+            <!-- Default horizontal form -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- /.row -->
+</div>
+</div><!-- /# column -->
+<!--  /Traffic -->
+{% endblock content %}
+
+
+{% block script %}
+
+<script>
+
+  function check_select_container(container_select){
+
+    if($('#container_delect' === container_select.value)){
+
+      $("#divnumber_of_container").hide();
+    }
+  
+
+
+
+
+  }
+
+
+
+
+
+
+</script>
+
+
+{% endblock script %}

@@ -1,0 +1,175 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+<style>
+    th {
+        text-align: center;
+        font-size: 15px;
+        white-space: nowrap;
+    }
+
+    td {
+        white-space: nowrap;
+    }
+
+    h5 {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+
+</style>
+<br>
+
+
+<!--  Traffic  -->
+<div class="row">
+    <div class="col-lg-12">
+        <!-- start table specimen last create -->
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header f-16">
+                        <strong>Specimen in brooks</strong>
+                    </div>
+                    <div class="card-body f-14" >
+                        <br>
+                        <div  style="overflow-x:auto;">
+                            <table width="100%" class="table table-sm table-striped table-bordered"
+                                id="tb_specimen_in_brooks">
+                                <thead>
+                                    <tr>
+                                        <th>QR CODE</th>
+                                        <th>ORIGINAL CODE</th>
+                                        <th>VOUCHER CODE</th>
+                                        <th>FAMILY NAME</th>
+                                        <th>SCIENTIFIC NAME</th>
+                                        <th>BROOKS QRCODE</th>
+                                        <th>TUBE TYPE</th>
+                                        <th>DATE MAPPING</th>
+                                        <th>CREATE BY</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in specimen|slice:":10" %}
+                                    <tr>
+                                        <td class="text-center">{{ item.qr_code|default_if_none:"" }} </td>
+                                        <td class="text-center">{{ item.original_code|default_if_none:"" }}</td>
+                                        <td class="text-center">{{ item.voucher_code|default_if_none:"" }}</td>
+                                        <td class="text-center">{{ item.family|default_if_none:"" }}</td>
+                                        <td class="text-center">{{ item.scientific_name|default_if_none:"" }}</td>
+                                        <td class="text-center">{{ item.brooks_qrcode|default_if_none:"" }}</td>
+                                        <td class="text-center">{{ item.tube_type|default_if_none:"" }} ml.</td>
+                                        <td class="text-center">{{ item.date_create|date:"d M, Y" }}</td>
+                                        <td class="text-center">{{ item.first_name|default_if_none:"" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- btn view more -->
+                <div class="col-lg-12 text-right" style="margin-top: -15px;">
+                    <div class="card-body">
+                        <a href="#">
+                            <button type="button" class="btn btn-outline-primary btn-sm">more data</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end table last create -->
+
+    </div>
+</div>
+<!--  /Traffic -->
+
+
+<!-- Modal -->
+{% for i in specimen|slice:":10" %}
+<div class="modal fade" id="Modal{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <br>
+                <i class="far fa-times-circle fa-6x" style="color: #dc3545"></i>
+                <br><br>
+                <h3 style="color: #6f6f6f;">Are you sure?</h3><br>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <span style="color: #9c9c9c">
+                            Do you really want to delete these specimen? This process connot be
+                            undone.
+                        </span>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <!-- button -->
+                <br><br>
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary btn-block">Cancel</button>
+                    </div>
+                    <div class="col-4">
+                        <form action="/SmsBackEnd/delete_specimen_collection/" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="specimen_id" value="{{ item.id }}">
+                            <button type="submit" class="btn btn-danger btn-block">Delete</button>
+                        </form>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+{% endblock content %}
+
+
+{% block script%}
+<script>
+
+    jQuery(function () {
+        var table = $('#tb_specimen_in_brooks').DataTable({
+            "columnDefs": [
+            
+            ],
+            "order": [[0, "desc"]],
+            dom: 'Bfrtip',
+            buttons: ['csv', 'excel'],
+            
+
+        });
+        table.buttons().container()
+            .appendTo('#example_wrapper .col-md-6:eq(0)');
+        var table_detail = $('#table_detail').dataTable({
+            "columnDefs": [{ "width": "5%", "targets": 0 }],
+            "paging": false,
+            "scrollY": "300px",
+        });
+
+        $('#id_date_create').datepicker({
+            dateFormat: 'dd/mm/yy',
+        }).datepicker('setDate', new Date())
+
+    })
+</script>
+
+
+
+
+{% endblock script%}

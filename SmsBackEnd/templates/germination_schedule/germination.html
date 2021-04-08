@@ -1,0 +1,214 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+<style>
+  th {
+        text-align: center;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    td {
+        white-space: nowrap;
+    }
+
+    h5 {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    tfoot {
+        display: table-header-group;
+    }
+lii {
+        width: 2em;
+        height: 2em;
+        text-align: center;
+        line-height: 2em;
+        border-radius: 1em;
+        background: lightblue;
+        margin: 0 0em;
+        display: inline-block;
+        color: white;
+        position: relative;
+    }
+
+    .active-green {
+        background: #00C853;
+
+    }
+
+    .active-yellow {
+        background: #FFD600;
+    }
+
+    .active-red {
+        background: #F44336;
+    }
+</style>
+
+<!--  Content  -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header f-16">
+                <h4 class="box-title"><i class="fas fa-map"></i> Germination schedule</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label for="birthday">Start date:</label>
+                        <input type="date" id="start_date" name="start_date">
+                        <label for="birthday">End date:</label>
+                        <input type="date" id="end_date" name="end_date">
+                        <input type="submit">
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-body f-14">
+                        <div class="table-responsive">
+                            <table width="100%"
+                                class="table  table-hover  table-hover-cursor table-striped table-bordered"
+                                id="tb_specimen">
+                                <thead>
+                                    <tr>
+                                        <th>Sample ID</th>
+                                        <th>Original Code</th>
+                                        <th>NBT Code</th>
+                                        <th>Scientific name</th>
+                                        <th>Collectors</th>
+                                        <th>Status</th>
+                                        <th>Next schedule</th>
+                                        <th>Summary</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {% for item in specimen %}
+                                    <tr>
+                                        <td class="text-center">
+
+                                            <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                class="tag_a_border_bottom">
+                                                {{ item.raw_code_text }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {{ item.original_code|default_if_none:"" }}
+                                        </td>
+                                        <td>
+                                            {{ item.nbt_code_text|default_if_none:"" }}
+                                        </td>
+                                        <td>
+                                            {{ item.scientific_name|default_if_none:"" }}
+                                        </td>
+                                        <td class="text-center">{{ item.first_name|default_if_none:"" }}</td>
+                                        <td class="text-center">{{ item.date|date:'d/m/Y' }}</td>
+                                        <td class="text-center">
+                                        <ul>
+                                        <lii>
+                                        1
+                                        </lii>
+                                         <lii>
+                                        2
+                                        </lii>
+                                         <lii>
+                                        3
+                                        </lii>
+                                        </ul>
+
+                                        </td>
+
+                                        <td class="text-center">
+
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td class="text-center">
+                                            W000001
+                                        </td>
+                                     
+                                        <td>
+                                           PT-01
+                                        </td>
+                                        <td>
+                                            NBT-W000001
+                                        </td>
+                                        <td class="text-center">Solanum lycopersicum L.</td>
+                                        <td class="text-center">Pramote</td>
+                                        <td >
+                                        <ul>
+                                        <lii>
+                                        <a href="{% url 'SmsBackEnd:form_germination' specimen_id=1 %}"> 1</a>
+                                        </lii>
+                                         <lii>
+                                        2
+                                        </lii>
+                                         <lii>
+                                        3
+                                        </lii>
+                                        </ul>
+
+                                        </td>
+
+                                        <td class="text-center">
+
+                                        </td>
+                                         <td class="text-center">
+
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- /# column -->
+
+</div><!-- /.row -->
+
+<!--  /Content -->
+
+
+{% endblock content %}
+
+{% block script %}
+<script>
+    jQuery(function () {
+        var table = $('#tb_specimen').DataTable({
+            "columnDefs": [
+
+            ],
+            "order": [
+                [0, "desc"]
+            ]
+        });
+    })
+</script>
+{% endblock script %}

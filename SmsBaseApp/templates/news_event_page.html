@@ -1,0 +1,417 @@
+{% extends "includes/base_home.html" %}
+
+{% block banner %}
+
+{% endblock banner %}
+
+
+{% block document_container %}
+<style>
+   div.uu {
+
+      padding-top: 0px;
+      padding-right: 0px;
+      padding-bottom: 0px;
+      padding-left: 0px;
+
+   }
+
+   div.li {
+      width: 130px;
+      height: 130px;
+      margin: 20px;
+      background: #0E9F98;
+      float: left;
+   }
+
+   .card-img-wrap {
+      overflow: hidden;
+      position: relative;
+   }
+
+   .card-img-wrap:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.3);
+      opacity: 0;
+      transition: opacity .25s;
+   }
+
+   .card-img-wrap img {
+      transition: transform .25s;
+      width: 100%;
+   }
+
+   .card-img-wrap:hover img {
+      transform: scale(1.2);
+   }
+
+   .card-img-wrap:hover:after {
+      opacity: 1;
+   }
+
+   #more {
+      display: none;
+   }
+
+   * {
+      box-sizing: border-box;
+   }
+
+   html {
+      box-sizing: border-box;
+   }
+
+   *,
+   *:before,
+   *:after {
+      box-sizing: inherit;
+   }
+
+   .column {
+      float: left;
+      width: 33.3%;
+      margin-bottom: 16px;
+      padding: 0 8px;
+   }
+
+   @media screen and (max-width: 650px) {
+      .column {
+         width: 100%;
+         display: block;
+      }
+   }
+
+   .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+   }
+
+   .container {
+      padding: 0 16px;
+   }
+
+   .container::after,
+   .row::after {
+      content: "";
+      clear: both;
+      display: table;
+   }
+
+   .title {
+      color: grey;
+   }
+
+   .button {
+      border: none;
+      outline: 0;
+      display: inline-block;
+      padding: 8px;
+      color: rgb(0, 0, 0);
+      background-color: rgb(20, 221, 204);
+      text-align: center;
+      cursor: pointer;
+      width: 100%;
+   }
+
+   .button:hover {
+      background-color: #555;
+   }
+
+   /* text-overflow */
+   article>p {
+      font-size: 1em;
+      line-height: 1em;
+      height: 5em;
+      border: 3px solid #00ACEE;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: '...?';
+   }
+</style>
+
+
+<div class="container my-5">
+
+
+   <!--Section: News-->
+   <section class="magazine-section dark-grey-text">
+ 
+     <!-- Section heading -->
+     <h1 class="text-center font-weight-bold mb-4 pb-2">News</h1>
+     {% for mostview in most_view %}
+     <!-- Poppular News -->
+     <div class="row">
+ 
+ 
+       <div class="col-lg-6 col-md-6 mb-4">
+ 
+ 
+         <div class="single-news">
+ 
+ 
+           <div class="view overlay rounded z-depth-1-half mb-4">
+             <img class="img-fluid" src="{{mostview.image.url}}" alt="Sample image">
+             <a>
+               <div class="mask rgba-white-slight"></div>
+             </a>
+           </div>
+ 
+           <h3 class="font-weight-bold dark-grey-text mb-3"><a>{{mostview.title}}</a></h3>
+ 
+           <div class="news-data justify-content-between">
+             <p class="grey-text" style="margin:0">Author : {{mostview.author}}</p>
+             <p class="grey-text">created_on: {{mostview.created_on}}</p>
+           </div>
+ 
+           <p class="dark-grey-text">
+             {{mostview.content|slice:":200" }}
+           </p>
+           <a href="{{mostview.get_absolute_url}}" class="float-right">
+             readmore &nbsp<i class="fas fa-angle-double-right"></i></a>
+         </div>
+       </div>
+ 
+       {% endfor %}
+ 
+ 
+       <!-- Poppular News -->
+ 
+ 
+ 
+ 
+       <!-- Future News -->
+ 
+ 
+       <div class="col-lg-6 col-md-6 col-12  mb-4 scrollbar scrollbar-primary">
+ 
+         {% for post in posts %}
+         {% for mostview  in most_view %}
+         {% if post.id != mostview.id %}
+         <div class="mb-3 pt-2" style="border-bottom: solid 1px rgba(229, 232, 232)">
+ 
+           <div class="row">
+ 
+ 
+             <div class="col-md-3">
+ 
+               <div class="view overlay rounded z-depth-1 mb-4">
+                 <img class="img-fluid" src="{{post.image.url}}" alt="Sample image">
+                 <a href="{% url 'SmsBaseApp:news_full_detail' post.slug  %}">
+                   <div class="mask rgba-white-slight"></div>    
+                 </a>
+               </div>
+ 
+             </div>
+ 
+             <div class="col-md-9">
+               <a href="{% url 'SmsBaseApp:news_full_detail' post.slug  %}">
+                 <h3 class="font-weight-bold dark-grey-text" style="margin:0">{{post.title}}</h3>
+                 <p class="grey-text" style="margin:0">Author by: {{post.author}}</p>
+                 <p class="grey-text">updated_on : {{post.created_on}}</p>
+               </a>
+ 
+             </div>
+ 
+             <div class="col-md-12 pb-2">
+               <p>{{post.content|slice:":200" }}</p>
+               <a href="{{post.get_absolute_url}}" class="float-right">
+                 readmore &nbsp<i class="fas fa-angle-double-right"></i></a>
+             </div>
+           </div>
+         </div>
+         {% endif %}
+         {% endfor %}
+         {% endfor %}
+ 
+         <nav aria-label="Page navigation example">
+           <ul class="pagination justify-content-end">
+             {% if posts.has_previous %}
+             <li class="page-item">
+               <a href="?page={{ posts.previous_page_number }}" class="page-link">
+                 Previous
+               </a>
+             </li>
+             {% endif %}
+ 
+             {% for p in posts.paginator.page_range %}
+             {% if posts.number == p %}
+             <li class="page-item active">
+               <a href="?page={{ p }}" class="page-link">{{ p }}</a>
+ 
+             </li>
+             {% else %}
+             <li class="page-item">
+               <a href="?page={{ p }}" class="page-link">{{ p }}</a>
+             </li>
+ 
+             {% endif %}
+             {% endfor %}
+ 
+             {% if posts.has_next %}
+             <li class="page-item">
+               <a href="?page={{ posts.next_page_number }}" class="page-link">
+                 Next
+               </a>
+             </li>
+             {% endif %}
+           </ul>
+         </nav>
+ 
+       </div>
+     </div>
+ </div>
+ </div>
+ </section>
+ <!--EndSection: News-->
+ </div>
+ <section class="background-homepage">
+   <div class="container my-5">
+ 
+     <h1 class="text-center font-weight-bold  mb-4 pb-2">Event</h1>
+     <div class="row">
+       <div class="col col-md-7 col-12">
+         <div id="calendar"></div>
+         <div id="data" hidden>{{events}}</div>
+       </div>
+       <div class="col col-md-5 col-12 mt-4 scrollbar scrollbar-primary"
+         style="border-left: 1px solid rgb(229,232,232); ">
+         {% for event in event %}
+ 
+         <div class="mb-3 pt-2" style="border-bottom: solid 1px rgba(229, 232, 232)">
+ 
+           <div class="row">
+ 
+ 
+             <div class="col-md-3">
+ 
+               <div class="view overlay rounded z-depth-1 mb-4">
+                 <img class="img-fluid" src="{{event.image.url}}" alt="Sample image">
+                 <a>
+                   <div class="mask rgba-white-slight"></div>
+                 </a>
+               </div>
+ 
+             </div>
+ 
+             <div class="col-md-9">
+               <h3 class="font-weight-bold dark-grey-text" style="margin:0">{{event.title}}</h3>
+ 
+               <p class="grey-text" style="margin:0">Startevent at: {{ event.Start_event}}</p>
+               <p class="grey-text">Endevent at: {{ event.End_event}}</p>
+ 
+ 
+             </div>
+ 
+             <div class="col-md-12 pb-2">
+               <p>{{event.description|slice:":200" }}</p>
+               <a href="{% url 'SmsBaseApp:event_detail' event.pk  %}" class="float-right">
+                 readmore &nbsp<i class="fas fa-angle-double-right"></i></a>
+             </div>
+           </div>
+         </div>
+         {% endfor %}
+ 
+         <nav aria-label="Page navigation example">
+           <ul class="pagination justify-content-end">
+             {% if event.has_previous %}
+             <li class="page-item">
+               <a href="?page1={{ event.previous_page_number }}" class="page-link">
+                 Previous
+               </a>
+             </li>
+             {% endif %}
+ 
+             {% for pg in event.paginator.page_range %}
+             {% if event.number == pg %}
+             <li class="page-item active">
+               <a href="?page1={{ pg }}" class="page-link">{{ pg }}</a>
+ 
+             </li>
+             {% else %}
+             <li class="page-item">
+               <a href="?page1={{ pg }}" class="page-link">{{ pg }}</a>
+             </li>
+ 
+             {% endif %}
+             {% endfor %}
+ 
+             {% if event.has_next %}
+             <li class="page-item">
+               <a href="?page1={{ event.next_page_number }}" class="page-link">
+                 Next
+               </a>
+             </li>
+             {% endif %}
+           </ul>
+         </nav>
+ 
+       </div>
+ 
+ 
+     </div>
+   </div>
+ </section>
+
+
+
+
+{% endblock document_container %}
+
+{% block script %}
+<!--  scrip full calendar -->
+<script>
+  var calendarEl = document.getElementById('calendar')
+  var events = eval($('#data').text());
+  console.log(events);
+  const eventF = events.map(d => ({
+    title: d.title,
+    start: d.Start_event,
+    end: d.End_event
+  }))
+
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    plugins: ["dayGrid"],
+    header: {
+      left: "prev,next ",
+      center: "title",
+      right: "today"
+    },
+    height: 500,
+
+    eventLimit: true, // for all non-TimeGrid views
+    views: {
+      timeGrid: {
+        eventLimit: 6 // adjust to 6 only for timeGridWeek/timeGridDay
+      }
+    },
+    editable: true,
+    droppable: true, // this allows things to be dropped onto the calendar
+    drop: function (info) {
+      // is the "remove after drop" checkbox checked?
+      if (checkbox.checked) {
+        // if so, remove the element from the "Draggable Events" list
+        info.draggedEl.parentNode.removeChild(info.draggedEl);
+      }
+    },
+    eventClick: function (info) {
+      document.querySelector(".show_info_div").style.display = "";
+      document.getElementById("show_info_date_start").innerHTML = format_date_(
+        info.event.start
+      );
+      document.getElementById("show_info_title").innerHTML = info.event.title;
+      document.getElementById("show_info_date_end").innerHTML = format_date_(
+        info.event.end
+      );
+    },
+    events: eventF
+  });
+
+  calendar.render();
+
+  console.log(eventF)
+</script>
+{% endblock script %}

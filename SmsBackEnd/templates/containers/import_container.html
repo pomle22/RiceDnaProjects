@@ -1,0 +1,81 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+
+
+<!--  Traffic  -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="box-title">import container comming soon</h4>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card-body">
+            <!-- Grid row -->
+            <div class="form-group row col-md-12">
+
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupFileAddon01">Input records file</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="inputGroupFile01"
+                    aria-describedby="inputGroupFileAddon01">
+                  <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                </div>
+              </div>
+
+            </div>
+            <!-- Grid row -->
+
+            <div class="row col-md-12">
+              <label>Import type : &nbsp;</label>
+              <!-- Default inline 1-->
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample">
+                <label class="custom-control-label" for="defaultInline1">Create</label>
+              </div>
+
+              <!-- Default inline 2-->
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample">
+                <label class="custom-control-label" for="defaultInline2">Update</label>
+              </div>
+
+            </div>
+
+
+            <!-- Grid row -->
+            <div class="form-group row">
+              <!-- Default input -->
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Date and Time Format</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" id="inputEmail3" placeholder="HH:MM:DD">
+              </div>
+              <div class="col-sm-5">
+                  <input type="text" class="form-control" id="inputPassword3" placeholder="HH:MM">
+                </div>
+            </div>
+            <!-- Grid row -->
+
+            <div class="form-group row">
+              <button type="submit" class="btn btn-primary">Validate and Import</button>
+            </div>
+
+          
+
+          </div>
+        </div>
+
+      </div> <!-- /.row -->
+      <div class="card-body"></div>
+    </div>
+  </div><!-- /# column -->
+</div>
+<!--  /Traffic -->
+
+
+{% endblock content %}

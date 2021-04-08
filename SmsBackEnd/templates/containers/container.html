@@ -1,0 +1,360 @@
+{% extends "includes/base_admin.html" %}
+
+{% load django_template_maths %}
+{% block content %}
+
+<style>
+    .dot {
+        height: 50px;
+        width: 50px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+
+
+/* Container module */
+
+.table-3d td {
+    border-top: 4px black solid; 
+    border-bottom: 4px black solid;
+    border-left: 1px black solid;
+    border-right: 1px black solid;
+
+  
+/*     height:70px; */
+}
+
+.table-3d {
+-webkit-box-shadow: 15px 10px 5px 8px rgba(0,0,0,1);
+-moz-box-shadow: 10px 10px 5px 8px rgba(0,0,0,1);
+ box-shadow: 1px 1px 0px #999,
+             2px 2px 0px #999,
+             3px 3px 0px #999,
+             4px 4px 0px #999,
+             5px 5px 0px #999,
+             6px 6px 0px #999,
+             7px 7px 0px #999,
+             8px 8px 0px #999,
+             9px 9px 0px #999,
+             10px 10px 0px #999;
+}
+
+.table-3d td:hover {background-color: #f5f5f5;}
+
+
+.table-3d th, td {
+  padding: 60px;
+  text-align: center;
+}
+
+.table-3d td:first-child {
+    border-left: thin solid;
+}
+
+.table-3d td:last-child {
+    border-right: thin solid;
+    
+}
+
+
+/* ENd container module*/
+
+
+</style>
+<!--  Traffic  -->
+
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+
+                <div id="jstree">
+                    <!-- in this example the tree is populated from inline HTML -->
+                    <ul>
+                        {% for item_con in container %}
+                        {% if item_con.store_specimen == 'yes' %}
+                        <li data-jstree='{"icon":"fas fa-th"}'>
+                            {% else %}
+                        <li data-jstree='{"icon":"fas fa-box"}'>
+                            {% endif %}
+                            <a href="{% url 'SmsBackEnd:container' container_id=item_con.id %}">{{item_con.name}}</a>
+                            <ul>
+                                {% for item_chi in child_container %}
+                                {% if item_chi.parent_container_id == item_con.id %}
+                                {% if item_chi.store_specimen == 'yes' %}
+                                <li id="{{item_chi.id}}" data-jstree='{"icon":"fas fa-th"}'>
+                                    {% else %}
+                                <li id="{{item_chi.id}}" data-jstree='{"icon":"fas fa-box"}'>
+                                    {% endif %}<a
+                                        href="{% url 'SmsBackEnd:container' container_id=item_chi.id %}">{{item_chi.name}}</a>
+                                    <ul>
+                                        {% for item_chi_sub in child_container %}
+                                        {% if item_chi_sub.parent_container_id == item_chi.id %}
+                                        {% if item_chi_sub.store_specimen == 'yes' %}
+                                        <li id="{{item_chi_sub.id}}" data-jstree='{"icon":"fas fa-th"}'>
+                                            {% else %}
+                                        <li id="{{item_chi_sub.id}}" data-jstree='{"icon":"fas fa-box"}'>
+                                            {% endif %}<a
+                                                href="{% url 'SmsBackEnd:container' container_id=item_chi_sub.id %}">{{item_chi_sub.name}}</a>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-9">
+        <div class="card">
+            <form id="assign-form">
+                <div class="card-body" id="demo">
+                    {% if store_specimen == 'yes'%}
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <textarea name="position_assign" id="position_assign" rows="3" placeholder="Content..."
+                                class="form-control"></textarea>
+                        </div>
+                        <div class="col-sm-2">
+                            <div><button type="submit" class="text-center btn btn-primary btn-sm">Submit</button></div>
+                        </div>
+                    </div><br>
+                    {% endif %}
+
+                    <div style="width: 900px;height: 600px; overflow: auto; white-space: nowrap; ">
+
+                        <table class="table-3d">
+                            <tbody>
+                                <tr>
+                                    {% if store_specimen == 'yes'%}
+                                    {% with name=1 %}
+                                    <script>
+                                        var pos_emtry = []
+                                    </script>
+                                    {% for item_con_pos in container_pos_spec %}
+                                    <td >
+                                        <div >
+                                            ({{item_con_pos.pos_one}},{{item_con_pos.pos_two}})</div>
+                                        <div id="pos_id_{{item_con_pos.id}}" style="display: none;" value="full"></div>
+                                        {% if item_con_pos.occupying_specimen_id != null  %}
+                                        <button type="button" class="btn btn-secondary btn-sm"><i
+                                                class="fa fa-lightbulb-o"></i>
+                                            {{ item_con_pos.occupying_specimen.scientific_name }}</button>
+
+                                        {% else %}
+
+                                        <script>
+
+                                            pos_emtry.push("{{item_con_pos.id}}")
+
+                                        </script>
+                                        <div id="pos_lo_{{item_con_pos.id}}" value="">
+
+
+                                            {% endif%} </div>
+
+                                    </td>
+
+                                    {% if forloop.counter|divisibleby:no_of_cols %}
+                                <tr >
+
+                                    {% endif %}
+
+                                    {% endfor %}
+                                    {% endwith %}
+
+                                    {% else %}
+                                    {% for item_con_pos_con in container_pos_con %}
+                                    <td >
+                                        <div style="text-align:right;margin-top: -60px;">
+                                            ({{item_con_pos_con.pos_one}},{{item_con_pos_con.pos_two}})</div>
+                                        <div id="pos_id_{{forloop.counter}}" style="display: none;">
+                                            {{item_con_pos_con.id}}</div>
+                                        {% if item_con_pos_con.occupying_container_id != null  %}
+
+                                        <a
+                                            href="{% url 'SmsBackEnd:container' container_id=item_con_pos_con.occupying_container.id %}"><button
+                                                style="margin-bottom: -60px;" type="button"
+                                                class="btn btn-secondary btn-sm"><i class="fa fa-lightbulb-o"></i>
+                                                {{item_con_pos_con.occupying_container.name}} </button></a>
+
+                                        {% else %}
+                                        <div>
+                                            <a
+                                                href="{% url 'SmsBackEnd:form_add_child_container' parent_container_id=container_id position_in_con=item_con_pos_con.id  %}"><button
+                                                    style="margin-bottom: -60px;" type="button"
+                                                    class="btn btn-secondary btn-sm"><i class="fa fa-lightbulb-o"></i>
+                                                    Add</button></a>
+                                            {% endif%} </div>
+
+                                    </td>
+
+                                    {% if forloop.counter|divisibleby:no_of_cols %}
+                                <tr >
+
+                                    {% endif %}
+
+                                    {% endfor %}
+
+
+                                    {% endif %}
+
+
+
+
+                                </tr>
+                               
+
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <!-- <p id="demo"></p> -->
+</div>
+</div><!-- /# column -->
+<!--  /Traffic -->
+
+
+{% endblock content %}
+
+{% block script %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+<script>
+    $(function () {
+        // 6 create an instance when the DOM is ready
+        $('#jstree').jstree();
+        $('#jstree').jstree(true).select_node('{{container_id}}');
+        // 7 bind to events triggered on the tree
+        $('#jstree').on("changed.jstree", function (e, data) {
+            console.log(data.selected);
+            var href = data.node.a_attr.href;
+            document.location.href = href;
+        });
+
+        // $("#jstree").jstree().bind("select_node.jstree", function (e, data) {
+        //     var href = data.node.a_attr.href;
+        //     document.location.href = href;
+        // });
+        // 8 interact with the tree - either way is OK
+        $('button').on('click', function () {
+            $('#jstree').jstree(true).select_node('child_node_3');
+            // $('#jstree').jstree('select_node', 'child_node_3');
+            $.jstree.reference('#jstree').select_node('child_node_1');
+        });
+    });
+
+    function Tray(item) {
+
+        //make an ajax call and get status value using the same 'id'
+        $.ajax({
+            url: "/SmsBackEnd/get_tray/", // the endpoint
+            type: "POST",
+            // This is the dictionary you are SENDING to your Django code. 
+            // We are sending the 'action':add_car and the 'id: $car_id  
+            // which is a variable that contains what car the user selected
+            data: { action: "get_tray", tray_id: item },
+            success: function (data) {
+                // This will execute when where Django code returns a dictionary 
+                // called 'data' back to us.
+                console.log(data)
+                var x = "";
+                var index = 1;
+                for (i in data.results) {
+
+
+                    if (index % 5 != 0) {
+                        x += "<span class='dot'>" + data.results[i].location_name + "</span>"
+
+                    } else {
+                        x += "<span class='dot'>" + data.results[i].location_name + "</span><br>";
+                    }
+                    index++;
+
+                }
+                document.getElementById("demo").innerHTML = x;
+            }
+        });
+
+    }
+
+
+    var position_array_send
+    var position_array = []
+    $('#position_assign').bind('input propertychange', function () {
+        var position_text = this.value;
+
+        position_array = position_text.split(",");
+
+        for (i = 0; i < position_array.length; i++) {
+            var btn = document.createElement("BUTTON");
+            btn.innerHTML = position_array[i];
+            document.getElementById("pos_lo_" + pos_emtry[i]).innerHTML = '<button type="button" class="btn btn-success btn-sm"><i class="fa fa-lightbulb-o"></i>&nbsp;' + position_array[i] + '</button>'
+
+        }
+
+        // console.log("position_sm",position_array) 
+        // console.log("position_container",pos_emtry) 
+    });
+
+    // Submit post on submit
+    $('#assign-form').on('submit', function (event) {
+        event.preventDefault();
+        console.log("form submitted!")  // sanity check
+
+        console.log("position_sm", position_array)
+        console.log("position_container", pos_emtry)
+        assign_specimen(position_array, pos_emtry);
+    });
+
+    // AJAX for posting
+    function assign_specimen(position_array, pos_emtry) {
+        console.log("assign_specimen!") // sanity check
+
+        $.ajax({
+            url: "/SmsBackEnd/assign_specimen/", // the endpoint
+            type: "POST", // http method
+            data: { position_array: position_array, pos_emtry: pos_emtry }, // data sent with the post request
+
+            // handle a successful response
+            success: function (json) {
+                console.log(json.result);
+                console.log("success"); // another sanity check
+                if (json.result == "success") {
+                    alert("success!!!")
+                } else {
+                    alert("fail!!!")
+                }
+            },
+
+            // handle a non-successful response
+            error: function (xhr, errmsg, err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: " + errmsg +
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+    };
+
+</script>
+
+{% endblock script%}

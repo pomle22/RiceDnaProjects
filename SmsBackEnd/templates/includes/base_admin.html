@@ -1,0 +1,773 @@
+<!doctype html>
+<html class="no-js" lang="">
+{% load static %}  
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Specimen management systems</title>
+    <meta name="description" content="SmsBaseApp Admin">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'admin_dist/images/favicon.png' %}"/>
+
+    <!-- bootstrap CSS 4.3.1 -->
+    <link rel="stylesheet" href="{% static 'admin_dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
+    <!-- select CSS -->
+    <link rel="stylesheet" href="{% static 'admin_dist/css/bootstrap-select.css' %}">
+
+    <!-- icon themi-fy CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <!-- Mytemplate CSS -->
+    <link rel="stylesheet" href="{% static 'admin_dist/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_dist/css/font_size_style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_dist/css/cs-skin-elastic.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_dist/css/lib_frontend/chosen/chosen.min.css' %}">
+    <!-- datatables CSS -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/DataTables-1.10.18/css/dataTables.bootstrap4.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/AutoFill-2.3.3/css/autoFill.bootstrap4.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/Buttons-1.5.6/css/buttons.bootstrap4.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/ColReorder-1.5.0/css/colReorder.bootstrap4.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/FixedColumns-3.2.5/css/fixedColumns.bootstrap4.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/FixedHeader-3.1.4/css/fixedHeader.bootstrap4.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/KeyTable-2.5.0/css/keyTable.bootstrap4.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/Responsive-2.2.2/css/responsive.bootstrap4.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/RowGroup-1.1.0/css/rowGroup.bootstrap4.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/RowReorder-1.2.4/css/rowReorder.bootstrap4.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/Scroller-2.0.0/css/scroller.bootstrap4.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/Select-1.3.0/css/select.bootstrap4.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin_dist/packages/datatable_bs_4/Buttons-1.5.6/css/buttons.dataTables.css' %}"/>
+    <!-- pie chart css -->
+    <link rel="stylesheet" href="{% static 'admin_dist/css/pie-chart.css' %}">
+    <!-- CSS JQuery UI -->
+    <link rel="stylesheet" href="{% static 'admin_dist/js/lib_frontend/jquery-ui/jquery-ui.css' %}">
+    <!-- Style DIY. -->
+    <link rel="stylesheet" href="{% static 'admin_dist/css/style_custom.css' %}">
+
+    <!-- CSS Confirm -->
+    <link rel="stylesheet" href="{% static 'admin_dist/css/jquery-confirm.min.css' %}">
+
+    <!-- leaflet MAP -->
+    <link rel="stylesheet" href="{% static 'admin_dist/js/leaflet/leaflet.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_dist/js/leaflet/screen.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_dist/js/leaflet/MarkerCluster.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_dist/js/leaflet/MarkerCluster.Default.css' %}">
+
+    <link href="{% static 'admin_dist/css/smart_wizard.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'admin_dist/css/smart_wizard_theme_arrows.css' %}" rel="stylesheet" type="text/css"/>
+
+    <style>
+        .buttons-csv {
+            background-color: darkgray;
+            color: white;
+            font-size: 10px;
+            height: 30px;
+            border-radius: 8px;
+
+        }
+
+        .buttons-excel {
+            background-color: darkgray;
+            color: white;
+            font-size: 10px;
+            height: 30px;
+            border-radius: 8px;
+        }
+    </style>
+
+    <style>
+        /* Center the loader */
+        #loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 1;
+            width: 150px;
+            height: 150px;
+            margin: -75px 0 0 -75px;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Add animation to "page content" */
+        .animate-bottom {
+            position: relative;
+            -webkit-animation-name: animatebottom;
+            -webkit-animation-duration: 1s;
+            animation-name: animatebottom;
+            animation-duration: 1s
+        }
+
+        @-webkit-keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+            to {
+                bottom: 0px;
+                opacity: 1
+            }
+        }
+
+        @keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+            to {
+                bottom: 0;
+                opacity: 1
+            }
+        }
+
+        #myDiv {
+            display: none;
+            text-align: center;
+        }
+
+
+    </style>
+
+
+</head>
+
+<body>
+<!-- Left Panel -->
+<aside id="left-panel" class="left-panel">
+    <nav class="navbar navbar-expand-sm navbar-default">
+        <div id="main-menu" class="main-menu collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <!-- Check if user group -->
+                {% if request.session.user_session == "SuperAdmin" %}
+                    <li class="active"><a href="{% url 'SmsBackEnd:smsbackend_main_admin' %}"><i
+                            class="menu-icon fa fa-laptop"></i>Dashboard</a>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Account</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fas fa-user-plus"></i><a
+                                    href="{% url 'SmsBackEnd:create_accounts' %}">
+                                Create account</a></li>
+                            <li><i class="fas fa-users-cog"></i><a href="{% url 'SmsBackEnd:manage_accounts' %}">
+                                Manage account</a></li>
+                            <li><i class="fas fa-user-circle"></i><a href="{% url 'SmsBackEnd:active_accounts' %}">
+                                Active account</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-database"></i>Backup</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fas fa-history"></i><a href="{% url 'SmsBackEnd:backup' %}">
+                                Backup history</a></li>
+                            <li><i class="menu-icon fa fa-save"></i><a href="{% url 'SmsBackEnd:backup_database' %}">
+                                Backup database</a></li>
+                            <li><i class="menu-icon fa fa-list-alt"></i><a
+                                    href="{% url 'SmsBackEnd:backup_web_content' %}">
+                                Backup web content</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-newspaper"></i>News & Events</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fas fa-newspaper"> </i><a
+                                href="{% url 'SmsBackEnd:manage_news_events_new' %}">
+                            Manage News New</a></li>
+
+                            <!-- <li><i class="menu-icon fas fa-newspaper"> </i><a
+                                    href="{% url 'SmsBackEnd:manage_news_events' %}">
+                                Manage News</a></li>
+                            <li><i class="menu-icon fa fa-plus"></i><a href="{% url 'SmsBackEnd:create_news' %}">
+                                Create news</a></li>
+                            <li><i class="fas fa-calendar-plus"></i><a href="{% url 'SmsBackEnd:views_events' %}">
+                                Manage Events</a></li> -->
+                                <li><i class="fas fa-calendar-plus"></i><a href="{% url 'SmsBackEnd:add_news' %}">
+                                    Add New</a></li> 
+                                    <li><i class="fas fa-calendar-plus"></i><a href="{% url 'SmsBackEnd:add_event' %}">
+                                        Add Event</a></li> 
+                        </ul>
+                    </li>
+
+          
+                    
+
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-window-restore"></i>Web content</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fas fa-align-right"></i><a
+                                    href="{% url 'SmsBackEnd:change_content' %}">
+                                Update web content</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-sticky-note"></i>Logs</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fas fa-align-right"></i><a href="{% url 'SmsBackEnd:logs' %}">
+                                Database logs</a></li>
+                            <li><i class="menu-icon fas fa-align-right"></i><a href="#">
+                                Web logs</a></li>
+                            <li><i class="menu-icon fas fa-align-right"></i><a href="#">
+                                Users logs</a></li>
+                        </ul>
+                    </li>
+                    <!-- Check if user group curator -->
+                {% elif request.session.user_session == "Curator" %}
+                    <li class="active">
+                        <a href="{% url 'SmsBackEnd:smsbackend_main_curator' %}"><i
+                                class="menu-icon fa fa-laptop"></i>Dashboard</a>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-sticky-note"></i>Specimens</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fas fa-seedling"></i><a
+                                    href="{% url 'SmsBackEnd:specimen_collect' %}">
+                                Collect</a></li>
+                           
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-box"></i>Containers</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fas fa-list-ul"></i><a href="{% url 'SmsBackEnd:list_container' %}">
+                                Container</a></li>
+                            <li><i class="menu-icon fas fa-plus"></i><a href="{% url 'SmsBackEnd:new_container' %}">
+                                Create </a></li>
+                            <li><i class="menu-icon fas fa-plus-square"></i><a
+                                    href="{% url 'SmsBackEnd:type_container' %}">
+                                Type </a></li>
+                            <li><i class="menu-icon fas fa-file-import"></i><a
+                                    href="{% url 'SmsBackEnd:import_container' %}">
+                                Import </a></li>
+                            <li><i class="menu-icon fas fa-file-export"></i><a
+                                    href="{% url 'SmsBackEnd:export_container' %}">
+                                Export </a></li>
+                            <li><i class="menu-icon fas fa-question-circle"></i><a
+                                    href="{% url 'SmsBackEnd:help_container' %}">
+                                Help </a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-tasks"></i>Jobs</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-plus"></i><a href="{% url 'SmsBackEnd:create_job' %}">
+                                Create jobs</a></li>
+                            <li><i class="fas fa-calendar-plus"></i><a href="{% url 'SmsBackEnd:list_job' %}">
+                                Manage jobs</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-filter"></i>Queries</a> </a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-plus"></i><a href="{% url 'SmsBackEnd:create_queries' %}">
+                                Create queries</a></li>
+                            <li><i class="fas fa-calendar-plus"></i><a href="{% url 'SmsBackEnd:list_queries' %}">
+                                List queries</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-globe-asia"></i>Site</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-plus"></i><a href="{% url 'SmsBackEnd:create_site' %}">
+                                Add site</a></li>
+  
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-users"></i>Staff</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-user-plus"></i><a href="{% url 'SmsBackEnd:manage_accounts' %}">
+                                Manage staff</a></li>
+                            {#                            <li><i class="fas fa-calendar-plus"></i><a href="{% url 'SmsBackEnd:list_site' %}">#}
+                            {#                                Manage site</a></li>#}
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-qrcode"></i>Generate ID/QR Code</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fas fa-list-ul"></i><a href="{% url 'SmsBackEnd:list_of_qrcode' %}">
+                                List of ID/QR code</a></li>
+                            <li><i class="menu-icon fa fa-plus"></i><a href="{% url 'SmsBackEnd:create_qrcode' %}">
+                                Create ID/QR code</a></li>
+                            <li><i class="menu-icon fas fa-question-circle"></i><a
+                                    href="{% url 'SmsBackEnd:list_queries' %}">
+                                Help</a></li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'SmsBackEnd:final_approve' %}">
+                            <i class="menu-icon fas fa-clipboard-list"></i>Final approval
+                        </a>
+
+                    <li class="">
+                        <a href="#">
+                            <i class="menu-icon fas fa-project-diagram"></i>Add taxonomy info
+                    </a>
+                    </li>
+                 
+                    <!-- Check if user group collector -->
+                {% elif request.session.user_session == "Worker" %}
+                    <li class="active">
+                        <a href="{% url 'SmsBackEnd:smsbackend_main_collector' %}"><i
+                                class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'SmsBackEnd:send_specimen' %}">
+                            <i class="menu-icon far fa-paper-plane"></i>Send specimen</a>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-store"></i>Brooks store</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fas fa-qrcode"></i><a href="{% url 'SmsBackEnd:matching_specimen' %}">
+                                Specimen matching</a></li>
+                            <li><i class="fas fa-search"></i><a href="{% url 'SmsBackEnd:specimen_in_brooks' %}">
+                                Specimen in brooks </a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fas fa-qrcode"></i>Generate ID/QR Code</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fas fa-list-ul"></i><a href="{% url 'SmsBackEnd:list_of_qrcode' %}">
+                                List of ID/QR Code</a></li>
+                            <li><i class="menu-icon fa fa-plus"></i><a href="{% url 'SmsBackEnd:create_qrcode' %}">
+                                Create ID/QR Code</a></li>
+                            <li><i class="menu-icon fas fa-question-circle"></i><a
+                                    href="{% url 'SmsBackEnd:list_queries' %}">
+                                Help</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{% url 'SmsBackEnd:germination' %}"><i class="menu-icon fas fa-calendar-alt"></i>Germination schedule </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'SmsBackEnd:advance_search' %}"><i class="menu-icon fas fa-search"></i>Search info </a>
+                    </li>
+                    <!-- <li >
+                        <a href="{% url 'SmsBackEnd:transfer_specimen'%}" >
+                            <i class="menu-icon fas fa-dolly"></i>Transfer specimen to lab</a>
+                    </li> -->
+
+                    {% comment %} <li class="">
+                        <a href="{% url 'SmsBackEnd:approve_pass_specimen'%}">
+                            <i class="menu-icon fas fa-clipboard-list"></i>Approve (Test) </a>
+                    </li> {% endcomment %}
+
+                    <!-- For News & Events -->
+                    {% comment %} <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"> <i class="menu-icon fas fa-id-card"></i>News & events</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fas fa-chalkboard-teacher"></i><a
+                                    href="{% url 'SmsBackEnd:manage_news_events' %}">
+                                    Manage News & events</a></li>
+                            <li><i class="fas fa-edit"></i><a href="{% url 'SmsBackEnd:create_news' %}">
+                                    Create News</a></li>
+                            <li><i class="fa fa-calendar" aria-hidden="true"></i><a
+                                    href="{% url 'SmsBackEnd:views_events' %}">
+                                    Create Events</a></li>
+
+                        </ul>
+                    </li> {% endcomment %}
+
+                    <!-- End check menu for user group -->
+
+                    <!-- Check if user group plant lab -->
+                {% elif request.session.user_session == "Plant_lab" %}
+                    <li class="active">
+                        <a href="{% url 'SmsBackEnd:smsbackend_plant_lab' %}"><i
+                                class="menu-icon fa fa-laptop"></i>Dashboard
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'SmsBackEnd:plant_lab_receive_specimen' %}">
+                            <i class="menu-icon fas fa-shopping-basket"></i></i>Receive specimen</a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'SmsBackEnd:plant_lab_list_specimen_process' %}">
+                            <i class="menu-icon fas fa-microscope"></i>Process specimen</a>
+                    </li>
+                    <!-- End check menu for plant lab -->
+
+                    <!-- Check if user group Herbarium_lab -->
+                {% elif request.session.user_session == "Herbarium_lab" %}
+                    <li class="active">
+                        <a href="{% url 'SmsBackEnd:smsbackend_herbarium_lab' %}"><i
+                                class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'SmsBackEnd:herbarium_lab_receive_specimen' %}">
+                            <i class="menu-icon fas fa-shopping-basket"></i></i>Receive specimen</a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'SmsBackEnd:herbarium_lab_list_specimen_process' %}">
+                            <i class="menu-icon fas fa-microscope"></i>Process specimen</a>
+                    </li>
+                    <!-- End check menu for Herbarium_lab -->
+
+                    <!-- Check if user group Molecular_lab -->
+                {% elif request.session.user_session == "Molecular_lab" %}
+                    <li class="active">
+                        <a href="{% url 'SmsBackEnd:smsbackend_molecular_lab' %}"><i
+                                class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'SmsBackEnd:molecular_lab_receive_specimen' %}">
+                            <i class="menu-icon fas fa-shopping-basket"></i></i>Receive specimen</a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'SmsBackEnd:molecular_lab_list_specimen_process' %}">
+                            <i class="menu-icon fas fa-microscope"></i>Process specimen</a>
+                    </li>
+                    <!-- End check menu for Molecular_lab -->
+
+                    <!-- Check if user group Tissue_lab -->
+                {% elif request.session.user_session == "Tissue_lab" %}
+                    <li class="active">
+                        <a href="{% url 'SmsBackEnd:smsbackend_tissue_lab' %}"><i
+                                class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'SmsBackEnd:tissue_lab_receive_specimen' %}">
+                            <i class="menu-icon fas fa-shopping-basket"></i></i>Receive specimen</a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'SmsBackEnd:tissue_lab_list_specimen_process' %}">
+                            <i class="menu-icon fas fa-microscope"></i>Process specimen</a>
+                    </li>
+                {% endif %}
+                <!-- End check menu for Tissue_lab -->
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+</aside>
+<!-- End left-panel -->
+
+<!-- Banner - Content  -->
+<div id="right-panel" class="right-panel">
+    <!-- Header-->
+    <header id="header" class="header">
+        <div class="top-left">
+            <div class="navbar-header">
+                {% if user.groups.all.0|stringformat:"s" == 'SuperAdmin' %}
+                    <a class="navbar-brand" href="./"><img src="{% static 'admin_dist/images/logo-super-admin.png' %}"
+                                                           alt="Logo"></a>
+                {% elif user.groups.all.0|stringformat:"s" == 'Collector' %}
+                    <a class="navbar-brand" href="./"><img src="{% static 'admin_dist/images/logo-collector.png' %}"
+                                                           alt="Logo"></a>
+                {% elif user.groups.all.0|stringformat:"s" == 'Curator' %}
+                    <a class="navbar-brand" href="./"><img src="{% static 'admin_dist/images/logo-curator.png' %}"
+                                                           alt="Logo"></a>
+                {% endif %}
+
+                <a class="navbar-brand hidden" href="./"><img src="{% static 'admin_dist/images/logo2.png' %}"
+                                                              alt="Logo"></a>
+                <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+            </div>
+        </div>
+        <div class="top-right">
+            <div class="header-menu">
+                <div class="header-left">
+                    <button class="search-trigger"><i class="fa fa-search"></i></button>
+                    <!-- Search bar -->
+                    <div class="form-inline">
+                        <form class="search-form">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search ..."
+                                   aria-label="Search">
+                            <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
+                        </form>
+                    </div>
+                    <div class="dropdown for-notification">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="notification"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bell"></i>
+                            <span class="count bg-danger">3</span>
+                        </button>
+                        <!-- Notification for users -->
+                        <div class="dropdown-menu" aria-labelledby="notification">
+                            <p class="red">You have 3 Notification</p>
+                            {% for item in log_list %}
+                            <a class="dropdown-item media" href="#">
+                                <i class="fa fa-check"></i>
+                                <p>{{item.user_action}} {{item.log_detail}}</p>
+                            </a>
+                            {% endfor %}
+                 
+                        </div>
+                    </div>
+                    <!-- Massage for users -->
+                    <div class="dropdown for-message">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="message"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-envelope"></i>
+                            <span class="count bg-primary">4</span>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="message">
+                            <p class="red">You have 4 Mails</p>
+                            <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar"
+                                                                        src="{% static 'admin_dist/images/avatar/1.jpg' %}"></span>
+                                <div class="message media-body">
+                                    <span class="name float-left">Jonathan Smith</span>
+                                    <span class="time float-right">Just now</span>
+                                    <p>Hello, this is an example msg</p>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="user-area dropdown float-right">
+                    <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <img class="user-avatar rounded-circle" src="{% static 'admin_dist/images/admin.jpg' %}"
+                             alt="User Avatar">
+                    </a>
+                    <div class="user-menu dropdown-menu">
+                        <a class="nav-link" href="#"><i class="far fa-user"></i>My
+                            Profile</a>
+
+
+                        <a class="nav-link" href="#"><i
+                                class="fa fa-cog"></i>Settings</a>
+
+                        <a class="nav-link" href="{% url 'Users:logout' %}"><i class="fa fa-power-off"></i>Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- /#header -->
+    <!-- Content -->
+    <div class="content">
+        <!-- Animated -->
+        <div class="animated fadeIn">
+
+            <!-- Breadcrumb bar -->
+            <!-- <div class="bc-icons-2 h6">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb blue-grey lighten-4">
+                        <li class="breadcrumb-item"><a class="black-text" href="#">Home</a><i
+                                class="fas fa-angle-double-right mx-2" aria-hidden="true"></i></li>
+                        <li class="breadcrumb-item"><a class="black-text" href="#">Libary</a><i
+                                class="fas fa-angle-double-right mx-2" aria-hidden="true"></i></li>
+                        <li class="breadcrumb-item active">Data<i class="fas fa-angle-double-right mx-2"
+                                aria-hidden="true"></i></li>
+                        <li class="breadcrumb-item"></li>
+                    </ol>
+                </nav>
+            </div> -->
+
+            <div class="text-right">
+                    <span class="badge badge-primary"> <b>Username :</b> {{ user.username }}
+                        <small><i>({{ user.first_name }})</i></small> , <b>Last login :</b> {{ user.last_login }}</span>
+
+            </div>
+
+            <!-- Strat Content -->
+            {% block content %}
+
+            {% endblock content %}
+            <!-- End Content -->
+
+            <!-- Fix css content -->
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!-- /.content -->
+
+    <!-- Fix css content -->
+    <div class="clearfix"></div>
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner bg-white">
+            <div class="row">
+                <div class="col-sm-6">
+                    Copyright &copy; 2018 SmsBaseApp Admin
+                </div>
+                <!-- <div class="col-sm-6 text-right">
+                    Designed by <a href="https://colorlib.com">Colorlib</a>
+                </div> -->
+            </div>
+        </div>
+    </footer>
+    <!-- /.site-footer -->
+</div>
+<!-- End Banner - Content -->
+
+
+<!-- JQuery -->
+<script type="text/javascript" src="{% static 'admin_dist/js/jquery-3.4.0.min.js' %}"></script>
+<!-- JQuery Validate -->
+<script type="text/javascript" src="{% static 'admin_dist/js/jquery.validate.js' %}"></script>
+<!-- JQuery Confirm -->
+<script type="text/javascript" src="{% static 'admin_dist/js/jquery-confirm.min.js' %}"></script>
+<!-- Scripts search select-->
+<script src="{% static 'admin_dist/js/bootstrap-select.js' %}"></script>
+<!-- Scripts template-->
+<script src="{% static 'admin_dist/js/main.js' %}"></script>
+<!-- Scripts json-->
+<script src="{% static 'admin_dist/js/jquery.miranda.js' %}"></script>
+<script src="{% static 'admin_dist/js/jquery.matchHeight.min.js' %}"></script>
+<!-- bootstrap JS -->
+<script src="{% static 'admin_dist/js/popper.min.js' %}"></script>
+<script src="{% static 'admin_dist/js/bootstrap.min.js' %}"></script>
+<!-- JQuery UI -->
+<script src="{% static 'admin_dist/js/lib_frontend/jquery-ui/jquery-ui.js' %}"></script>
+<!-- DATATABLE JS -->
+<script type="text/javascript" src="{% static 'admin_dist/packages/datatable_bs_4/JSZip-2.5.0/jszip.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/pdfmake-0.1.36/pdfmake.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/pdfmake-0.1.36/vfs_fonts.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/DataTables-1.10.18/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/DataTables-1.10.18/js/dataTables.bootstrap4.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/AutoFill-2.3.3/js/dataTables.autoFill.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/AutoFill-2.3.3/js/autoFill.bootstrap4.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/Buttons-1.5.6/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/Buttons-1.5.6/js/buttons.bootstrap4.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/Buttons-1.5.6/js/buttons.colVis.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/Buttons-1.5.6/js/buttons.flash.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/Buttons-1.5.6/js/buttons.html5.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/Buttons-1.5.6/js/buttons.print.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/ColReorder-1.5.0/js/dataTables.colReorder.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/FixedColumns-3.2.5/js/dataTables.fixedColumns.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/FixedHeader-3.1.4/js/dataTables.fixedHeader.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/KeyTable-2.5.0/js/dataTables.keyTable.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/Responsive-2.2.2/js/dataTables.responsive.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/Responsive-2.2.2/js/responsive.bootstrap4.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/RowGroup-1.1.0/js/dataTables.rowGroup.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/RowReorder-1.2.4/js/dataTables.rowReorder.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/Scroller-2.0.0/js/dataTables.scroller.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'admin_dist/packages/datatable_bs_4/Select-1.3.0/js/dataTables.select.min.js' %}"></script>
+<!--Chartist Chart-->
+<script src="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartist-plugin-legend@0.6.2/chartist-plugin-legend.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/simpleweather@3.1.0/jquery.simpleWeather.min.js"></script>
+<script src="{% static 'admin_dist/js/init/weather-init.js' %}"></script>
+<script src="{% static 'admin_dist/js/lib_frontend/chosen/chosen.jquery.min.js' %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
+<!-- <script src="{% static 'admin_dist/js/init/fullcalendar-init.js' %}"></script> -->
+
+<!-- D3 pie chart -->
+<script src="{% static 'admin_dist/js/d3pie/libs/d3.min.js' %}"></script>
+<script src="{% static 'admin_dist/js/d3pie/d3pie.js' %}"></script>
+
+<!-- html2canvas.js -->
+<script src="{% static 'admin_dist/js/html2canvas/html2canvas.js' %}"></script>
+<script src="{% static 'admin_dist/js/html2canvas/canvas2image.js' %}"></script>
+
+<!-- jQuery-Mapael-master -->
+<script src="{% static 'admin_dist/js/jQuery-Mapael-master/jquery.mousewheel.min.js' %}"></script>
+<script src="{% static 'admin_dist/js/jQuery-Mapael-master/raphael.min.js' %}"></script>
+<script src="{% static 'admin_dist/js/jQuery-Mapael-master/jquery.mapael.js' %}"></script>
+<script src="{% static 'admin_dist/js/jQuery-Mapael-master/maps/thailand.js' %}"></script>
+<!-- leaflet MAP -->
+<script src="{% static 'admin_dist/js/leaflet/leaflet.js' %}"></script>
+<script src="{% static 'admin_dist/js/leaflet/leaflet.markercluster-src.js' %}"></script>
+<script src="{% static 'admin_dist/js/leaflet/leaflet.markercluster.layersupport.js' %}"></script>
+<script src="{% static 'admin_dist/js/leaflet/bundle.min.js' %}"></script>
+
+<!-- echart -->
+<script src="{% static 'admin_dist/js/echart/echarts.min.js' %}"></script>
+
+
+<!--Local Stuff-->
+<script>
+    jQuery(".standardSelect").chosen({
+        disable_search_threshold: 10,
+        no_results_text: "Oops, nothing found!",
+        width: "100%"
+    });
+</script>
+
+<!-- Block script -->
+{% block script %}
+
+{% endblock script %}
+<!-- End block script -->
+
+
+</body>
+
+</html>

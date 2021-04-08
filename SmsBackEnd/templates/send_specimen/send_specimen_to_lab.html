@@ -1,0 +1,422 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+<style>
+   th {
+      text-align: center;
+      font-size: 15px;
+      white-space: nowrap;
+   }
+
+   td {
+      white-space: nowrap;
+   }
+
+   h5 {
+      font-weight: bold;
+      font-size: 18px;
+   }
+
+   label {
+      font-size: 15px;
+      font-weight: 600;
+   }
+
+   .form-control {
+      font-size: unset;
+   }
+
+   .fa-sm:hover {
+      cursor: pointer;
+   }
+
+   /* .ui-icon {
+      width: 0px;
+      height: 0px;
+      display: none;
+   } */
+</style>
+
+
+<br>
+<div class="row">
+   <div class="col-lg-12">
+      <!-- start table specimen last create -->
+      <div class="card">
+         <div class="row">
+            <div class="col-lg-12">
+               <div class="card-header">
+                  <strong>Send specimen</strong>
+               </div>
+               <div class="card-body" style="font-size: 14px;">
+
+                  <h5>Detail</h5>
+                  <br>
+
+                  <!-- from send specimen -->
+
+                  <form method="POST" id="specimen_form" autocomplete="off">
+                     {% csrf_token %}
+                     <div class="form-group">
+                        <label for="send_name">Speciemen send name</label>
+                        <input type="text" class="form-control" id="send_name" placeholder="Speciemen send name" value="test"
+                           name="send_name" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="send_detail">Speciemen send detail</label>
+                        <textarea class="form-control" id="send_detail" placeholder="Speciemen send detail"
+                           name="send_detail">test</textarea>
+                     </div>
+                     <div class="form-row">
+                        <div class="form-group col-md-6">
+                           <label for="send_by">Send by</label>
+                           <select id="send_by" class="form-control" name="send_by">
+                              <option selected>test_send_by</option>
+                              <option>...</option>
+                           </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                           <label for="send_to">Send to</label>
+                           <select id="send_to" class="form-control" name="send_to">
+                              <option selected>test_send_to</option>
+                              <!-- <option selected value="test_send_to">Choose...</option> -->
+                              <option>...</option>
+                           </select>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="date_send">Date send</label>
+                        <input type="text" class="form-control" id="id_date_send" name="date_send">
+                     </div>
+
+                     <input type="text" id="specimen_send" name="specimen_send" required hidden>
+                  </form>
+                  <br>
+                  <h5>Select specimen</h5>
+                  <br>
+                  <div class="form-group">
+                     <label for="qr_search">QR Code Search</label> &nbsp;&nbsp;
+                     <input type="text" class="form-control" id="qr_search" placeholder="QR Code Search">
+                     <br>
+                     <label for="qr_search">Specimen select</label>
+                     <div class="specimen_tag_select">
+                        <span class="text_specimen" style="color: #6e767f">Specimen List</span>
+                     </div>
+                     <br>
+
+                     <!-- table all spcimen -->
+                     <div class="table-responsive">
+                        <table class="table table-sm table-striped table-bordered" id="all_specimen">
+                           <thead>
+                              <tr>
+                                 <th>no.</th>
+                                 <th>specimen name</th>
+                                 <th>create by</th>
+                                 <th>date create</th>
+                                 <th class="pr-0">
+                                    Select lab
+                                    <button id="check_all" class="btn btn-sm btn-outline-secondary" onclick="btn_all()"
+                                       disabled>check all</button>
+                                    <button id="uncheck_all" class="btn btn-sm btn-outline-secondary"
+                                       onclick="un_btn_all()" style="display: none">uncheck all</button>
+                                 </th>
+                                 <th class="pr-0">select</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              {% for i in specimen %}
+                              <tr>
+                                 <td class="text-center">{{ forloop.counter }}</td>
+                                 <td>
+                                    <a href="/SmsBackEnd/form_specimen_collection/{{ i.id }}?disable=true"
+                                       class="tag_a_border_bottom">
+                                       {{ i.scientific_name }}
+                                    </a>
+                                 </td>
+                                 <td>{{ i.collector }}</td>
+                                 <td>{{ i.date_create|date:'d/m/Y' }}</td>
+                                 <td class="text-center">
+                                    <label class="class_check_all border border-dark pl-2 pr-2 b-radius-5"
+                                       for="id_seed{{i.id}}" style="margin-bottom: 0rem;">seed</label>
+                                    <input type="checkbox" name="seed" id="id_seed{{i.id}}" class="check_ui"
+                                       style="display: none" value="seed" disabled
+                                       onchange="btn_select('{{i.id}}','seed')" id_old='{{i.id}}'>
+
+                                    <label class="class_check_all border border-dark pl-2 pr-2 b-radius-5"
+                                       for="id_molecular{{i.id}}" style="margin-bottom: 0rem;">molecular</label>
+                                    <input type="checkbox" name="molecular" id="id_molecular{{i.id}}" class="check_ui"
+                                       style="display: none" value="molecular" disabled
+                                       onchange="btn_select('{{i.id}}','molecular')" id_old='{{i.id}}'>
+
+                                    <label class="class_check_all border border-dark pl-2 pr-2 b-radius-5"
+                                       for="id_tissue{{i.id}}" style="margin-bottom: 0rem;">tissue</label>
+                                    <input type="checkbox" name="tissue" id="id_tissue{{i.id}}" class="check_ui"
+                                       style="display: none" value="tissue" disabled
+                                       onchange="btn_select('{{i.id}}','tissue')" id_old='{{i.id}}'>
+
+                                    <label class="class_check_all border border-dark pl-2 pr-2 b-radius-5"
+                                       for="id_herbarium{{i.id}}" style="margin-bottom: 0rem;">herbarium</label>
+                                    <input type="checkbox" name="herbarium" id="id_herbarium{{i.id}}" class="check_ui"
+                                       style="display: none" value="herbarium" disabled
+                                       onchange="btn_select('{{i.id}}','herbarium')" id_old='{{i.id}}'>
+                                 </td>
+                                 <td class="text-center">
+                                    <div class="custom-control custom-checkbox">
+                                       <input type="checkbox" class="custom-control-input chk_specimen"
+                                          id="customCheck{{ i.id }}" id_specimen="{{ i.id }}"
+                                          name_specimen="{{ i.scientific_name }}" qr_specimen="{{ i.qr_code }}">
+                                       <label class="custom-control-label" for="customCheck{{ i.id }}"></label>
+                                    </div>
+                                 </td>
+                              </tr>
+                              {% endfor %}
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- table all spcimen -->
+                  </div>
+
+
+                  <!-- from send specimen -->
+                  <!-- btn submit_page -->
+                  <div class="btn_submit_page float-right"></div>
+
+
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end table last create -->
+   </div>
+</div>
+
+
+{% endblock content %}
+
+{% block script%}
+<script>
+   function btn_all() {
+      $(specimen_select).each(function (i, v) {
+         v.lab = []
+      })
+      $('.check_ui').each(function (i, v) {
+         if ($(this).is(':disabled') === false) {
+            id = $(this).attr('id')
+            lab = $(this).val()
+            id_old = $(this).attr('id_old')
+            $(specimen_select).each(function (i, v) {
+               if (v.id == id_old) {
+                  v.lab.push(lab)
+                  $('#' + id).prop('checked', true)
+                  $('label[for="' + id + '"]').addClass('bg-secondary text-white')
+               }
+            })
+
+         }
+      })
+      $('#check_all').hide()
+      $('#uncheck_all').show()
+   }
+   function un_btn_all() {
+      $('.check_ui').each(function (i, v) {
+         if ($(this).is(':disabled') === false) {
+            id = $(this).attr('id')
+            $('#' + id).prop('checked', false)
+            $(specimen_select).each(function (i, v) {
+               v.lab = []
+            })
+            $('label[for="' + id + '"]').removeClass('bg-secondary text-white')
+         }
+      })
+      $('#check_all').show()
+      $('#uncheck_all').hide()
+   }
+   function btn_select(id, lab) {
+      if ($('input[type="checkbox"][id="id_' + lab + id + '"]').is(":checked")) {
+         $(specimen_select).each(function (i, v) {
+            if (v.id == id) {
+               v.lab.push(lab)
+               $('label[for="id_' + lab + id + '"]').addClass('bg-secondary text-white')
+            }
+         })
+      }
+      else {
+         $(specimen_select).each(function (i, v) {
+            if (v.id == id) {
+               v.lab = jQuery.grep(v.lab, function (value) { // remove value in array
+                  return value != lab;
+               })
+               $('label[for="id_' + lab + id + '"]').removeClass('bg-secondary text-white')
+            }
+         })
+      }
+      console.log(JSON.stringify(specimen_select, null, 2))
+   }
+   function check_btn_check_all() {
+      var check_btn_check_all_check = 0
+      $('.chk_specimen').each(function (i, v) {
+         if ($(this).is(':checked') === true) {
+            check_btn_check_all_check += 1
+         }
+      })
+      if (check_btn_check_all_check == 0) {
+         $('#check_all').prop('disabled', true)
+      }
+   }
+
+
+
+
+   var specimen_select = []
+   $(document).ready(function () {
+
+      var btn_submit_primary = '<button id="submit_form" class="btn btn-outline-primary btn-sm float-right" type="submit" form="specimen_form">Send Specimen</button>'
+      var btn_submit_secondary = '<button class="btn btn-outline-secondary btn-sm float-right" style="cursor: not-allowed;"type="button">Send Specimen</button>'
+      $('.btn_submit_page').html(btn_submit_secondary)
+
+
+      $('.btn-outline-primary').hide()
+      console.clear()
+      var table = $('#all_specimen').DataTable({
+         paging: false,
+         "columnDefs": [
+            {
+               "width": "5%",
+               "targets": 0,
+               "orderable": false,
+            },
+            {
+               "targets": 4,
+               "width": "35%",
+               "orderable": false,
+            },
+            {
+               "targets": 5,
+               "orderable": false,
+            }
+         ]
+      });
+
+      $('#all_specimen_wrapper > .row').css('padding-top', '3px')
+
+      // date now
+      $(function () {
+         var date = $('#id_date_send').datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", new Date());
+      });
+
+
+
+
+
+
+
+
+      // click in table
+      table.$('.chk_specimen').click(function () {
+         var id_specimen = $(this).attr('id_specimen')
+         var qrcode = $(this).attr('qr_specimen')
+         var name_specimen = $(this).attr('name_specimen')
+         if ($(this).is(':checked')) {
+            specimen_select.push({ id: String(id_specimen),qr: String(qrcode), lab: [] })
+            $('.specimen_tag_select').append('<span class="specimen_tag" id="' + id_specimen + '">' + name_specimen + ' <i class="fas fa-times fa-sm close_tag"></i></span>')
+
+            $('#check_all').prop('disabled', false)
+            $('input[type="checkbox"][id="id_seed' + id_specimen + '"]').prop("disabled", false);
+            $('input[type="checkbox"][id="id_molecular' + id_specimen + '"]').prop("disabled", false);
+            $('input[type="checkbox"][id="id_tissue' + id_specimen + '"]').prop("disabled", false);
+            $('input[type="checkbox"][id="id_herbarium' + id_specimen + '"]').prop("disabled", false);
+         } else {
+            $('#' + id_specimen).remove()
+            // specimen_select = jQuery.grep(specimen_select, function (value) {
+            //    return value != id_specimen;
+            // });
+            
+
+            $('label[for="id_seed' + id_specimen + '"]').removeClass('bg-secondary text-white')
+            $('label[for="id_molecular' + id_specimen + '"]').removeClass('bg-secondary text-white')
+            $('label[for="id_tissue' + id_specimen + '"]').removeClass('bg-secondary text-white')
+            $('label[for="id_herbarium' + id_specimen + '"]').removeClass('bg-secondary text-white')
+            $('input[type="checkbox"][id="id_seed' + id_specimen + '"]').prop('checked', false).prop("disabled", true)
+            $('input[type="checkbox"][id="id_molecular' + id_specimen + '"]').prop('checked', false).prop("disabled", true)
+            $('input[type="checkbox"][id="id_tissue' + id_specimen + '"]').prop('checked', false).prop("disabled", true)
+            $('input[type="checkbox"][id="id_herbarium' + id_specimen + '"]').prop('checked', false).prop("disabled", true)
+            check_btn_check_all()
+
+
+            $(specimen_select).each(function (i, val) {
+               if (val) {
+                  id_specimen = String(id_specimen)
+                  if (val.id === id_specimen) {
+                     specimen_select.splice(i, 1); // delete index
+                  }
+               }
+            });
+         }
+
+         // click remove tag
+         $('.close_tag').click(function () {
+            var id = $(this).parents().eq(0)['prevObject'].attr('id')
+            $(this).parents().eq(0).remove() // remove this tag
+            // console.log(id)
+            table.$('#customCheck' + id).prop('checked', false) // un check this id
+            specimen_select = jQuery.grep(specimen_select, function (value) { // remove value in array
+               return value != id;
+            });
+
+            if (specimen_select.length != 0) {
+               $('.text_specimen').hide()
+               $('.btn_submit_page').html(btn_submit_primary)
+               $('#submit_form').click(function () {
+                  confirm("Click OK to continue?");
+                  $('#specimen_send').val(JSON.stringify(specimen_select))
+               })
+            } else {
+               $('.text_specimen').show()
+               $('.btn_submit_page').html(btn_submit_secondary)
+            }
+
+         })
+
+         if (specimen_select.length != 0) {
+            // console.log('1')
+            $('.text_specimen').hide()
+            $('.btn_submit_page').html(btn_submit_primary)
+            $('#submit_form').click(function () {
+               confirm("Click OK to continue?");
+               $('#specimen_send').val(JSON.stringify(specimen_select))
+            })
+         } else {
+            // console.log('2')
+            $('.text_specimen').show()
+            $('.btn_submit_page').html(btn_submit_secondary)
+         }
+      })
+
+
+
+
+
+
+
+      //QR Code
+      $('#qr_search').on('keypress', function (e) {
+         var all_checkbox_in_table = table.$('.chk_specimen')
+         if (e.which == 13) {
+            var qr_code = $(this).val()
+
+            $.each(all_checkbox_in_table, function (key, value) { // loop for get qr_specimen and id in checkbox 
+               if (qr_code == $(value).attr('qr_specimen')) {
+                  var qr_id = $(value).attr('id')
+                  table.$('#' + qr_id).trigger('click')
+               }
+            });
+
+            $(this).val('')
+         }
+      })
+
+
+   });
+</script>
+{% endblock script%}

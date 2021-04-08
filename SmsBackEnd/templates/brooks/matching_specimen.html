@@ -1,0 +1,319 @@
+{% extends "includes/base_admin.html" %}
+
+{% block content %}
+<!--  Traffic  -->
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header f-16">
+                <b>Matching specimen</b>
+            </div>
+            <div class="card-body f-14">
+                <form action="/SmsBackEnd/matching_specimen/" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row form-group">
+                                <div class="col col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" id="qr_code_search" name="input2-group2"
+                                            placeholder="Example: NBT-W-000001 or W000001" class="form-control">
+                                        <div class="input-group-btn"><button type="button" class="btn btn-primary"
+                                                id="btn_search_sm">Search</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <!-- input -->
+
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">SampleID</label>
+                                        </div>
+                                        <div class="col-12 col-md-8"><input type="text" id="input_qr_code"
+                                                name="input_qr_code" class="form-control">
+                                            <input type="hidden" id="input_specimen_id" name="input_specimen_id"
+                                                class="form-control "></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Original
+                                                code</label></div>
+                                        <div class="col-12 col-md-8"><input type="text" id="input_original_code"
+                                                name="input_original_code" class="form-control" disabled></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Other
+                                                code</label></div>
+                                        <div class="col-12 col-md-8"><input type="text" id="input_voucher_code"
+                                                name="input_voucher_code" class="form-control" disabled></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Scientific
+                                                name</label></div>
+                                        <div class="col-12 col-md-8"><input type="text" id="input_scientific_name"
+                                                name="input_scientific_name" class="form-control" disabled></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Family</label>
+                                        </div>
+                                        <div class="col-12 col-md-8"><input type="text" id="input_family"
+                                                name="input_family" class="form-control" disabled></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Date Create</label>
+                                        </div>
+                                        <div class="col-12 col-md-8"><input type="text" id="input_date_create"
+                                                name="input_date_create" class="form-control" disabled></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Create by</label>
+                                        </div>
+                                        <div class="col-12 col-md-8"><input type="text" id="input_create_by"
+                                                name="input_create_by" class="form-control" disabled></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Status</label>
+                                        </div>
+                                        <div class="col-12 col-md-8"><input type="text" id="input_storage_status"
+                                                name="input_storage_status" class="form-control" disabled></div>
+                                    </div>
+
+
+                                    <!-- /input -->
+                                </div>
+                                <!-- end card body -->
+                            </div>
+                            <!-- end card -->
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <!-- input -->
+                                    <div class="row form-group">
+                                        <div class="col col-md-2"><label class=" form-control-label">Tube type</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="select_tube_type" id="select_tube_type"
+                                                class="form-control-sm form-control">
+                                                <option value="" hidden selected>Please select</option>
+                                                <option value="25">25 ml.</option>
+                                                <option value="40">40 ml.</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-2"><label class=" form-control-label">Brooks QR
+                                                Code</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <div id="div_span_tube">
+                                            </div>
+
+
+                                            <textarea type="text" rows="5" id="text_brook_qrcode"
+                                                name="text_brook_qrcode" class="form-control"
+                                                placeholder="Example: WND7873j , KSFVl678 , JRGNSAO2"></textarea>
+                                        </div>
+                                    </div>
+                                    <!-- /input -->
+                                </div>
+                                <!-- end card body -->
+                            </div>
+                            <!-- end card -->
+                            <div class="float-right">
+                                <button class="btn btn-sm btn-primary ml-1" id="btn_save" name="btn_save" type="submit"
+                                    disabled>Save</button>
+                                <button class="btn btn-sm btn-secondary" id="btn_reset" name="btn_reset" type="reset"
+                                    disabled>Reset</button>
+                            </div>
+
+
+                        </div>
+
+                </form>
+            </div><br>
+            <div class="card">
+                <div class="card-body">
+
+
+                    <div class="row">
+                        <div class="col col-md-12">
+                            <div class="table-responsive">
+                                <table width="100%" class="table table-sm table-striped table-bordered"
+                                    id="tb_specimen_mapping">
+                                    <thead>
+                                        <tr>
+                                            <th>SampleID</th>
+                                            <th>NBT CODE</th>
+                                            <th>BROOKS QR CODE</th>
+                                            <th>SCIENTIFIC NAME</th>
+                                            <th>FAMILY</th>
+                                            <th>MAPPING BY</th>
+                                            <th>ACTION</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in specimen_maping_list|slice:":10" %}
+                                        <tr>
+                                            <td class="text-center">{{ item.raw_code_external }}</td>
+                                            <td class="text-center">{{ item.nbt_code }}</td>
+                                            <td class="text-center">{{ item.brooks_qrcode }}</td>
+                                            <td class="text-center">{{ item.scientific_name }}</td>
+                                            <td class="text-center">{{ item.family }}</td>
+                                            <td class="text-center">{{ item.first_name }}</td>
+                                            <td class="text-center"> <a href="#" class="tag_a_btn">
+                                                    <span>view</span>
+                                                </a>&nbsp;
+                                                <a href="#" class="tag_a_btn">
+                                                    <span>edit</span>
+                                                </a></td>
+
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<!--  /Traffic -->
+
+
+{% endblock content %}
+{% block script%}
+<script>
+    $(document).ready(function () {
+        var table = $('#tb_specimen_mapping').DataTable({
+            "columnDefs": [
+
+            ],
+            "order": [
+                [0, "desc"]
+            ],
+            dom: 'Bfrtip',
+            buttons: ['csv', 'excel'],
+        });
+
+
+
+
+    });
+    $('#btn_search_sm').click(function () {
+
+        const myNode = document.getElementById("div_span_tube");
+        myNode.innerHTML = '';
+        get_specimen($('#qr_code_search').val())
+    })
+
+    $("#text_brook_qrcode").on('change keyup paste', function () {
+        // your code here
+        var text_brook_qrcode = $("#text_brook_qrcode").val()
+        if (text_brook_qrcode == "") {
+            $('#btn_save').prop('disabled', true);
+        } else {
+            $('#btn_save').prop('disabled', false);
+            var arr_text_brook_qrcode = text_brook_qrcode.split(",");
+            for (i = 0; i < arr_text_brook_qrcode.length; i++) {
+                if (arr_text_brook_qrcode[i] == "" || arr_text_brook_qrcode[i].length != 8) {
+                    $('#btn_save').prop('disabled', true);
+                }
+
+            }
+
+        }
+
+        //check length qrcode
+
+    });
+
+
+
+    function get_specimen(item) {
+
+        //make an ajax call and get status value using the same 'id'
+        $.ajax({
+            url: "/SmsBackEnd/get_specimen/", // the endpoint
+            type: "POST",
+            // This is the dictionary you are SENDING to your Django code. 
+            // We are sending the 'action':add_car and the 'id: $car_id  
+            // which is a variable that contains what car the user selected
+            data: {
+                qr_code: item
+            },
+            success: function (data) {
+                // This will execute when where Django code returns a dictionary 
+                // called 'data' back to us.
+
+
+                if (data.results.length > 0) {
+                    console.log(data)
+                    $("#input_qr_code").val(data.results[0].raw_code_external);
+                    $("#input_original_code").val(data.results[0].original_code);
+                    $("#input_voucher_code").val(data.results[0].other_code);
+                    $("#input_scientific_name").val(data.results[0].scientific_name);
+                    $("#input_family").val(data.results[0].family);
+                    $("#input_date_create").val(data.results[0].date_create);
+                    $("#input_create_by").val(data.results[0].first_name);
+                    $("#input_storage_status").val(data.results[0].form_storage_status);
+                    $("#input_specimen_id").val(data.results[0].id);
+                    $("#select_tube_type").val(data.results[0].tube_type).change();
+                    // $("#text_brook_qrcode").val(data.results[0].brooks_qrcode);
+
+                    var brooks_qrcode = data.results[0].brooks_qrcode;
+                    if (brooks_qrcode != null) {
+                        var arr_brooks_qrcode = brooks_qrcode.split(",");
+
+                        for (i = 0; i < arr_brooks_qrcode.length; i++) {
+                            var node = document.createElement("BUTTON");
+                            var icon = document.createElement("I");
+                            icon.innerHTML += '&nbsp;';
+                            icon.className = 'fas fa-vial';
+                            node.className = 'btn btn-success btn-sm';
+                            node.setAttribute("style", "margin:5px;"); // Create a <li> node
+                            var textnode = document.createTextNode(arr_brooks_qrcode[
+                                i]); // Create a text node
+                            node.appendChild(icon);
+                            node.appendChild(textnode);
+
+                            document.getElementById('div_span_tube').appendChild(node);
+                        }
+                    }
+
+
+
+
+                    if (data.results[0].brooks_qrcode == null) {
+                        console.log('brook null data', data.results[0].brooks_qrcode)
+                        $("#btn_save").prop('disabled', true);
+                        $("#btn_save").prop('value', 'add');
+                        $("#btn_save").html("Add");
+                        $("#btn_reset").prop('disabled', false);
+                    } else {
+                        $("#btn_save").prop('disabled', true);
+                        $("#btn_save").prop('value', 'save');
+                        $("#btn_save").html("Save");
+                        $("#btn_reset").prop('disabled', false);
+                    }
+
+
+
+
+                }
+
+            }
+        });
+
+    }
+</script>
+{% endblock script%}

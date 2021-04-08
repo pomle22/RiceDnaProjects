@@ -1,0 +1,43 @@
+{% extends "includes/base_home.html" %}
+{% load static i18n %} {% load i18n %} {% load staticfiles %}
+{% block document_container %}
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-9  card mb-4  mt-5 ">
+      <div class="card-body">
+        <h1 class="">{% block title %} {{ post.title }} {% endblock title %}</h1>
+        <h5 class=" text-muted">Author By: {{ post.author }}</h5>
+        <h5 class="text-muted">Updated on : {{ post.created_on }}</h5>
+         <div class="row">
+          <div class="col col-md-12  text-center mb-3">
+              <img src="{{post.image.url}}" class="img-fluid" max-width="100%" max-height=400px >
+          </div>
+        </div>
+        
+        <p class="mt-2" style="text-indent: 1.5em;">{{ post.content | safe }}</p>      
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12 my-5 sidebar">
+      <div class="card">
+       
+        <h3>ข่าวล่าสุด</h3>
+        <ul  class="pb-3"style = "border-bottom: 1px solid rgb(189, 189, 189);">
+            {% for item in task %}
+          <li>
+            <a href="{% url 'SmsBaseApp:news_full_detail' item.slug %}">{{ item.title }}</a>
+          </li>
+          {% endfor %} 
+        </ul>
+       
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock document_container %}
+
+{% block scripts %}
+
+{% endblock scripts %}

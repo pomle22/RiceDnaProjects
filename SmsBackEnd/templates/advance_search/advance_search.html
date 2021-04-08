@@ -1,0 +1,275 @@
+{% extends "includes/base_admin.html" %}
+
+{% block content %}
+<style>
+    th {
+        text-align: center;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    td {
+        white-space: nowrap;
+    }
+
+    h5 {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    tfoot {
+        display: table-header-group;
+    }
+
+    lii {
+        width: 2em;
+        height: 2em;
+        text-align: center;
+        line-height: 2em;
+        border-radius: 1em;
+        background: lightblue;
+        margin: 0 0em;
+        display: inline-block;
+        color: white;
+        position: relative;
+    }
+
+    .active-li {
+        background: dodgerblue;
+    }
+
+    .card-body-fix {
+        padding: 0.50rem;
+    }
+</style>
+
+<br>
+
+{{sms_fieldwork}}
+<hr>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <strong>ค้นหา</strong>
+                    </div>
+                    <form method="post" id="">
+                        <div class="card-body f-14">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="id_original_code" class="form-control-label">ID :</label>
+                                        <input type="number" id="SmsBackEnd_fieldwork_ID" name="SmsBackEnd_fieldwork_ID"
+                                            placeholder="ID" class="form-control-sm form-control" autocomplete="off"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="id_original_code" class="form-control-label">ชื่อวิทยาศาสตร์
+                                            (Scientific name) :</label>
+                                        <input type="text" id="scientific_name" name="scientific_name"
+                                            placeholder="Scientific name" class="form-control-sm form-control"
+                                            autocomplete="off" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="id_collect_date" class=" form-control-label">location :
+                                        </label>
+                                        <input type="text" id="locations" name="locations" placeholder="locations"
+                                            class="form-control-sm form-control" autocomplete="off" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="id_original_code" class="form-control-label">collector name
+                                            :</label>
+                                        <input type="text" id="collector_ID" name="collector_ID"
+                                            placeholder="collector name" class="form-control-sm form-control"
+                                            autocomplete="off" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="id_original_code" class="form-control-label">site_id :</label>
+                                        <input type="number" id="site_id" name="site_id" placeholder="Scientific name"
+                                            class="form-control-sm form-control" autocomplete="off" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="id_original_code" class="form-control-label">original_code :</label>
+                                        <input type="text" id="original_code" name="original_code"
+                                            placeholder="original_code" class="form-control-sm form-control"
+                                            autocomplete="off" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="id_original_code" class="form-control-label">raw_code_text :</label>
+                                        <input type="text" id="raw_code_text" name="raw_code_text"
+                                            placeholder="raw_code_text" class="form-control-sm form-control"
+                                            autocomplete="off" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="id_original_code" class="form-control-label">Date Time:</label>
+                                        <input type="date" id="Date_Time" name="Date_Time"
+                                            placeholder="Date_Time" class="form-control-sm form-control"
+                                            autocomplete="off" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="id_original_code" class="form-control-label">Date Time:</label>
+                                        <input type="date" id="Date_Time" name="Date_Time"
+                                            placeholder="Date_Time" class="form-control-sm form-control"
+                                            autocomplete="off" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="dtBasicExample" class="table table-striped table-bordered"
+                                        cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="th-sm">Name
+                                                </th>
+                                                <th class="th-sm">Position
+                                                </th>
+                                                <th class="th-sm">Office
+                                                </th>
+                                                <th class="th-sm">Age
+                                                </th>
+                                                <th class="th-sm">Start date
+                                                </th>
+                                                <th class="th-sm">Salary
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>61</td>
+                                                <td>2011/04/25</td>
+                                                <td>$320,800</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Name
+                                                </th>
+                                                <th>Position
+                                                </th>
+                                                <th>Office
+                                                </th>
+                                                <th>Age
+                                                </th>
+                                                <th>Start date
+                                                </th>
+                                                <th>Salary
+                                                </th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="float-left">
+                                        <button class="btn btn-sm btn-primary ml-1" id="Search"
+                                            type="button">Search</button>
+                                        <button class="btn btn-sm btn-secondary" type="reset">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+
+    $("#Search").click(function () {
+        var SmsBackEnd_fieldwork_ID = document.getElementById("SmsBackEnd_fieldwork_ID").value;
+        var scientific_name = document.getElementById("scientific_name").value;
+        var locations = document.getElementById("locations").value;
+        // var id_years = $("#single").val();
+        // alert(SmsBackEnd_fieldwork_ID);
+        // alert(scientific_name);
+        // alert(locations);
+
+        if (SmsBackEnd_fieldwork_ID == "") {
+            alert("SmsBackEnd_fieldwork_ID")
+            // break;
+        } else if (scientific_name == "") {
+            alert("scientific_name")
+            // break
+        } else if (locations == "") {
+            alert("locations")
+            // break
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: '/SmsBackEnd/advance_search/',
+                data: {
+                    SmsBackEnd_fieldwork_ID: SmsBackEnd_fieldwork_ID,
+                    locations: locations,
+                    scientific_name: scientific_name,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    console.log('Submission was successful.');
+                    console.log(data);
+                    if (data['join_Data'].length <= 0) {
+                        alert("Data Not match")
+                    } else {
+                        for (let index = 0; index < data['join_Data'].length; index++) {
+                            const element = data['join_Data'][index].original_code;
+                        }
+                    }
+                },
+                error: function (data) {
+                    console.log('An error occurred.');
+                    console.log(data);
+                },
+            });
+        }
+    });
+
+    // Data Tables
+    $(document).ready(function () {
+
+        $('#dtBasicExample').dataTable({
+            "language": {
+                "search": "Filter records:"
+            }
+        });
+        $('.dataTables_length').addClass('bs-select');
+
+    });
+</script>
+{% endblock script %}

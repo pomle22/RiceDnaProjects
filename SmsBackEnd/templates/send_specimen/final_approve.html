@@ -1,0 +1,369 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+<style>
+    th {
+        text-align: center;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    td {
+        white-space: nowrap;
+    }
+
+    h5 {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    tfoot {
+        display: table-header-group;
+    }
+
+    lii {
+        width: 2em;
+        height: 2em;
+        text-align: center;
+        line-height: 2em;
+        border-radius: 1em;
+        background: lightblue;
+        margin: 0 0em;
+        display: inline-block;
+        color: white;
+        position: relative;
+    }
+
+    .active-green {
+        background: #00C853;
+
+    }
+
+    .active-yellow {
+        background: #FFD600;
+    }
+
+    .active-red {
+        background: #F44336;
+    }
+
+    .card-body-fix {
+        padding: 0.50rem;
+    }
+</style>
+<br>
+
+<!--  Traffic  -->
+<div class="row">
+    <div class="col-lg-12">
+        <!-- start table specimen last create -->
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <strong>Final approve specimen</strong>
+                    </div>
+                    <div class="card-body" style="font-size: 14px;">
+                        <br>
+                        <div class="table-responsive">
+                            <table width="100%"
+                                class="table  table-hover  table-hover-cursor table-striped table-bordered"
+                                id="tb_specimen">
+                                <thead>
+                                    <tr>
+                                        <th>Sample ID</th>
+                                        <th>Original Code</th>
+                                        <th>NBT Code</th>
+                                        <th>Scientific name</th>
+                                        <th>Create by</th>
+                                        <th>Date create</th>
+                                        <th>Status</th>
+                                        <th>Summary</th>
+                                   
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                       
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {% for item in specimen %}
+                                    <tr>
+                                        <td class="text-center">
+
+                                            <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                class="tag_a_border_bottom">
+                                                {{ item.raw_code_text }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {{ item.original_code|default_if_none:"" }}
+                                        </td>
+                                        <td>
+                                            {{ item.nbt_code_text|default_if_none:"" }}
+                                        </td>
+                                        <td>
+                                            {{ item.scientific_name|default_if_none:"" }}
+                                        </td>
+                                        <td class="text-center">{{ item.first_name|default_if_none:"" }}</td>
+                                        <td class="text-center">{{ item.date|date:'d/m/Y' }}</td>
+                                        <td class="text-center">
+                                            <ul style="margin-bottom: 0px;">
+                                                {% if item.is_checked_fieldwork == "1" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step1">
+                                                    <lii class=" active-green">1</lii>
+                                                </a>
+                                                {% elif item.form_fieldwork_status == "4" or item.form_fieldwork_status == "2" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step1">
+                                                    <lii class=" active-yellow">1</lii>
+                                                </a>
+                                                {% elif item.form_fieldwork_status == "6" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step1">
+                                                    <lii class=" active-red">1</lii>
+                                                </a>
+                                                {% else %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step1">
+                                                    <lii>1</lii>
+                                                </a>
+                                                {% endif %}
+
+                                                {% if item.is_checked_assessment == "1" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step2">
+                                                    <lii class=" active-green">2</lii>
+                                                </a>
+                                                {% elif item.form_assessment_status == "4" or item.form_assessment_status == "2" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step2">
+                                                    <lii class=" active-yellow">2</lii>
+                                                </a>
+                                                {% elif item.form_assessment_status == "6" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step2">
+                                                    <lii class=" active-red">2</lii>
+                                                </a>
+                                                {% else %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step2">
+                                                    <lii>2</lii>
+                                                </a>
+                                                {% endif %}
+
+                                                {% if item.is_checked_seed_clean == "1" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step3">
+                                                    <lii class=" active-green">3</lii>
+                                                </a>
+                                                {% elif item.form_seed_clean_status == "4" or item.form_seed_clean_status == "2" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step3">
+                                                    <lii class=" active-yellow">3</lii>
+                                                </a>
+                                                {% elif item.form_seed_clean_status == "6" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step3">
+                                                    <lii class=" active-red">3</lii>
+                                                </a>
+                                                {% else %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step3">
+                                                    <lii>3</lii>
+                                                </a>
+                                                {% endif %}
+
+                                                {% if item.is_checked_seed_germination == "1" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step4">
+                                                    <lii class=" active-green">4</lii>
+                                                </a>
+                                                {% elif item.form_seed_germination_status == "4" or item.form_seed_germination_status == "2" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step4">
+                                                    <lii class=" active-yellow">4</lii>
+                                                </a>
+                                                {% elif item.form_seed_germination_status == "6" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step4">
+                                                    <lii class=" active-red">4</lii>
+                                                </a>
+                                                {% else %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step4">
+                                                    <lii>4</lii>
+                                                </a>
+                                                {% endif %}
+
+                                                {% if item.is_checked_seed_germination == "1" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step5">
+                                                    <lii class=" active-green">5</lii>
+                                                </a>
+                                                {% elif item.form_seed_germination_status == "4" or item.form_seed_germination_status == "2" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step5">
+                                                    <lii class=" active-yellow">5</lii>
+                                                </a>
+                                                {% elif item.form_seed_germination_status == "6" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step5">
+                                                    <lii class=" active-red">5</lii>
+                                                </a>
+                                                {% else %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step5">
+                                                    <lii>5</lii>
+                                                </a>
+                                                {% endif %}
+
+
+                                                {% if item.is_checked_storage == "1" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step6">
+                                                    <lii class=" active-green">6</lii>
+                                                </a>
+                                                {% elif item.form_storage_status == "4" or item.form_storage_status == "2" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step6">
+                                                    <lii class=" active-yellow">6</lii>
+                                                </a>
+                                                {% elif item.form_storage_status == "6" %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step6">
+                                                    <lii class=" active-red">6</lii>
+                                                </a>
+                                                {% else %}
+                                                <a href="/SmsBackEnd/create_specimen/{{ item.raw_code_text }}"
+                                                    id="btn_step6">
+                                                    <lii>6</lii>
+                                                </a>
+                                                {% endif %}
+
+
+
+
+
+                                            </ul>
+                                        </td>
+
+                                        <td class="text-center">
+                                       <button type="button" class="btn btn-info" onclick="set_status_form('final_app','{{specimen_id}}')">Approve</button>
+                                       
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- end table last create -->
+
+    </div>
+</div>
+<!--  /Traffic -->
+
+
+
+
+
+
+{% endblock content %}
+
+{% block script %}
+<script>
+    $(document).ready(function () {
+       
+        $('#tb_specimen').DataTable({
+            select: true,
+            "oLanguage": {
+                "sSearch": "Search by Sample ID, original ID :"
+            },
+            
+        });
+
+        
+    });
+</script>
+
+<script>
+    function set_status_form(type_event, sm_id) {
+        var type_event = type_event;
+        var sm_id = sm_id;
+
+        $.confirm({
+            title: 'Are you sure approve all process? </br>',
+            type: 'red',
+            closeIcon: true,
+            typeAnimated: true,
+            columnClass: 'medium',
+            content: 'Please select the storage summary of this sample.</br>' +
+                '<input type="radio" id="pass" name="status" value="2">' +
+                '<label for="pass"> &nbsp;&nbsp;Finish (ตรวจสอบแล้วถูกต้องทั้งหมด)</label><br>' +
+                '<input type="radio" id="fail" name="status" value="6">' +
+                '<label for="fail"> &nbsp;&nbsp;Fail (ตรวจสอบแล้วตัวอย่างเสียหาย)</label></br>' +
+                '<div class="form-group "><label>Reason :</label>' +
+                '<textarea class="form-control"  id="textarea_reason"name="textarea_reason" disabled></textarea></div>',
+            buttons: {
+                formSubmit: {
+                    text: 'Yes',
+                    btnClass: 'btn-blue',
+                    action: function () {
+                        var status = this.$content.find($("input[name='status']:checked")).val();
+                        var textarea_reason = this.$content.find($("textarea[name='textarea_reason']"))
+                            .val();
+                        
+         
+                    }
+                },
+                cancel: function () {
+                    //close
+                },
+            },
+            onContentReady: function () {
+                // bind to events
+
+                $("input[name='status']").on('change', function () {
+                    if ($(this).val() == '2') {
+                        $('textarea[name="textarea_reason"]').attr('disabled', true).prop(
+                            'required', false).focus();
+                    } else if ($(this).val() == '4') {
+
+                        $('textarea[name="textarea_reason"]').val('').attr('disabled', false).prop(
+                            'required', true).focus();
+                    } else if ($(this).val() == '6') {
+                        $('textarea[name="textarea_reason"]').val('').attr('disabled', false).prop(
+                            'required', true).focus();
+                    }
+
+                });
+
+                var jc = this;
+                this.$content.find('form').on('submit', function (e) {
+                    // if the user submits the form by pressing enter in the field.
+                    e.preventDefault();
+                    jc.$$formSubmit.trigger('click'); // reference the button and click it
+                });
+            }
+        });
+
+    }
+    </script>   
+
+{% endblock script %}

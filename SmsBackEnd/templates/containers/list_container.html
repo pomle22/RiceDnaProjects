@@ -1,0 +1,75 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+
+<style>
+.dataTables_wrapper {
+    font-size: 13px;
+}
+</style>
+
+
+<!--  Traffic  -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="box-title">list container </h4>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card-body">
+            <table id="tb_list_container" class="table table-sm f-12">
+              <thead>
+                <tr >
+                  <th>Name</th>
+                  <th>Site</th>
+                  <th>Create by</th>
+                  <th>Dimension</th>
+                  <th>Sample storage</th>
+                  <th>Approximate Capacity</th>
+                  <th>Occupied v/s Free</th>
+                </tr>
+              </thead>
+              <tbody >		 	
+                {% for item in list_container %}
+                <tr>
+                  <td><a href="{% url 'SmsBackEnd:container' container_id=item.id %}">{{ item.name }}</a></td>
+                  <td>A Demo Site</td>
+                  <td>Admin</td>
+                  <td>4 X 5 </td>
+                  <td>49</td>
+                  <td>25920</td>
+                  <td><div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        
+          </div>
+        </div>
+
+      </div> <!-- /.row -->
+      <div class="card-body"></div>
+    </div>
+  </div><!-- /# column -->
+</div>
+<!--  /Traffic -->
+
+
+{% endblock content %}
+
+{% block script %}
+
+<script>
+$(document).ready(function() {
+    $('#tb_list_container').DataTable( {
+        "deferRender": true
+    });
+  
+} );
+</script>
+{% endblock script%}

@@ -1,0 +1,48 @@
+{% extends "includes/base_admin.html" %}
+{% load static i18n %} {% load i18n %} {% load staticfiles %}
+{% load crispy_forms_tags %}
+
+<style>
+    #myProgress {
+      width: 100%;
+      background-color: #ddd;
+    }
+    
+    #myBar {
+      width: 10%;
+      height: 30px;
+      background-color: #4CAF50;
+      text-align: center;
+      line-height: 30px;
+      color: white;
+    }
+</style>               
+
+{% block content %}
+
+<main class="pt-5">
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col col-md-12">
+                    <form  method="post" action="about_data_page" class="container" enctype="multipart/form-data">
+                      {% csrf_token %}
+                     <div class="card mb-3 ">   
+                      <div class="card-header" style="background-color:#91FFAD">
+                        <h2>เพิ่ม-แก้ไข About</h2>
+                      </div>
+                      <div class="card-body">
+                        {{ form|crispy }}
+                        <button name="submit" type="submit"   class="btn btn-success"  >Save</button>
+                        <a href="{% url 'SmsBackEnd:about_data_page' %} "class="btn btn-primary">Cancel</a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+            </div>
+        </div>
+</main>
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}

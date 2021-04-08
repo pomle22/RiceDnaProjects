@@ -1,0 +1,1228 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+
+<!--  Content  -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header f-16">
+                <h4 class="box-title"><i class="fas fa-map"></i> Germination schedule</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                   
+                    <h2 class="text-center">การทดสอบความมีชีวิตของเมล็ด</h2>
+                    <!-- Step 4 -->
+                    <div class="tab-pane " id="seed_lab2" role="tabpanel" aria-labelledby="seed_lab2_tab">
+                        <form action="/SmsBackEnd/submit_update_plant_tz_test/" id="f1l3_form_tz_test" method="post"
+                            autocomplete="off" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="text" id="id_specimen" name="f1l3_name_specimen_id_tz"
+                                class="form-control-sm form-control" value="{{ specimen_id }}" hidden readonly>
+                            <!-- input -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-info p-1" role="alert">
+                                        การทดสอบความมีชีวิตของเมล็ดด้วยวิธี TZ Test
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="" class="form-control-label">Barcode
+                                            :</label>
+                                        <input type="text" id="id_barcode" name="" placeholder=""
+                                            value="{{ specimen_data.qr_code }}" class="form-control-sm form-control"
+                                            required readonly>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-8">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_accession_number"
+                                            class="form-control-label">หมายเลขตัวอย่างอ้างอิง
+                                            (Accession
+                                            number)
+                                            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top"
+                                                title="Accession number question"></i>
+                                            :</label>
+                                        <input type="text" id="f1l3_id_accession_number"
+                                            name="f1l3_name_accession_number" placeholder="" value=""
+                                            class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_date" class="form-control-label">วันที่รับเข้า
+                                            (Date) :</label>
+                                        <input type="text" id="f1l3_id_date" name="f1l3_name_date" placeholder=""
+                                            value="" class="form-control-sm form-control f_datepicker">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_scientific_name" class="form-control-label">ชื่อวิทยาศาสตร์
+                                            (Scientific
+                                            name) :</label>
+                                        <input type="text" id="f1l3_id_scientific_name" name="f1l3_name_scientific_name"
+                                            placeholder="" value=""
+                                            class="form-control-sm form-control scientific_name_disable">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_family" class="form-control-label">วงศ์ (Family)
+                                            :</label>
+                                        <input type="text" id="f1l3_id_family" name="f1l3_name_family" placeholder=""
+                                            value="" class="form-control-sm form-control family_disable">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_date_start" class="form-control-label">วันที่เริ่ม
+                                            :</label>
+                                        <input type="text" id="f1l3_id_date_start" name="f1l3_name_date_start"
+                                            placeholder="" value="" class="form-control-sm form-control f_datepicker">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_name_date_end" class="form-control-label">วันที่เสร็จสิ้น
+                                            :</label>
+                                        <input type="text" id="f1l3_name_date_end" name="f1l3_name_date_end"
+                                            placeholder="" value="" class="form-control-sm form-control f_datepicker">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_times_test" class="form-control-label">ครั้งที่ทดสอบ
+                                            :</label>
+                                        <input type="text" id="f1l3_id_times_test" name="f1l3_name_times_test"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-3">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_year_store" class="form-control-label">ปีที่เก็บรักษา
+                                            :</label>
+                                        <input type="text" id="f1l3_id_year_store" name="f1l3_name_year_store"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_user_test" class="form-control-label">ผู้ทดสอบ
+                                            :</label>
+                                        <input type="text" id="f1l3_id_user_test" name="f1l3_name_user_test"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_times_x_seed" class="form-control-label">จำนวนซ้ำ
+                                            x
+                                            จำนวนเมล็ดทดสอบ :</label>
+                                        <input type="text" id="f1l3_id_times_x_seed" name="f1l3_name_times_x_seed"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_solution_concentration"
+                                            class="form-control-label">ความเข้มข้นของสารละลาย
+                                            :</label>
+                                        <input type="text" id="f1l3_id_solution_concentration"
+                                            name="f1l3_name_solution_concentration" placeholder="" value=""
+                                            class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_dye_temp" class="form-control-label">ย้อมที่อุณหภูมิ
+                                            :</label>
+                                        <input type="text" id="f1l3_id_dye_temp" name="f1l3_name_dye_temp"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_time_dye" class="form-control-label">ระยะเวลาในการย้อมสี
+                                            :</label>
+                                        <input type="text" id="f1l3_id_time_dye" name="f1l3_name_time_dye"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table width="100%" class="table table-sm table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <td class="text-center">ซ้ำที่</td>
+                                                    <td class="text-center">เมล็ดมีชีวิต</td>
+                                                    <td class="text-center">เมล็ดไม่มีชีวิต</td>
+                                                    <td class="text-center">ความมีชีวิต (%)</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for i in i|rjust:8 %}
+                                                <tr>
+                                                    <td class="text-center">{{ forloop.counter }}
+                                                        <input type="hidden" name="f1l3_name_r{{ forloop.counter }}[]"
+                                                            value="{{ forloop.counter }}">
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <input type="number" name="f1l3_name_r{{ forloop.counter }}[]"
+                                                            id="fl3_id_test_c1_{{ forloop.counter }}"
+                                                            class="form-control-sm form-control avg_col_1" cal="1">
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <input type="number" name="f1l3_name_r{{ forloop.counter }}[]"
+                                                            id="fl3_id_test_c2_{{ forloop.counter }}"
+                                                            class="form-control-sm form-control avg_col_2" cal="2">
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <input type="number" name="f1l3_name_r{{ forloop.counter }}[]"
+                                                            id="fl3_id_test_c3_{{ forloop.counter }}"
+                                                            class="form-control-sm form-control avg_col_3" cal="3">
+
+                                                        <input type="number" name="f1l3_name_r{{ forloop.counter }}[]"
+                                                            id="fl3_id_test_c4_{{ forloop.counter }}"
+                                                            class="form-control-sm form-control avg_col_4" hidden>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                <tr>
+                                                    <td class="text-center">เฉลี่ย</td>
+                                                    <td>
+                                                        <input type="text" name="f1l3_avg[]"
+                                                            class="form-control-sm form-control avg_result1">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f1l3_avg[]"
+                                                            class="form-control-sm form-control avg_result2">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f1l3_avg[]"
+                                                            class="form-control-sm form-control avg_result3">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_date_start" class="form-control-label">หมายเหตุ
+                                            :</label>
+                                        <textarea class="form-control-sm form-control" name="f1l3_name_note"
+                                            id="f1l3_id_note" cols="30" rows="5"></textarea>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="" class="form-control-label">รูปภาพ
+                                            :</label><br>
+                                        <input type="file" class="" name="f1l3_name_pic" id="f1l3_id_pic" multiple="">
+                                    </div>
+                                    <ul class="list-unstyled ml-4">
+                                        <ul id="list_image_from_db_tz">
+                                        </ul>
+                                    </ul>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f1l3_id_photographer1" class="form-control-label">ผู้ถ่ายภาพ
+                                            :</label>
+                                        <input type="text" id="f1l3_id_photographer1" name="f1l3__name_photographer1"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="float-right mt-3">
+                                {% if user_form_permission.form_four == "1" %}
+                                {% if specimen_data.form_seed_germination_status == "1" or specimen_data.form_seed_germination_status == "0" or pecimen_data.form_seed_morphology_status == "3"%}
+                                <input type="text" name="f1l3_type_submit_tz" value="save" id="" readonly hidden>
+                                <button class="btn  btn-primary ml-1 btn_tz_test" type="submit">Save
+                                </button>
+                                <button class="btn  btn-secondary btn_tz_test" type="reset">Reset</button>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                            <!-- /input -->
+                        </form>
+
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+
+                        <form action="/SmsBackEnd/submit_update_plant_seed_strength_test/" id="f2l3_form_strength_test"
+                            method="post" autocomplete="off" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="text" id="" name="f2l3_name_specimen_id_strength_test"
+                                class="form-control-sm form-control" value="{{ specimen_id }}" hidden readonly>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-info p-1" role="alert">
+                                        การทดสอบความแข็งแรงของเมล็ด
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="" class="form-control-label">Barcode
+                                            :</label>
+                                        <input type="text" id="id_barcode" name="" placeholder="" value=""
+                                            class="form-control-sm form-control" required readonly>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-8">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_accession_number"
+                                            class="form-control-label">หมายเลขตัวอย่างอ้างอิง
+                                            (Accession
+                                            number)
+                                            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top"
+                                                title="Accession number question"></i>
+                                            :</label>
+                                        <input type="text" id="f2l3_id_accession_number"
+                                            name="f2l3_name_accession_number" placeholder="" value=""
+                                            class="form-control-sm form-control" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_date" class="form-control-label">วันที่รับเข้า
+                                            (Date) :</label>
+                                        <input type="text" id="f2l3_id_date" name="f2l3_name_date" placeholder=""
+                                            value="" class="form-control-sm form-control f_datepicker" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_scientific_name" class="form-control-label">ชื่อวิทยาศาสตร์
+                                            (Scientific
+                                            name) :</label>
+                                        <input type="text" id="f2l3_id_scientific_name" name="f2l3_name_scientific_name"
+                                            placeholder="" value=""
+                                            class="form-control-sm form-control scientific_name_disable" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_family" class="form-control-label">วงศ์ (Family)
+                                            :</label>
+                                        <input type="text" id="f2l3_id_family" name="f2l3_name_family" placeholder=""
+                                            value="" class="form-control-sm form-control family_disable" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_date_start" class="form-control-label">วันที่เริ่ม
+                                            :</label>
+                                        <input type="text" id="f2l3_id_date_start" name="f2l3_name_date_start"
+                                            placeholder="" value="" class="form-control-sm form-control f_datepicker"
+                                            required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_name_date_end" class="form-control-label">วันที่เสร็จสิ้น
+                                            :</label>
+                                        <input type="text" id="f2l3_name_date_end" name="f2l3_name_date_end"
+                                            placeholder="" value="" class="form-control-sm form-control f_datepicker"
+                                            required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_times_test" class="form-control-label">ครั้งที่ทดสอบ
+                                            :</label>
+                                        <input type="text" id="f2l3_id_times_test" name="f2l3_name_times_test"
+                                            placeholder="" value="" class="form-control-sm form-control" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-3">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_year_store" class="form-control-label">ปีที่เก็บรักษา
+                                            :</label>
+                                        <input type="text" id="f2l3_id_year_store" name="f2l3_name_year_store"
+                                            placeholder="" value="" class="form-control-sm form-control" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_user_test" class="form-control-label">ผู้ทดสอบ
+                                            :</label>
+                                        <input type="text" id="f2l3_id_user_test" name="f2l3_name_user_test"
+                                            placeholder="" value="" class="form-control-sm form-control" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_mode_test" class="form-control-label">วิธีทดสอบ
+                                            :</label>
+                                        <input type="text" id="f2l3_id_mode_test" name="f2l3_name_mode_test"
+                                            placeholder="" value="" class="form-control-sm form-control" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_times_x_seed" class="form-control-label">จำนวนซ้ำ x
+                                            จำนวนเมล็ดทดสอบ :</label>
+                                        <input type="text" id="f2l3_id_times_x_seed" name="f2l3_name_times_x_seed"
+                                            placeholder="" value="" class="form-control-sm form-control" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_light" class="form-control-label">แสง
+                                            :</label>
+                                        <input type="text" id="f2l3_id_light" name="f2l3_name_light" placeholder=""
+                                            value="" class="form-control-sm form-control" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_moisture" class="form-control-label">ความชื้น
+                                            :</label>
+                                        <input type="text" id="f2l3_id_moisture" name="f2l3_name_moisture"
+                                            placeholder="" value="" class="form-control-sm form-control" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_temp" class="form-control-label">อุณหภูมิ
+                                            :</label>
+                                        <input type="text" id="f2l3_id_temp" name="f2l3_name_temp" placeholder=""
+                                            value="" class="form-control-sm form-control" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="table-responsive">
+                                        <table width="100%" class="table table-sm table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <td rowspan="2" class="text-center">วัน</td>
+                                                    <td colspan="8" class="text-center">
+                                                        จำนวนเมล็ดที่งอกซ้ำที่
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">1</td>
+                                                    <td class="text-center">2</td>
+                                                    <td class="text-center">3</td>
+                                                    <td class="text-center">4</td>
+                                                    <td class="text-center">5</td>
+                                                    <td class="text-center">6</td>
+                                                    <td class="text-center">7</td>
+                                                    <td class="text-center">8</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for i in i|rjust:16 %}
+                                                <tr>
+                                                    <td class="text-center">
+                                                        {{ forloop.counter }}
+                                                        <input type="hidden" value="{{ forloop.counter }}"
+                                                            name="f2l3_name{{ forloop.counter }}[]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test_c1_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test_c2_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test_c3_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test_c4_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test_c5_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test_c6_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test_c7_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test_c8_{{ forloop.counter }}">
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test_c9_{{ forloop.counter }}" hidden>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="table-responsive">
+                                        <table width="100%" class="table table-sm table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <td rowspan="2" class="text-center">วัน</td>
+                                                    <td colspan="8" class="text-center">
+                                                        จำนวนเมล็ดที่งอกซ้ำที่
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">1</td>
+                                                    <td class="text-center">2</td>
+                                                    <td class="text-center">3</td>
+                                                    <td class="text-center">4</td>
+                                                    <td class="text-center">5</td>
+                                                    <td class="text-center">6</td>
+                                                    <td class="text-center">7</td>
+                                                    <td class="text-center">8</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for i in i|rjust:28 %}
+                                                {% if forloop.counter > 16 %}
+                                                <tr>
+                                                    <td class="text-center">
+                                                        {{ forloop.counter }}
+                                                        <input type="hidden" value="{{ forloop.counter }}"
+                                                            name="f2l3_name{{ forloop.counter }}[]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test2_c1_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test2_c2_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test2_c3_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test2_c4_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test2_c5_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test2_c6_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test2_c7_{{ forloop.counter }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test2_c8_{{ forloop.counter }}">
+                                                        <input type="text" name="f2l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            id="f2l3_id_table_test2_c9_{{ forloop.counter }}" hidden>
+                                                    </td>
+                                                </tr>
+                                                {% endif %}
+                                                {% endfor %}
+                                                <tr>
+                                                    <td class="text-center">GI</td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_gi[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_gi[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_gi[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_gi[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_gi[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_gi[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_gi[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_gi[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">นน.(g)</td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_weight[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_weight[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_weight[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_weight[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_weight[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_weight[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_weight[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_weight[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">SGR</td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_sgr[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_sgr[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_sgr[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_sgr[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_sgr[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_sgr[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_sgr[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="f2l3_name_sgr[]"
+                                                            class="form-control-sm form-control">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_date_start" class="form-control-label">หมายเหตุ
+                                            :</label>
+                                        <textarea class="form-control-sm form-control" name="f2l3_name_note"
+                                            id="f2l3_id_note" cols="30" rows="5"></textarea>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="" class="form-control-label">รูปภาพ
+                                            :</label><br>
+                                        <input type="file" class="" name="f2l3_name_img" id="f2l3_id_img" multiple="">
+                                    </div>
+                                    <ul class="list-unstyled ml-4">
+                                        <ul id="list_image_from_db_strength">
+                                        </ul>
+                                    </ul>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f2l3_id_photographer1" class="form-control-label">ผู้ถ่ายภาพ
+                                            :</label>
+                                        <input type="text" id="f2l3_id_photographer1" name="f2l3_name_photographer1"
+                                            placeholder="" value="" class="form-control-sm form-control" required>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="float-right mt-3">
+                                {% if user_form_permission.form_four == "1" %}
+                                {% if specimen_data.form_seed_germination_status == "1" or specimen_data.form_seed_germination_status == "0" or specimen_data.form_seed_morphology_status == "3"%}
+                                <input type="text" name="f2l3_type_submit_strength_test" value="save" id="" readonly
+                                    hidden>
+                                <button class="btn  btn-primary ml-1 btn_strength_test" type="submit">Save
+                                </button>
+                                <button class="btn  btn-secondary btn_strength_test" type="reset">Reset
+                                </button>
+                                {% endif %}
+
+
+                                {% endif %}
+                            </div>
+                            <!-- /input -->
+
+                        </form>
+
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+
+                        <form action="/SmsBackEnd/submit_update_plant_seed_germination_test/"
+                            id="f3l3_form_seed_germination_test" method="post" autocomplete="off"
+                            enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="text" id="" name="f3l3_name_specimen_id_strength_test"
+                                class="form-control-sm form-control" value="{{ specimen_id }}" hidden readonly>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-info p-1" role="alert">
+                                        การทดสอบความงอกของเมล็ด
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="" class="form-control-label">Barcode
+                                            :</label>
+                                        <input type="text" id="id_barcode" name="" placeholder="" value=""
+                                            class="form-control-sm form-control" required readonly>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-8">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_accession_number"
+                                            class="form-control-label">หมายเลขตัวอย่างอ้างอิง
+                                            (Accession
+                                            number)
+                                            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top"
+                                                title="Accession number question"></i>
+                                            :</label>
+                                        <input type="text" id="f3l3_id_accession_number"
+                                            name="f3l3_name_accession_number" placeholder="" value=""
+                                            class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_date" class="form-control-label">วันที่รับเข้า
+                                            (Date) :</label>
+                                        <input type="text" id="f3l3_id_date" name="f3l3_name_date" placeholder=""
+                                            value="" class="form-control-sm form-control f_datepicker">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_scientific_name" class="form-control-label">ชื่อวิทยาศาสตร์
+                                            (Scientific
+                                            name) :</label>
+                                        <input type="text" id="f3l3_id_scientific_name" name="f3l3_name_scientific_name"
+                                            placeholder="" value=""
+                                            class="form-control-sm form-control scientific_name_disable">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_family" class="form-control-label">วงศ์ (Family)
+                                            :</label>
+                                        <input type="text" id="f3l3_id_family" name="f3l3_name_family" placeholder=""
+                                            value="" class="form-control-sm form-control family_disable">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_date_start" class="form-control-label">วันที่เริ่ม
+                                            :</label>
+                                        <input type="text" id="f3l3_id_date_start" name="f3l3_name_date_start"
+                                            placeholder="" value="" class="form-control-sm form-control f_datepicker">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_name_date_end" class="form-control-label">วันที่เสร็จสิ้น
+                                            :</label>
+                                        <input type="text" id="f3l3_name_date_end" name="f3l3_name_date_end"
+                                            placeholder="" value="" class="form-control-sm form-control f_datepicker">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_times_test" class="form-control-label">ครั้งที่ทดสอบ
+                                            :</label>
+                                        <input type="text" id="f3l3_id_times_test" name="f3l3_name_times_test"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-3">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_year_store" class="form-control-label">ปีที่เก็บรักษา
+                                            :</label>
+                                        <input type="text" id="f3l3_id_year_store" name="f3l3_name_year_store"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_user_test" class="form-control-label">ผู้ทดสอบ
+                                            :</label>
+                                        <input type="text" id="f3l3_id_user_test" name="f3l3_name_user_test"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_mode_test" class="form-control-label">วิธีทดสอบ
+                                            :</label>
+                                        <input type="text" id="f3l3_id_mode_test" name="f3l3_name_mode_test"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_times_x_seed" class="form-control-label">จำนวนซ้ำ x
+                                            จำนวนเมล็ดทดสอบ :</label>
+                                        <input type="text" id="f3l3_id_times_x_seed" name="f3l3_name_times_x_seed"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_light" class="form-control-label">แสง
+                                            :</label>
+                                        <input type="text" id="f3l3_id_light" name="f3l3_name_light" placeholder=""
+                                            value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_moisture" class="form-control-label">ความชื้น
+                                            :</label>
+                                        <input type="text" id="f3l3_id_moisture" name="f3l3_name_moisture"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_temp" class="form-control-label">อุณหภูมิ
+                                            :</label>
+                                        <input type="text" id="f3l3_id_temp" name="f3l3_name_temp" placeholder=""
+                                            value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table width="100%" class="table table-sm table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <td class="text-center">ซ้ำที่</td>
+                                                    <td class="text-center">
+                                                        วันที่เริ่มนับ
+                                                        <br>
+                                                        <input type="text"
+                                                            class="f_datepicker form-control form-control-sm text-center"
+                                                            name="f3l3_date_start_test" id="">
+                                                    </td>
+                                                    <td class="text-center" colspan="5">
+                                                        วันสุดท้ายของการนับ
+                                                        <br>
+                                                        <input type="text"
+                                                            class="f_datepicker form-control form-control-sm text-center"
+                                                            name="f3l3_date_end_test" id=""
+                                                            style="margin-left: 40%;margin-right: 40%; width: 20%;">
+                                                    </td>
+                                                    <td class="text-center">ความงอก <br> (%)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td class="text-center">ต้นกล้าปกติ</td>
+                                                    <td class="text-center">ต้นกล้าปกติ</td>
+                                                    <td class="text-center">ต้นกล้าผิดปกติ</td>
+                                                    <td class="text-center">เมล็ดสดไม่งอก</td>
+                                                    <td class="text-center">เมล็ดแข็ง</td>
+                                                    <td class="text-center">เมล็ดตาย</td>
+                                                    <td></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for i in i|rjust:8 %}
+                                                <tr>
+                                                    <td class="text-center">{{ forloop.counter }}
+                                                        <input type="text" name="f3l3_name{{ forloop.counter }}[]"
+                                                            class="form-control-sm form-control"
+                                                            value="{{ forloop.counter }}" hidden>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_name{{ forloop.counter }}[]"
+                                                            id="f3l3_id_c1_{{ forloop.counter }}"
+                                                            class="form-control-sm form-control avg_col_test1" cal="1">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_name{{ forloop.counter }}[]"
+                                                            id="f3l3_id_c2_{{ forloop.counter }}"
+                                                            class="form-control-sm form-control avg_col_test2" cal="2">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_name{{ forloop.counter }}[]"
+                                                            id="f3l3_id_c3_{{ forloop.counter }}"
+                                                            class="form-control-sm form-control avg_col_test3" cal="3">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_name{{ forloop.counter }}[]"
+                                                            id="f3l3_id_c4_{{ forloop.counter }}"
+                                                            class="form-control-sm form-control avg_col_test4" cal="4">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_name{{ forloop.counter }}[]"
+                                                            id="f3l3_id_c5_{{ forloop.counter }}"
+                                                            class="form-control-sm form-control avg_col_test5" cal="5">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_name{{ forloop.counter }}[]"
+                                                            id="f3l3_id_c6_{{ forloop.counter }}"
+                                                            class="form-control-sm form-control avg_col_test6" cal="6">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_name{{ forloop.counter }}[]"
+                                                            id="f3l3_id_c7_{{ forloop.counter }}"
+                                                            class="form-control-sm form-control avg_col_test7" cal="7">
+
+                                                        <input type="text" name="f3l3_name{{ forloop.counter }}[]"
+                                                            id="f3l3_id_c8_{{ forloop.counter }}"
+                                                            class="form-control-sm form-control" hidden>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                <tr>
+                                                    <td class="text-center">เฉลี่ย</td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_avg[]"
+                                                            class="form-control-sm form-control avg_result_test1">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_avg[]"
+                                                            class="form-control-sm form-control avg_result_test2">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_avg[]"
+                                                            class="form-control-sm form-control avg_result_test3">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_avg[]"
+                                                            class="form-control-sm form-control avg_result_test4">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_avg[]"
+                                                            class="form-control-sm form-control avg_result_test5">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_avg[]"
+                                                            class="form-control-sm form-control avg_result_test6">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" name="f3l3_avg[]"
+                                                            class="form-control-sm form-control avg_result_test7">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_date_start" class="form-control-label">หมายเหตุ
+                                            :</label>
+                                        <textarea class="form-control-sm form-control" name="f3l3_name_note"
+                                            id="f3l3_id_note" cols="30" rows="5"></textarea>
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="" class="form-control-label">รูปภาพ
+                                            :</label><br>
+                                        <input type="file" class="" name="f3l3_name_img" id="f3l3_id_img" multiple="">
+                                    </div>
+                                    <ul class="list-unstyled ml-4">
+                                        <ul id="list_image_from_db_germination">
+                                        </ul>
+                                    </ul>
+                                    <!-- input group -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- input group -->
+                                    <div class="form-group">
+                                        <label for="f3l3_id_photographer1" class="form-control-label">ผู้ถ่ายภาพ
+                                            :</label>
+                                        <input type="text" id="f3l3_id_photographer1" name="f3l3_name_photographer1"
+                                            placeholder="" value="" class="form-control-sm form-control">
+                                    </div>
+                                    <!-- input group -->
+                                </div>
+                            </div>
+                       
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="float-right mt-3">
+                         
+
+                                        <input type="text" name="f3l3_type_submit_germination_test" value="save" id=""
+                                            readonly hidden>
+                                        <button class="btn  btn-primary ml-1 btn_germination_sm" type="submit">Save
+                                        </button>
+                                        <button class="btn  btn-secondary btn_germination_sm" type="reset">
+                                            Reset
+                                        </button>
+                
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /input -->
+
+                        </form>
+                    </div>
+                    <!-- /Step 4 -->
+    
+                    </div>
+
+                </div>
+
+            </div>
+          
+        </div>
+
+    </div> <!-- /# column -->
+
+</div><!-- /.row -->
+
+<!--  /Content -->
+
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}

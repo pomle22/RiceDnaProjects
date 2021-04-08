@@ -1,0 +1,166 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+
+<style>
+   th {
+      text-align: center;
+      font-size: 15px;
+      white-space: nowrap;
+   }
+
+   td {
+      white-space: nowrap;
+   }
+
+   h5 {
+      font-weight: bold;
+      font-size: 18px;
+   }
+
+   label {
+      font-size: 15px;
+      font-weight: 600;
+   }
+
+   .form-control {
+      font-size: unset;
+   }
+
+   .fa-sm:hover {
+      cursor: pointer;
+   }
+</style>
+
+<!--  Traffic  -->
+<div class="row">
+   <div class="col-lg-12">
+      <div class="card">
+         <div class="card-header">
+            <strong>Edit News & Events </strong>
+         </div>
+         <div class="card-body" style="font-size: 14px;">
+
+            <form method="post" enctype="multipart/form-data" class="form-horizontal">
+               <!-- HTTP แบบ Post-->
+               {% csrf_token %}
+
+
+               <div class="row form-group">
+                  <div class="col-lg-6">
+                     <label for="" class="form-control-label">ภาพถ่าย : <small class="text-danger">(limit 5
+                           file)</small></label>
+                     <div class="custom-file">
+                        <input type="file" name="name_pic" id="customFile" accept="image/*" multiple>
+                     </div>
+
+                     <div class="custom-file">
+                        {% for i in edit_news %}
+                        <input type="hidden" name="news_id" value="{{ i.id }}">
+                        {% for im in i.image_evevt %}
+                        <a font size="6" href="/media/photo_new_events/{{im}}">
+                           <font size="3%">{{im}}</font>
+                        </a>
+
+                        <button type="button" id="{{forloop.counter}}" class="btn_test"><i style="color:red"
+                              class="fa fa-trash" aria-hidden="true"></i></button>
+                        {% endfor %}
+                        {% endfor %}
+                        <input type="hidden" id="get_data" name="get_data">
+                        <button type="submit" class="submit_form" data-toggle="modal" data-target="#myModalimage"
+                           name="type_submit" value="deleteimage" style="display: none"><i style="color:red"
+                              class="fa fa-trash" aria-hidden="true"></i></button>
+                     </div>
+
+                     <ul class="list-unstyled ml-4">
+                        <ul id="list_image_from_db">
+                        </ul>
+                     </ul>
+                  </div>
+
+                  <!-- Image Gallery -->
+                  <div class="col-lg-6">
+                     <label for="" class="form-control-label">อัลบั้มภาพ</label>
+                     <div class="custom-file">
+                        <input type="file" name="gallery_pic" id="customFile" accept="image/*" multiple>
+                     </div>
+
+                     <div class="custom-file">
+                        {% for i in edit_news %}
+                        <input type="hidden" name="gallery_id" value="{{ i.id }}">
+                        {% for im in i.image_gallery %}
+                        <a font size="6" href="/media/news_gallery/{{im}}">
+                           <font size="3%">{{im}}</font>
+                        </a>
+
+                        <button type="button" id="{{forloop.counter}}" class="im_test"><i style="color:red"
+                              class="fa fa-trash" aria-hidden="true"></i></button>
+                        {% endfor %}
+                        {% endfor %}
+                        <input type="hidden" id="gallery_data" name="gallery_data">
+                        <button type="submit" class="submit_form_gallery" data-toggle="modal"
+                           data-target="#myModalimage" name="type_submit" value="deleteimagegallery"
+                           style="display: none"><i style="color:red" class="fa fa-trash"
+                              aria-hidden="true"></i></button>
+                     </div>
+
+                     <ul class="list-unstyled ml-4">
+                        <ul id="list_image_from_db">
+                        </ul>
+                     </ul>
+                     <!-- input group -->
+                  </div>
+               </div>
+
+               <div class="form-group">
+                  {% for i in edit_news %}
+                  <label for="send_name">Title</label>
+                  <input type="text" class="form-control" id="send_name" placeholder="Title..." name="title"
+                     value="{{ i.title }}" required>
+                  {% endfor %}
+               </div>
+
+               <div class="form-group">
+                  <label for="send_detail">Detail</label>
+                  {% for i in edit_news %}
+                  <textarea class="form-control" name="detail" rows="5" id="send_detail"
+                     placeholder="Write about Detail" name="send_detail">{{ i.detail }}</textarea>
+                  {% endfor %}
+               </div>
+
+               <div class="row form-group">
+                  <!-- href="{% url 'SmsBackEnd:create_news'%}" -->
+                  <div class="container" align='right'>
+                     <a><button id="myBtn" type="Submit" name="type_submit" value="update"
+                           class="btn btn-success">Save</button></a>
+                  </div>
+               </div>
+            </form>
+         </div>
+
+      </div>
+   </div><!-- /# column -->
+</div>
+
+
+<script>
+   $('.btn_test').click(function () {
+      $('#get_data').val($(this).attr('id'))
+      $('.submit_form').trigger('click')
+   })
+</script>
+
+<script>
+   // Image_gallery
+   $('.im_test').click(function () {
+      $('#gallery_data').val($(this).attr('id'))
+      $('.submit_form_gallery').trigger('click')
+   })
+</script>
+
+
+
+
+
+{% endblock content %}

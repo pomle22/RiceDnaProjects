@@ -1,0 +1,159 @@
+{% extends "includes/base_admin.html" %}
+
+{% block content %}
+{% load qr_code %}
+{% comment %} {{request.session.user_session}} {% endcomment %}
+
+
+<style>
+  .ui-dialog {
+    z-index: 1000 !important;
+  }
+</style>
+<div class="alert alert-info p-1" role="alert">
+  QRcode generator
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header f-14">
+        <b>Specimen QRcode</b>
+      </div>
+      <div class="card-body f-14">
+        <form action="/SmsBackEnd/qrcode_printing_custom/" method="post" autocomplete="off">
+          {% csrf_token %}
+
+          <div class="row">
+            <!--  -->
+            <div class="col-4" id="row_num">
+              <label for="">QRcode</label>
+              {% for i in data %}
+              <input type="text" name="qrcode[]" id="" class="form-control mb-1" value="{{i.qrcode}}" required readonly>
+              {% endfor %}
+            </div>
+            <!--  -->
+            <div class="col-4" id="row_size">
+              <label for="">Size</label>
+              {% for i in data %}
+              
+              <select name="size[]" id="" class="form-control mb-1" required>
+                <option selected hidden></option>
+                <option value="2" {% if i.size == '2' %} selected {% endif %}>QR(2) 3*3 มม.</option>
+                <option value="3" {% if i.size == '3' %} selected {% endif %}>QR(3) 4*4 มม.</option>
+                <option value="4" {% if i.size == '4' %} selected {% endif %}>QR(4) 6*6 มม.</option>
+                <option value="5" {% if i.size == '5' %} selected {% endif %}>QR(5) 7*7 มม.</option>
+                <option value="6" {% if i.size == '6' %} selected {% endif %}>QR(6) 8*8 มม.</option>
+                <option value="7" {% if i.size == '7' %} selected {% endif %}>QR(7) 10*10 มม.</option>
+                <option value="8" {% if i.size == '8' %} selected {% endif %}>QR(8) 12*12 มม.</option>
+                <option value="9" {% if i.size == '9' %} selected {% endif %}>QR(9) 13*13 มม.</option>
+                <option value="10" {% if i.size == '10' %} selected {% endif %}>QR(10) 15*15 มม.</option>
+                <option value="11" {% if i.size == '11' %} selected {% endif %}>QR(11) 16*16 มม.</option>
+                <option value="12" {% if i.size == '12' %} selected {% endif %}>QR(12) 18*18 มม.</option>
+                <option value="13" {% if i.size == '13' %} selected {% endif %}>QR(13) 19*19 มม.</option>
+                <option value="14" {% if i.size == '14' %} selected {% endif %}>QR(14) 20*20 มม.</option>
+                <option value="15" {% if i.size == '15' %} selected {% endif %}>QR(15) 22*22 มม.</option>
+                <option value="16" {% if i.size == '16' %} selected {% endif %}>QR(16) 24*24 มม.</option>
+                <option value="17" {% if i.size == '17' %} selected {% endif %}>QR(17) 25*25 มม.</option>
+                <option value="18" {% if i.size == '18' %} selected {% endif %}>QR(18) 26*26 มม.</option>
+                <option value="19" {% if i.size == '19' %} selected {% endif %}>QR(19) 28*28 มม.</option>
+                <option value="20" {% if i.size == '20' %} selected {% endif %}>QR(20) 30*30 มม.</option>
+              </select>
+              {% endfor %}
+            </div>
+            <!--  -->
+            <div class="col-4" id="row_dup">
+              <label for="">Duplicate</label>
+              {% for i in data %}
+              <input type="number" name="dup_origin[]" id="" class="form-control mb-1" value="{{i.duplicate}}" required hidden>
+              <input type="number" name="dup[]" id="" class="form-control mb-1" value="{{i.duplicate}}" required>
+              {% endfor %}
+            </div>
+            <input type="text" name="date_create" id="id_date_create" readonly hidden>
+            <!--  -->
+          </div>
+          <div class="row mt-2">
+            <div class="col-sm-6 text-left">
+            </div>
+            <div class="col-sm-6 text-right">
+              <!-- <button class="btn btn-sm btn-secondary" type="reset">Reset</button> -->
+              <button class="btn btn-sm btn-primary" type="submit">Generated</button>
+            </div>
+          </div>
+
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock content %}
+
+
+{% block script%}
+<script>
+  function printDiv(divName) {
+    var printContents = document.getElementById(divName).innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+  }
+
+  function demo_size() {
+    var x = document.getElementById("printableArea");
+    if (x.style.display === "none") {
+      // x.style.display = "block";
+      $('#printableArea').show(500)
+    } else {
+      // x.style.display = "none";
+      $('#printableArea').hide(500)
+    }
+  }
+
+  $('#add_row').click(function () {
+    num = $('.add_num').length;
+    if (num <= 5) {
+      $('#row_num').append('<input type="number" name="num[]" id="" class="form-control mt-1 add_num" required>')
+      $('#row_size').append('<select name="size[]" id="" class="form-control mt-1 add_size" required><option selected hidden></option><option value="2">QR(2) 3*3 มม.</option><option value="3">QR(3) 4*4 มม.</option><option value="4">QR(4) 6*6 มม.</option><option value="5">QR(5) 7*7 มม.</option><option value="6">QR(6) 8*8 มม.</option><option value="7">QR(7) 10*10 มม.</option><option value="8">QR(8) 12*12 มม.</option><option value="9">QR(9) 13*13 มม.</option><option value="10">QR(10) 15*15 มม.</option><option value="11">QR(11) 16*16 มม.</option><option value="12">QR(12) 18*18 มม.</option><option value="13">QR(13) 19*19 มม.</option><option value="14">QR(14) 20*20 มม.</option><option value="15">QR(15) 22*22 มม.</option><option value="16">QR(16) 24*24 มม.</option><option value="17">QR(17) 25*25 มม.</option><option value="18">QR(18) 26*26 มม.</option><option value="19">QR(19) 28*28 มม.</option><option value="20">QR(20) 30*30 มม.</option></select>')
+      $('#row_dup').append('<input type="number" name="dup[]" id="" class="form-control mt-1 add_dup" required>')
+    } else {
+      alert("Limit 5 row")
+    }
+
+  })
+  $('#del_row').click(function () {
+    $('.add_num').last().remove()
+    $('.add_size').last().remove()
+    $('.add_dup').last().remove()
+  })
+
+  jQuery(function () {
+    var table = $('#example').DataTable({
+      "columnDefs": [
+        { "width": "10%", "targets": 3 }
+      ],
+
+    });
+    var table_detail = $('#table_detail').dataTable({
+      "columnDefs": [{ "width": "5%", "targets": 0 }],
+    });
+
+
+    $('#id_date_create').datepicker({
+      dateFormat: 'dd/mm/yy',
+    }).datepicker('setDate', new Date())
+
+
+  })
+
+</script>
+
+{% endblock script%}

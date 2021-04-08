@@ -1,0 +1,39 @@
+{% extends "includes/base_user.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block document_container %}
+<meta http-equiv="refresh" content="{{ displaytime }};url={{ goto }}">
+<style>
+    .card {
+        background-color: rgba(16, 16, 22, 0.767);
+    }
+</style>
+<div class="container my-5">
+    <div class="row">
+
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+
+                <!--Card content-->
+                <div class="card-body text-canter">
+                    <div class="text-center border border-light p-5 white-text">
+                        <h1>{% trans "System message" %} </h1>
+                        <div class="ui {{ type }} message">
+                            {# <i class="close icon"></i>#}
+                            <div class="header">
+                                {{ message_header }}
+                            </div>
+                            <p>{{ message_detail }}</p>
+                        </div>
+                        <div class="load-container load6">
+                            <div class="loader">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock document_container %}

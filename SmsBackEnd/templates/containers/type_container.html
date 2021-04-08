@@ -1,0 +1,71 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+
+
+<!--  Traffic  -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="box-title">type container comming soon</h4>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card-body">
+            <table id="tb_type_container" class="table table-sm table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Name Format</th>
+                  <th>Dimension</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>-20 BOX</td>
+                  <td>%PCONT_NAME%.B%PCONT_UID%</td>
+                  <td>17 x 4</td>
+
+                </tr>
+                <tr>
+                  <td>-30 BOX</td>
+                  <td>%PCONT_NAME%.B%PCONT_UID%</td>
+                  <td>17 x 4</td>
+
+                </tr>
+                <tr>
+                  <td>-80 BOX</td>
+                  <td>%PCONT_NAME%.B%PCONT_UID%</td>
+                  <td>17 x 4</td>
+
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+      </div> <!-- /.row -->
+      <div class="card-body"></div>
+    </div>
+  </div><!-- /# column -->
+</div>
+<!--  /Traffic -->
+
+
+{% endblock content %}
+
+{% block script %}
+
+<script>
+$(document).ready(function() {
+    $('#tb_type_container').DataTable( {
+        responsive: true
+    });
+  
+} );
+</script>
+{% endblock script%}

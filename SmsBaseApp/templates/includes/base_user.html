@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+{% load static  %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>SmsBaseApp</title>
+  <!-- Font Awesome -->
+  <!-- <link rel="stylesheet" href="{% static 'user_dist/css/all.css' %}"> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'user_dist/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="{% static 'user_dist/css/mdb.min.css' %}" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="{% static 'user_dist/css/style.css' %}" rel="stylesheet">
+  <!-- font -->
+  <link href="https://fonts.googleapis.com/css?family=Kanit:100i,200&display=swap" rel="stylesheet">
+  <style type="text/css">
+    body,
+    html {
+      height: 100%;
+      font-family: 'Kanit', sans-serif;
+    }
+
+    body {
+      background-image: url("https://mdbootstrap.com/wp-content/uploads/2019/02/back.jpg");
+      background-position: center;
+      background-repeat: no-repeat;
+      -webkit-background-size: cover;
+      background-size: cover;
+    }
+
+    .mobile-box {
+      width: 360px;
+      height: 640px;
+      color: #fff;
+      text-align: center;
+      -webkit-box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.92) !important;
+      box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.92) !important;
+    }
+
+    .view .bg-image {
+      height: 100%;
+    }
+
+    .view .gradient-mask {
+      background: -webkit-linear-gradient(rgba(0, 47, 75, 0.8) 0%, rgba(220, 66, 37, 0.8) 100%);
+      background: -o-linear-gradient(rgba(0, 47, 75, 0.8) 0%, rgba(220, 66, 37, 0.8) 100%);
+      background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 47, 75, 0.8)), to(rgba(220, 66, 37, 0.8)));
+      background: linear-gradient(rgba(0, 47, 75, 0.8) 0%, rgba(220, 66, 37, 0.8) 100%);
+      /* Chrome10+,Safari5.1+ */
+      /* Opera 11.10+ */
+      /* IE10+ */
+      /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#002f4b', endColorstr='#00000000', GradientType=0);
+    }
+
+    .view a {
+      color: #fff;
+    }
+
+    .view a:hover {
+      color: #dfdfdf;
+    }
+
+    .view input[type=text],
+    .view input[type=password],
+    .view input[type=email] {
+      border-bottom: 1px solid #fff;
+    }
+
+    .view .md-form input[type=text]:focus:not([readonly]),
+    .view .md-form input[type=password]:focus:not([readonly]),
+    .view .md-form input[type=email]:focus:not([readonly]) {
+      border-bottom: 1px solid #bbdefb !important;
+      -webkit-box-shadow: 0 1px 0 0 #bbdefb !important;
+      box-shadow: 0 1px 0 0 #bbdefb !important;
+    }
+
+    .view .md-form label {
+      color: #fff;
+    }
+
+    .view .md-form label.active {
+      color: #bbdefb !important;
+    }
+
+    /* Remove chrome autofil background color */
+    @-webkit-keyframes autofill {
+      to {
+        color: #fff;
+        background: transparent;
+      }
+    }
+
+    input:-webkit-autofill {
+      -webkit-animation-name: autofill;
+      -webkit-animation-fill-mode: both;
+    }
+
+    .md-form>input[type]:-webkit-autofill:not(.browser-default):not([type="search"])+label,
+    .md-form>input[type=date]:not(.browser-default)+label,
+    .md-form>input[type=time]:not(.browser-default)+label {
+      transform: translateY(-25px);
+      transform-origin: 0 0;
+      font-size: .8rem;
+    }
+  </style>
+</head>
+
+<body class="bg">
+
+  {% block banner %}
+
+  {% endblock banner %}
+
+  <!-- Block body -->
+  {% block document_body %}
+
+  <!-- Block Container -->
+  {% block document_container %}
+
+  {% endblock document_container %}
+  <!-- End Block container -->
+
+  <!-- Footer -->
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+    <!--Call to action-->
+    <div class="pt-4">
+
+    </div>
+    <!--/.Call to action-->
+
+    <hr class="my-4">
+
+  </footer>
+  <!--/.Footer-->
+  </footer>
+  <!--/.Footer-->
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="{% static 'user_dist/js/jquery.min.js' %}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static 'user_dist/js/popper.min.js' %}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static 'user_dist/js/bootstrap.min.js' %}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static 'user_dist/js/mdb.min.js' %}"></script>
+  <!-- Fontawsome
+    <script type="text/javascript" src="{% static 'user_dist/js/all.js' %}"></script> -->
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.2.2/web-animations.min.js"></script>
+  </footer>
+  <!-- /Footer -->
+
+  <!-- Block script unique -->
+  {% block script %}
+  <script>
+  new WOW().init();
+  </script>
+
+  {% endblock script %}
+  <!-- End block unique -->
+
+  <!-- End block body -->
+  {% endblock document_body %}
+</body>
+
+</html>

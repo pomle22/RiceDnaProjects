@@ -1,0 +1,145 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+<!-- Widgets  -->
+<div class="row mt-3">
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card text-white bg-flat-color-1">
+            <div class="card-body">
+                <div class="card-left pt-1 float-left">
+                    <h3 class="mb-0 fw-r">
+                        <span>{{date_seed_lab}}</span>
+                    </h3>
+                    <p class="text-light mt-1 m-0">Seed</p>
+                </div><!-- /.card-left -->
+
+                <div class="card-right float-right text-right">
+                    <i class="icon fade-5 icon-lg fas fa-seedling "></i>
+                </div><!-- /.card-right -->
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card text-white bg-flat-color-3">
+            <div class="card-body">
+                <div class="card-left pt-1 float-left">
+                    <h3 class="mb-0 fw-r">
+                        <span>{{date_herbarium_lab}}</span>
+                    </h3>
+                    <p class="text-light mt-1 m-0">Herbarium</p>
+                </div><!-- /.card-left -->
+
+                <div class="card-right float-right text-right">
+                    <i class="icon fade-5 icon-lg fas fa-warehouse"></i>
+                </div><!-- /.card-right -->
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card text-white bg-flat-color-2">
+            <div class="card-body">
+                <div class="card-left pt-1 float-left">
+                    <h3 class="mb-0 fw-r">
+                        <span>{{date_molecular_lab}}</span>
+                    </h3>
+                    <p class="text-light mt-1 m-0">Molecular</p>
+                </div><!-- /.card-left -->
+
+                <div class="card-right float-right text-right">
+                    <i class="icon fade-5 icon-lg fas fa-microscope"></i>
+                </div><!-- /.card-right -->
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card text-white bg-flat-color-6">
+            <div class="card-body">
+                <div class="card-left pt-1 float-left">
+                    <h3 class="mb-0 fw-r">
+                        <span>{{date_tissue_lab}}</span>
+                    </h3>
+                    <p class="text-light mt-1 m-0">Tissue</p>
+                </div><!-- /.card-left -->
+
+                <div class="card-right float-right text-right">
+                    <i class="icon fade-5 icon-lg fas fa-atom"></i>
+                </div><!-- /.card-right -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /Widgets -->
+<div class="row">
+    <div class="col-12">
+        <form method="post">
+            {% csrf_token %}
+            <!-- /SmsBackEnd/transfer_order/ -->
+            <button type="submit" class="btn btn-link"><i class="fas fa-print"></i> Print current order</button>
+        </form>
+    </div>
+</div>
+
+<br>
+
+<div class="card">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-header">
+                <strong>list order</strong>
+            </div>
+            <div class="card-body" style="font-size: 14px;">
+                <br>
+                <div class="table-responsive">
+                    <table width="100%" class="table table-sm table-striped table-bordered" id="table_order">
+                        <thead>
+                            <tr>
+                                <th>Document number</th>
+                                <th>Date</th>
+                                <th>Count specimen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in data_table %}
+                            <tr>
+                                <td>
+                                    <a href="/SmsBackEnd/transfer_order?date={{i.doc_number}}" class="text-primary">
+                                        <u>
+                                            {{i.doc_number}}
+                                        </u>
+                                    </a>
+                                </td>
+                                <td>
+                                    {{i.date_print}}
+                                </td>
+                                <td>{{i.count_spid}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end table last create -->
+
+{% endblock content %}
+
+{% block script%}
+<script>
+    var table = $('#table_order').DataTable({
+        "columnDefs": [
+            // { // hide colume qr code
+            //     "visible": false,
+            //     "targets": 5
+            // }
+        ]
+    });
+</script>
+{% endblock script%}

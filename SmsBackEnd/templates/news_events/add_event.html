@@ -1,0 +1,47 @@
+{% extends "includes/base_admin.html" %}
+{% load static i18n %} {% load i18n %} {% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block extrahead %}
+{{ form.media }}
+{% endblock %}           
+
+           
+
+{% block content %}
+<main class="pt-5">
+    <div class="container ">
+        <form class="container" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card">
+              <div class="card-header" style="background-color:#91FFAD">
+                <h2>อีเวนท์</h2>
+              </div>
+              <div class="card-body">
+                {{form.title |as_crispy_field}}
+                {{form.description |as_crispy_field}}
+                {{ form.Start_event |as_crispy_field}}
+                {{ form.End_event |as_crispy_field}}
+                {{form.image |as_crispy_field}}
+                <button type="submit" class="btn btn-success">Save</button>
+                <button type="reset" class="btn btn-danger">Reset</button>
+                <a href="{% url 'SmsBackEnd:admin '}"class="btn btn-primary">Cancel</a>
+                
+              </div>
+            </div>
+        
+        </form>
+    </div>
+</main>
+
+
+
+
+
+{% endblock content %} 
+
+{% block scripts %}
+
+
+
+{% endblock scripts %}

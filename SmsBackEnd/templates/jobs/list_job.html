@@ -1,0 +1,100 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+
+
+<!--  Traffic  -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="box-title">list job comming soon</h4>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Created By</th>
+                  <th>Type</th>
+                  <th>Repeat Interval</th>
+                  <th>Last Run On</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#"> #19 Low supplies quantity alert</a></td>
+                  <td>System</td>
+                  <td>Internal</td>
+                  <td>Every day at 00:25 hours.</td>
+                  <td>Apr 03, 2019 07:25</td>
+                  <td><button type="button" class="btn btn-sm btn-primary"><i class="fas fa-microchip"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#smallmodal"><i class="fas fa-trash-alt"></i></button>
+                 </td>
+
+                </tr>
+                <tr>
+                  <td><a href="#"> #20 Low supplies quantity alert</a></td>
+                  <td>System</td>
+                  <td>Internal</td>
+                  <td>Every day at 00:25 hours.</td>
+                  <td>Apr 03, 2019 07:25</td>
+                  <td><button type="button" class="btn btn-sm btn-primary"><i class="fas fa-microchip"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+
+                </tr>
+                <tr>
+                  <td><a href="#">#23 Low supplies quantity alert</a></td>
+                  <td>System</td>
+                  <td>Internal</td>
+                  <td>Every day at 00:25 hours.</td>
+                  <td>Apr 03, 2019 07:25</td>
+                  <td><button type="button" class="btn btn-sm btn-primary"><i class="fas fa-microchip"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </td>
+
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+      </div> <!-- /.row -->
+      <div class="card-body"></div>
+    </div>
+  </div><!-- /# column -->
+</div>
+<!--  /Traffic -->
+
+
+<div class="modal fade" id="smallmodal" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="smallmodalLabel">Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Do you want delete this account ?
+                </p>
+            </div>
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Ok</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancle</button>
+   
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

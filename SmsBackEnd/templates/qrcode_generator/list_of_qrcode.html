@@ -1,0 +1,141 @@
+{% extends "includes/base_admin.html" %}
+
+{% block content %}
+    {% load qr_code %}
+    {% comment %} {{request.session.user_session}} {% endcomment %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header f-16">
+                    <i class="fas fa-list-ul"></i> <b>List of ID/QR code</b>
+                </div>
+                <div class="card-body f-14">
+                    <table id="tb_my_qrcode" class="table table-sm table-striped table-bordered ">
+                        <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>ID / QR code</th>
+                            <th>Create by</th>
+                            <th>Date create</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in list_qr_code %}
+                            <tr>
+                                <td>#{{ item.order_code }}</td>
+                                <td><h5>{{ item.qr_concat }}</h5></td>
+                                <td>{{ item.user_create }} </td>
+                                <td>{{ item.date_create|date:"d/m/Y G:i" }}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-small btn-light " value="{{ item.id }}"
+                                            onclick="btn_view(this.value)">
+                                        <i class="fas fa-eye"></i> Preview
+                                    </button>
+                                    <button class="btn btn-small btn-warning" value="{{ item.id }}">
+                                        <i class="fas fa-print"></i> Print
+                                    </button>
+                                    <button class="btn btn-small btn-primary" data-toggle="modal"
+                                            data-target="#exportModal{{ item.id }}" value="{{ item.id }}">
+                                        <i class="fas fa-file-export"></i> Export to
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for item in list_qr_code %}
+        <div class="modal fade" id="exportModal{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel"
+             aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="largeModalLabel">Export Row code : {{ item.order_code }}</h5>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <button type="button" id="btn_list{{ item.id }}" value="{{ item.id }}" onclick="changeToList(this)"
+                                class="btn btn-info float-right">List
+                        </button>
+                        <button type="button" id="btn_comma{{ item.id }}" value="{{ item.id }}" onclick="changeToComma(this)"
+                                class="btn btn-info float-right" style="margin-right: 3px;" disabled >Comma
+                        </button>
+                        <p id="qr_concat{{ item.id }}">
+                            {{ item.qr_concat }}
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+
+
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+
+{% endblock content %}
+
+{% block script %}
+    <script>
+        jQuery(function () {
+            var table = $('#tb_my_qrcode').DataTable({
+                "columnDefs": [
+                    {"width": "40%", "targets": 1}
+                ],
+                "order": [[0, "desc"]],
+                dom: 'Bfrtip',
+                buttons: ['csv', 'excel']
+
+            });
+            table.buttons().container()
+                .appendTo('#example_wrapper .col-md-6:eq(0)');
+            var table_detail = $('#table_detail').dataTable({
+                "columnDefs": [{"width": "5%", "targets": 0}],
+                "paging": false,
+                "scrollY": "300px",
+            });
+
+            $('#id_date_create').datepicker({
+                dateFormat: 'dd/mm/yy',
+            }).datepicker('setDate', new Date())
+
+        })
+
+        var tmp_text_raw_code = "";
+
+        function changeToList(order_code) {
+            var id_order_code = order_code.value;
+            var text_raw_code = document.getElementById('qr_concat' + id_order_code).textContent;
+            var text_change_to_list = text_raw_code.trim().split(',');
+            tmp_text_raw_code = text_change_to_list;
+            var text_show = "";
+            for (var i = 0; i < text_change_to_list.length; i++) {
+                text_show += text_change_to_list[i].trim() + "<br>"
+            }
+            document.getElementById('qr_concat' + id_order_code).innerHTML = text_show;
+            $("#btn_list"+id_order_code).attr("disabled", true);
+            $("#btn_comma"+id_order_code).attr("disabled", false);
+
+        }
+
+        function changeToComma(order_code) {
+            var id_order_code = order_code.value;
+
+            document.getElementById('qr_concat' + id_order_code).innerHTML = tmp_text_raw_code;
+            $("#btn_comma"+id_order_code).attr("disabled", true);
+            $("#btn_list"+id_order_code).attr("disabled", false);
+        }
+
+
+    </script>
+
+{% endblock script %}

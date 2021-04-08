@@ -1,0 +1,88 @@
+{% extends "includes/base_user.html" %} {% load i18n %} {% load static %}
+{% block document_container %}
+<!-- Grid container -->
+<div class="container my-5">
+
+  <!--Grid row-->
+  <div class="row d-flex justify-content-center">
+
+    <!-- Mobile box -->
+    <div class="mobile-box view">
+      <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/6-col/img (122).jpg" class="bg-image"
+        alt="smaple image">
+      <div class="mask gradient-mask">
+
+        <!-- Navbar -->
+        <div class="mobile-navbar d-flex justify-content-between p-2">
+
+          <div>
+            <i class="fas fa-signal"></i>
+            <i class="far fa-bell-slash"></i>
+            <i class="fas fa-wifi"></i>
+          </div>
+
+          <span>4:28 PM</span>
+
+          <div>
+            <i class="fab fa-bluetooth-b"></i>
+            <small>100%</small>
+            <i class="fas fa-battery-full"></i>
+          </div>
+
+        </div>
+        <!-- Navbar -->
+
+        <a href="#" class="float-right font-weight-bold mr-4 mt-2">Skip
+        </a>
+
+        <!-- Content -->
+        <!-- Default form login -->
+        <form method="post">
+          {% csrf_token %}
+          <div class="mt-5 p-4 text-center animated fadeIn">
+            {% if request.GET.next %}
+            <input type="hidden" name="next" class="form-control" value="{{ request.GET.next }}" />
+            {% endif %}
+            <div class="md-form form-md">
+              {{form.username}}
+              <label for="username-input">Username</label>
+            </div>
+            <div class="md-form form-md">
+              {{ form.password }}
+              <label for="password-input">Password</label>
+            </div>
+            {% if form.non_field_errors %} {% for error in form.non_field_errors %}
+            <div class="ui red message">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+
+            <a href="{% url 'Users:password_reset_request' %}">Forgot password?</a>
+
+            <!-- Sign in button -->
+            <button name="loginBtn" class="btn btn-outline-white btn-rounded btn-block my-4 waves-light z-depth-0"
+              type="submit">Sign
+              in</button>
+
+            <!-- Sign in button -->
+            <button class="btn btn-outline-white btn-rounded btn-block my-4 waves-light z-depth-0" type="submit"><i
+                class="fab fa-facebook-f mr-2"></i><a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a></button>
+
+            <!-- Register -->
+            <p>Not a member?
+              <a  href="{% url 'Users:signup' %}"
+                class="font-weight-bold">Register</a>
+            </p>
+
+        </form>
+      </div>
+      <!-- Content -->
+
+    </div>
+  </div>
+  <!-- Mobile box -->
+</div>
+<!--Grid row-->
+
+
+
+{% endblock document_container %}

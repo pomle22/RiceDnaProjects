@@ -1,0 +1,262 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+<style>
+   th {
+      text-align: center;
+      font-size: 15px;
+      white-space: nowrap;
+   }
+
+   td {
+      white-space: nowrap;
+   }
+
+   h5 {
+      font-weight: bold;
+      font-size: 18px;
+   }
+
+   label {
+      font-size: 15px;
+      font-weight: 600;
+   }
+
+   .form-control {
+      font-size: unset;
+   }
+
+   .fa-sm:hover {
+      cursor: pointer;
+   }
+</style>
+
+
+<br>
+<div class="row">
+   <div class="col-lg-12">
+      <!-- start table specimen last create -->
+      <div class="card">
+         <div class="row">
+            <div class="col-lg-12">
+               <div class="card-header">
+                  <strong>Send specimen</strong>
+               </div>
+               <div class="card-body" style="font-size: 14px;">
+
+                  <h5>Detail</h5>
+                  <br>
+
+                  <!-- from send specimen -->
+
+                  <form method="POST" id="specimen_form">
+                     {% csrf_token %}
+                     <div class="form-group">
+                        <label for="send_name">Speciemen send name</label>
+                        <input type="text" class="form-control" id="send_name" placeholder="Speciemen send name"
+                           name="send_name" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="send_detail">Speciemen send detail</label>
+                        <textarea class="form-control" id="send_detail" placeholder="Speciemen send detail"
+                           name="send_detail"></textarea>
+                     </div>
+                     <div class="form-row">
+                        <div class="form-group col-md-6">
+                           <label for="send_by">Send by</label>
+                           <select id="send_by" class="form-control" name="send_by">
+                              <option selected disabled hidden>Select Name</option>
+                              {% for i in group_collector %}
+                              <option value="{{i.id}}">{{i.first_name}} {{i.last_name}}</option>
+                              {% endfor %}
+                           </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                           <label for="send_to">Send to</label>
+                           <select id="send_to" class="form-control" name="send_to">
+                              <option selected disabled hidden>Select Name</option>
+                              {% for i in group_curator %}
+                              <option value="{{i.id}}">{{i.first_name}} {{i.last_name}}</option>
+                              {% endfor %}
+                           </select>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="date_send">Date send</label>
+                        <input type="text" class="form-control" id="date_send" name="date_send" placeholder="Date send">
+                     </div>
+
+                     <input type="hidden" id="specimen_send" name="specimen_send" required>
+                  </form>
+                  <br>
+                  <h5>Select specimen</h5>
+                  <br>
+                  <div class="form-group">
+                     <label for="qr_search">QR Code Search</label> &nbsp;&nbsp;
+                     <input type="text" class="form-control" id="qr_search" placeholder="QR Code Search">
+                     <br>
+                     <label for="qr_search">Specimen select</label>
+                     <div class="specimen_tag_select">
+                        <span class="text_specimen" style="color: #6e767f">Specimen List</span>
+                     </div>
+                     <br>
+
+                     <!-- table all spcimen -->
+                     <div class="table-responsive">
+                        <table class="table table-sm table-striped table-bordered" id="all_specimen">
+                           <thead>
+                              <tr>
+                                 <th>specimen no.</th>
+                                 <th>specimen name</th>
+                                 <th>create by</th>
+                                 <th>date create</th>
+                                 <th class="pr-0">select</th>
+                                 <th class="pr-0">QR Code</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              {% for i in specimen %}
+                              <tr>
+                                 <td class="text-center">{{ forloop.counter }}</td>
+                                 <td>
+                                    <a href="/SmsBackEnd/form_specimen_collection/{{ i.id }}?disable=true"
+                                       class="tag_a_border_bottom">
+                                       {{ i.scientific_name }}
+                                    </a>
+                                 </td>
+                                 <td>{{ i.collector }}</td>
+                                 <td>{{ i.date_create|date:'d/m/Y' }}</td>
+                                 <td class="text-center">
+                                    <div class="custom-control custom-checkbox">
+                                       <input type="checkbox" class="custom-control-input chk_specimen"
+                                          id="customCheck{{ i.id }}" id_specimen="{{ i.id }}"
+                                          name_specimen="{{ i.scientific_name }}" qr_specimen="{{ i.qr_code }}">
+                                       <label class="custom-control-label" for="customCheck{{ i.id }}"></label>
+                                    </div>
+                                 </td>
+                                 <td>{{ forloop.counter }}</td>
+                              </tr>
+                              {% endfor %}
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- table all spcimen -->
+                  </div>
+
+
+                  <!-- from send specimen -->
+                  <!-- btn submit_page -->
+                  <div class="btn_submit_page float-right"></div>
+
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end table last create -->
+   </div>
+</div>
+
+{% endblock content %}
+
+{% block script%}
+<script>
+   $(document).ready(function () {
+      var btn_submit_primary = '<button class="btn btn-outline-primary btn-sm float-right" form="specimen_form">Send Specimen</button>'
+      var btn_submit_secondary = '<button class="btn btn-outline-secondary btn-sm float-right" style="cursor: not-allowed;"type="button">Send Specimen</button>'
+      $('.btn_submit_page').html(btn_submit_secondary)
+
+
+      $('.btn-outline-primary').hide()
+      console.clear()
+      var table = $('#all_specimen').DataTable({
+         "columnDefs": [
+            {
+               "targets": 4,
+               "orderable": false
+            },
+            { // hide colume qr code
+               "visible": false,
+               "targets": 5
+            }
+         ]
+      });
+
+      $('#all_specimen_wrapper > .row').css('padding-top','3px')
+
+      // date now
+      $(function () {
+         var date = $('#date_send').datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", new Date());
+      });
+
+      var specimen_select = []
+
+      // click in table
+      table.$('.chk_specimen').click(function () {
+         var id_specimen = $(this).attr('id_specimen')
+         var name_specimen = $(this).attr('name_specimen')
+         if ($(this).is(':checked')) {
+            specimen_select.push(id_specimen)
+            $('.specimen_tag_select').append('<span class="specimen_tag" id="' + id_specimen + '">' + name_specimen + ' <i class="fas fa-times fa-sm close_tag"></i></span>')
+         } else {
+            $('#' + id_specimen).remove()
+            specimen_select = jQuery.grep(specimen_select, function (value) {
+               return value != id_specimen;
+            });
+         }
+
+         // click remove tag
+         $('.close_tag').click(function () {
+            var id = $(this).parents().eq(0)['prevObject'].attr('id')
+            $(this).parents().eq(0).remove() // remove this tag
+            console.log(id)
+            table.$('#customCheck' + id).prop('checked', false) // un check this id
+            specimen_select = jQuery.grep(specimen_select, function (value) { // remove value in array
+               return value != id;
+            });
+
+            if (specimen_select.length != 0) {
+               $('.text_specimen').hide()
+               $('.btn_submit_page').html(btn_submit_primary)
+            } else {
+               $('.text_specimen').show()
+               $('.btn_submit_page').html(btn_submit_secondary)
+            }
+
+            $('#specimen_send').val(specimen_select)
+         })
+
+         if (specimen_select.length != 0) {
+            console.log('1')
+            $('.text_specimen').hide()
+            $('.btn_submit_page').html(btn_submit_primary)
+         } else {
+            console.log('2')
+            $('.text_specimen').show()
+            $('.btn_submit_page').html(btn_submit_secondary)
+         }
+         $('#specimen_send').val(specimen_select)
+      })
+
+      //QR Code
+      $('#qr_search').on('keypress', function (e) {
+         var all_checkbox_in_table = table.$('.chk_specimen')
+         if (e.which == 13) {
+            var qr_code = $(this).val()
+
+            $.each(all_checkbox_in_table, function (key, value) { // loop for get qr_specimen and id in checkbox 
+               if (qr_code == $(value).attr('qr_specimen')) {
+                  var qr_id = $(value).attr('id')
+                  table.$('#' + qr_id).trigger('click')
+               }
+            });
+
+            $(this).val('')
+         }
+      })
+
+
+   });
+
+</script>
+{% endblock script%}

@@ -1,0 +1,587 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+<style>
+    .text_type,
+    .herder_text {
+        font-weight: 650;
+        color: #545454;
+        display: inline;
+    }
+
+    .icon_download_canvas {
+        cursor: pointer;
+        color: #545454;
+        /* float: right!important; */
+    }
+
+    .btn-danger {
+        display: inline-block;
+        padding: .25em .4em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25rem;
+    }
+
+    .stat-widget-five .stat-heading {
+        font-size: 13px;
+    }
+</style>
+<!-- {{request.session.user_session}} -->
+<!-- <h3>Admin</h3> -->
+<!-- Widgets  -->
+<br>
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="stat-widget-five">
+                    <div class="stat-icon dib flat-color-3">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="text-left dib">
+                            <div class="stat-text"><span class="count ">{{ user_count }}</span></div>
+                            <div class="stat-heading">User</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="stat-widget-five">
+                    <div class="stat-icon dib flat-color-2">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="text-left dib">
+                            <div class="stat-text"><span class="count">{{ user_request }}</span></div>
+                            <div class="stat-heading">Users request</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="stat-widget-five">
+                    <div class="stat-icon dib flat-color-5">
+                        <i class="fas fa-vial"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="text-left dib">
+                            <div class="stat-text"><span class="count">{{ specimen_count }}</span></div>
+                            <div class="stat-heading">Specimens</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="stat-widget-five">
+                    <div class="stat-icon dib flat-color-6">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="text-left dib">
+                            <div class="stat-text"><span class="count">{{ even_count }}</span></div>
+                            <div class="stat-heading">Even</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Widgets -->
+
+<!--  First Card  -->
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-11">
+                                <h4 class="herder_text">Group user</h4>
+                            </div>
+                            <div class="col-1">
+                                <i class="fas fa-download icon_download_canvas" id_for_download="donut_chart"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="height: 450px;">
+                        <div id="donut_chart" style="height: 90%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-10">
+                                <h4 class="herder_text">user online</h4>
+                            </div>
+                            <div class="col-1">
+                                <i class="fas fa-history icon_download_canvas" style="color:#545454;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body user_online_height1" style="height: 450px;">
+                        <div>
+                            <div class="user_online user_online_height2"
+                                style="padding: 10px; height: 405px; overflow: auto"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-11">
+                                <h4 class="herder_text">Backup data (database, web)</h4>
+                            </div>
+                            <div class="col-1">
+                                <i class="fas fa-download icon_download_canvas" id_for_download="line_chart"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="height: 450px;">
+                        <!-- <i class="fas fa-download icon_download_canvas" id_for_download="line_chart"></i> -->
+                        <div id="line_chart" style="height: 95%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-11">
+                                <h4 class="herder_text">Specimen</h4>
+                            </div>
+                            <div class="col-1">
+                                <i class="fas fa-download icon_download_canvas" id_for_download="pie_chart"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="height: 450px;">
+                        <!-- <i class="fas fa-download icon_download_canvas" id_for_download="pie_chart"></i> -->
+                        <div id="pie_chart" style="height: 95%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--  /First Card -->
+
+{% endblock content %}
+
+
+
+{% block script%}
+<script src="https://echarts.baidu.com/dist/echarts.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.clear()
+        // get data ////////////////////////////////////////////////////////////////////////
+        var user_count = '{{ user_count }}'
+        var users_online = eval('{{ users_online }}'.replace(/&#39;/g, '"'))
+        var users_group = eval('{{ users_group }}'.replace(/&#39;/g, '"'))
+        var specimen = eval('{{ specimen }}'.replace(/&#39;/g, '"'))
+        // get data ////////////////////////////////////////////////////////////////////////
+
+        // create chart ////////////////////////////////////////////////////////////////////
+
+        function donut_chart(user_count, users_group) {
+            option = {
+                title: {
+                    text: user_count,
+                    subtext: 'User',
+                    x: 'center',
+                    y: '140',
+                    textStyle: {
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        color: ['#333']
+                    },
+                    subtextStyle: {
+                        color: '#666',
+                        fontSize: 13,
+                        fontWeight: 500
+                    }
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    type: 'scroll',
+                    x: 'center',
+                    y: 'bottom',
+                },
+                series: [
+                    {
+                        name: 'Specimen',
+                        radius: ['35%', '65%'],
+                        center: ['50%', '45%'],
+                        type: 'pie',
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        },
+                        data: users_group
+                    }
+                ]
+                , label: {
+                    formatter: '{b} : {@2012}'
+                }
+            }
+            return option
+        }
+
+        function line_chart() {
+            option = {
+                title: {
+                    // text: 'backup data (database,web)',
+                    // x: 'center'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    x: 'center',
+                    y: 'bottom',
+                    data: ['Database', 'Website']
+                },
+                grid: {
+                    right: '3%',
+                    left: '5%',
+                    top: '5%'
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name: 'Database',
+                        type: 'line',
+                        data: [5, 4, 2, 7, 8, 5, 7, 5, 4, 2, 2, 5, 8, 10]
+                    },
+                    {
+                        name: 'Website',
+                        type: 'line',
+                        data: [1, 2, 4, 2, 5, 5, 1, 2, 3, 7, 8, 7, 9, 10]
+                    }
+                ]
+            };
+
+            return option;
+        }
+
+        function pie_chart(specimen) {
+            specimen =
+                [{
+                    label: { color: "#464646" },
+                    name: "Specimen",
+                    value: 7
+                }, {
+                    label: { color: "#464646" },
+                    name: "Animal",
+                    value: 4
+                }, {
+                    label: { color: "#464646" },
+                    name: "Microbe",
+                    value: 9
+                }, {
+                    label: { color: "#464646" },
+                    name: "Human",
+                    value: 10
+                }]
+            option = {
+                title: {
+                    // text: 'Specimen',
+                    // subtext: '纯属虚构',
+                    // x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    type: 'scroll',
+                    x: 'center',
+                    y: 'bottom',
+                    data: ['Specimen', 'Microbe', 'Human', 'Animal']
+                },
+                series: [
+                    {
+                        name: 'Specimen',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '45%'],
+                        data: specimen,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+
+            return option
+        }
+
+        setTimeout(function () {
+            var var_donut_chart = echarts.init(document.getElementById('donut_chart'), 'light');
+            var var_line_chart = echarts.init(document.getElementById('line_chart'), 'light');
+            var var_pie_chart = echarts.init(document.getElementById('pie_chart'), 'light');
+
+            var option = donut_chart(user_count, users_group);
+            var_donut_chart.setOption(option);
+
+            var option = line_chart();
+            var_line_chart.setOption(option);
+
+            var option = pie_chart(specimen);
+            var_pie_chart.setOption(option);
+
+        }, 100)
+
+        // create chart ////////////////////////////////////////////////////////////////////
+
+        // create user online //////////////////////////////////////////////////////////////
+        user_online(users_online)
+        click_btn_logOut()
+        click_btn_refresh()
+
+        setInterval(function () {
+            $.ajax({
+                type: "POST",
+                data: {
+                    'session': $(this).next().val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                url: "/SmsBackEnd/smsbackend_admin/",
+                success: function (data) {
+                    var users_online = eval(data.replace(/&#39;/g, '"'))
+                    user_online(users_online)
+                    click_btn_logOut()
+                },
+                error: function (data) {
+                    // alert('An error occurred.');
+                },
+            })
+        }, 60000)
+
+        function user_online(data_user) {
+            $('.user_online').html('')
+            function CheckTime(date_start, date_end) {
+                //Get datetime from input 
+                datetime1 = date_start;
+                datetime2 = date_end;
+
+                //Set date time format
+                var startDate = new Date(datetime1);
+                var endDate = new Date(datetime2);
+                var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
+
+                //Calculate time
+                var days = Math.floor(seconds / (3600 * 24));
+                var hrs_d = Math.floor((seconds - (days * (3600 * 24))) / 3600);
+                var hrs = Math.floor(seconds / 3600);
+                var mnts = Math.floor((seconds - (hrs * 3600)) / 60);
+                var secs = seconds - (hrs * 3600) - (mnts * 60);
+
+                //Add 0 if one digit
+                if (hrs_d < 10) hrs_d = "0" + hrs_d;
+                if (mnts < 10) mnts = "0" + mnts;
+                if (secs < 10) secs = "0" + secs;
+                time = [days, hrs_d, mnts, secs]
+                return (time)
+            }
+            var today = new Date();
+            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var dateTime = date + ' ' + time;
+            for (var i = 0; i < data_user.length; i++) {
+                var time = CheckTime(data_user[i][2], dateTime)
+                var time_online = time[0] + 'd, ' + time[1] + 'h :' + time[2] + 'min :' + time[3] + 's'
+                var time = CheckTime(data_user[i][4], dateTime)
+                var time_active = time[1] + 'h :' + time[2] + 'min :' + time[3] + 's'
+
+                var user_online_html = '<table border="0" style="width:100%; margin-bottom: 15px;">'
+                user_online_html += '<tbody>'
+                user_online_html += '<tr>'
+                user_online_html += '<td style="width:20px;" colspan="2">'
+                user_online_html += '<i class="fas fa-circle fa-xs" style="color: green; font-size: 8px; height: 15px;"></i>'
+                user_online_html += '</td>'
+                user_online_html += '<td style="width:40%;"> ' + data_user[i][1] + ' </td>'
+                user_online_html += '<td style="text-align: right;">'
+                user_online_html += '<button class="btn btn-sm btn-danger btn_logout">log out</button>'
+                user_online_html += '<input type="hidden" value="' + data_user[i][3] + '">'
+                user_online_html += '</td>'
+                user_online_html += '</tr>'
+                user_online_html += '<tr style="line-height: 20px;">'
+                user_online_html += '<td style="width:20px;" colspan="2"></td>'
+                user_online_html += '<td>'
+                user_online_html += '<sub style="color:#888888;bottom: 0;">online time</sub>'
+                user_online_html += '</td>'
+                user_online_html += '<td style="text-align: right; vertical-align: middle">'
+                user_online_html += '<sub style="color:#888888;bottom: 0;">' + time_online + '</sub>'
+                user_online_html += '</td>'
+                user_online_html += '</tr>'
+                // user_online_html += '<tr style="line-height: 15px;">'
+                // user_online_html += '<td style="width:20px;" colspan="2"></td>'
+                // user_online_html += '<td>'
+                // user_online_html += '<sub style="color:#888888;bottom: 0;">last active</sub>'
+                // user_online_html += '</td>'
+                // user_online_html += '<td style="text-align: right; vertical-align: middle">'
+                // user_online_html += '<sub style="color:#888888;bottom: 0;">' + time_active + '</sub>'
+                // user_online_html += '</td>'
+                // user_online_html += '</tr>'
+                user_online_html += '</tbody>'
+                user_online_html += '</table>'
+
+                $('.user_online').append(user_online_html)
+            }
+        }
+
+        function click_btn_logOut() {
+            $('.btn_logout').click(function () {
+                var sesseion = $(this).next().val()
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        'session': $(this).next().val(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    url: "/SmsBackEnd/smsbackend_admin/",
+                    success: function (data) {
+                        var users_online = eval(data.replace(/&#39;/g, '"'))
+                        user_online(users_online)
+                        click_btn_logOut()
+                    },
+                    error: function (data) {
+                        // alert('An error occurred.');
+
+                    },
+                })
+            })
+        }
+
+        function click_btn_refresh() {
+            $('.fa-history').click(function () {
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        'session': '',
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    url: "/SmsBackEnd/smsbackend_admin/",
+                    success: function (data) {
+                        var users_online = eval(data.replace(/&#39;/g, '"'))
+                        user_online(users_online)
+                        click_btn_logOut()
+                    },
+                    error: function (data) {
+                        // alert('An error occurred.');
+
+                    },
+                })
+            })
+        }
+
+        // create user online //////////////////////////////////////////////////////////////
+
+        // html2canvas (download image) ////////////////////////////////////////////////////
+        $('.icon_download_canvas').click(function () {
+
+            var id = $(this).attr('id_for_download')
+            var scroll_location = document.documentElement.scrollTop;
+            html2canvas($("#" + id), {
+                onrendered: function (canvas) {
+                    saveAs(canvas.toDataURL(), 'dashboard.png');
+                    window.scrollTo(0, scroll_location);
+                }
+            });
+
+            function saveAs(uri, filename) {
+                var link = document.createElement('a');
+                if (typeof link.download === 'string') {
+                    link.href = uri;
+                    link.download = filename;
+                    //Firefox requires the link to be in the body
+                    document.body.appendChild(link);
+                    //simulate click
+                    link.click();
+                    //remove the link when done
+                    document.body.removeChild(link);
+                } else {
+                    window.open(uri);
+                }
+            }
+
+
+        })
+
+
+        // screen mobile ///////////////////////////////////////////////////////////////////
+        if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $('.user_online_height1').css('height', '350px')
+            $('.user_online_height2').css('height', '300px')
+        }
+        // screen mobile ///////////////////////////////////////////////////////////////////
+
+    })
+</script>
+
+
+
+
+{% endblock script%}

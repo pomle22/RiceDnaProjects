@@ -1,0 +1,284 @@
+{% extends "includes/base_admin.html" %}
+{% load static i18n %} {% load i18n %} {% load staticfiles %}
+
+{% block content %}
+<main class="mx-5 py-3">
+    <div class="container-fluid mt-3">
+      <ul class="nav md-pills nav-justified pills-pink ">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#panel1"id="panel-1" role="tab">ข่าวสาร</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#panel2" role="tab">อีเวนท์</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#panel3" role="tab" id="panel-3">ข้อมูลผู้ติดต่อ</a>
+        </li>
+      </ul>
+
+      <!-- Tab panels -->
+<div class="tab-content pt-0">
+
+  <!--Panel 1-->
+  <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card my-3">
+          <div class="card-header" style="background-color:#91FFAD">
+            <h2>ข่าวสาร</h2>
+          </div>
+          <div class="card-body">
+            
+            <div class="container" style="overflow:auto;">
+              <input class="form-control mb-3" id="myInput" type="text" placeholder="Search ...">
+            <table class="table table-bordered " id="table_id">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">content</th>
+                  <th scope="col">image</th>
+                  <th scope="col">status</th>
+                  <th scope="col">edit</th>
+                  <th scope="col">delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for post in posts %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ post.title }}</td>
+                  <td>{{ post.content|slice:":200" }}</td>
+                  <td><img src="{{ post.image.url }}" width="100" height="100"></td>
+                  {% if post.status == 1 %}
+                  <td>Publish</td>
+                  {% else %}
+                  <td>Draft</td>
+                  {% endif %}
+                  <td><a href="{% url 'SmsBackEnd:edit_post' post.slug %}"><i class="fas fa-edit "></i></a></td>
+                  <td><button onclick="delete_data({{post.id}})" class="btn" style="padding-top: 0;"><i class="fas fa-trash" style="color:red"></i></button></td>
+
+                </tr>
+                
+                {% endfor %}
+              </tbody>
+            </table>  
+            </div>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-end mt-2">
+                {% if posts.has_previous %}
+                <li class="page-item">
+                  <a onclick='test({{ posts.previous_page_number }})' class= "page-link">
+                    Previous
+                  </a>
+                </li>
+                {% endif %}
+        
+                {% for p in posts.paginator.page_range %}
+                  {% if posts.number == p %}
+                    <li class="page-item active">
+                      <a  onclick='test({{p}})' class="page-link">{{ p }}</a>
+        
+                    </li>
+                  {% else %}
+                  <li class="page-item">
+                    <a  onclick='test({{p}})' class = "page-link">{{ p }}</a>
+                  </li>
+                  {% endif %}
+                {% endfor %}
+        
+                {% if posts.has_next %}
+                <li class="page-item">
+                  <a onclick='test({{posts.next_page_number }})'  class = "page-link">
+                    Next
+                  </a>
+                </li>
+                {% endif %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <!--/.Panel 1-->
+
+  <!--Panel 2-->
+  <div class="tab-pane fade" id="panel2" role="tabpanel">
+    
+      <!-- Event -->
+      <div class="card my-3">
+        <div class="card-header" style="background-color:#91FFAD">
+          <h2>อีเวนท์</h2>
+        </div>
+
+        <div class="card-body">
+          
+          <div class="container" style="overflow:auto;"> 
+            <input class="form-control mb-3" id="myInput1" type="text" placeholder="Search ...">
+          <table class="table table-bordered "id = "event_table">
+            <thead>
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Start_Event</th>
+                <th scope="col">End_Event</th>
+                <th scope="col">Image</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in event %}
+              <tr>
+                <th scope="row">{{ forloop.counter}}</th>
+                <td>{{ item.title }}</td>
+                <td>{{ item.description|slice:":200" }}</td>
+                <td>{{ item.Start_event }}</td>
+                <td>{{ item.End_event }}</td>
+                <td><img src="{{ item.image.url }}" width="100" height="100"></td>
+              
+                <td><a href="{% url 'SmsBackEnd:edit_event' pk=item.pk %}"><i class="fas fa-edit "></i></a></td>
+                <td><button onclick="delete_event({{item.id}})" class="btn" style="padding-top: 0px"><i class="fas fa-trash" style="color: red;"></i></button></td>
+                
+              </tr>
+              
+              {% endfor %}
+              
+            </tbody>
+          </table> 
+          </div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end mt-2">
+              {% if event.has_previous %}
+              <li class="page-item">
+                <a href="?page1={{ event.previous_page_number }}" class= "page-link">
+                  Previous
+                </a>
+              </li>
+              {% endif %}
+      
+              {% for pg in event.paginator.page_range %}
+                {% if event.number == pg %}
+                  <li class="page-item active">
+                    <a href = "?page1={{ pg }}" class="page-link">{{ pg }}</a>
+                      
+                  </li>
+                {% else %}
+                <li class="page-item">
+                  <a href = "?page1={{ pg }}" class = "page-link">{{ pg }}</a>
+                </li>
+                {% endif %}
+              {% endfor %}
+      
+              {% if event.has_next %}
+              <li class="page-item">
+                <a href="?page1={{ event.next_page_number }}" class = "page-link">
+                  Next
+                </a>
+              </li>
+              {% endif %}
+              </ul>
+            </nav>
+        </div>
+    </div>
+  </div>
+  <!--/.Panel 2-->
+
+  <!--Panel 3-->
+  <div class="tab-pane fade" id="panel3" role="tabpanel">      
+            <!-- contact -->
+    <div class="card my-3">
+      <div class="card-header" style="background-color:#91FFAD">
+        <h2>ข้อมูลผู้ติดต่อ</h2>
+      </div>
+        <div class="card-body">
+          <div class="container" style="overflow:auto;">
+            <input class="form-control mb-3" id="myInput2" type="text" placeholder="Search ...">
+            <table class="table table-bordered" id="contact_table">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Subject</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">From_Email</th>
+                  <th scope="col">PhoneNumber</th>
+                  <th scope="col">Message</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for items in contact %}
+                  <tr>
+                    <th scope="row">{{ forloop.counter}}</th>
+                      <td>{{ items.subject }}</td>
+                      <td>{{ items.name }}</td>
+                      <td>{{ items.from_email }}</td>
+                      <td>{{ items.phone }}</td>
+                      <td>{{ items.message }}</td> 
+                  </tr>
+                {% endfor %}    
+              </tbody>
+            </table> 
+          </div>
+
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-end mt-2">
+                {% if contact.has_previous %}
+                  <li class="page-item">
+                    <a onclick='test1({{ contact.previous_page_number }})' class= "page-link">
+                      Previous
+                    </a>
+                  </li>
+                {% endif %}
+                {% for pg2 in contact.paginator.page_range %}
+                  {% if contact.number == pg2 %}
+                    <li class="page-item active">
+                      <a  class="page-link" id="clk2" onclick='test1({{pg2}})'>{{ pg2 }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                      <a class = "page-link" id="clk" onclick='test1({{pg2}})'>{{ pg2 }}</a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+            
+                  {% if contact.has_next %}
+                    <li class="page-item">
+                      <a  onclick='test1({{ contact.next_page_number }})' class = "page-link">
+                        Next
+                      </a>
+                    </li>
+                  {% endif %}
+              </ul>
+            </nav>
+        </div>
+    </div>
+  </div>
+  <!--/.Panel 3-->
+</div>
+    </div>    
+  </main>
+  <!--Main layout-->
+
+
+  <script>
+function delete_data(x) {
+  if(confirm("คุณต้องการลบข้อมูล ?")){
+    window.location.assign("delete_new/?id="+x)
+  }
+}
+function delete_event(x) {
+  if (confirm("คุณต้องการลบข้อมูล ?")){
+    window.location.assign("delete_event/?id="+x)
+  }
+}
+
+</script>
+
+  
+{% endblock content %}
+
+
+
+

@@ -1,0 +1,149 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+<style>
+    th {
+        text-align: center;
+        font-size: 15px;
+        white-space: nowrap;
+    }
+
+    td {
+        white-space: nowrap;
+    }
+</style>
+
+
+<br>
+<div class="row">
+    <div class="col-lg-12">
+        <!-- start table specimen last create -->
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <strong>List send specimen</strong>
+                    </div>
+                    <div class="card-body" style="font-size: 14px;">
+
+                        <div class="table-responsive">
+
+                            <div class="table-responsive">
+                                <table width="100%" class="table table-sm table-striped table-bordered"
+                                    id="table_list_send_specimen">
+                                    <thead>
+                                        <tr>
+                                            <th>specimen no.</th>
+                                            <th>send name</th>
+                                            <th>send by</th>
+                                            <th>date send</th>
+                                            <th class="pr-0">detail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in list_send %}
+                                        <tr>
+                                            <td class="text-center">{{ forloop.counter }}</td>
+                                            <td class="text-center">{{ i.send_name }}</td>
+                                            <td class="text-center">{{ i.send_by }}</td>
+                                            <td class="text-center">{{ i.date_send|date:'d/m/Y' }}</td>
+                                            <td class="text-center">
+                                                <a href="/SmsBackEnd/detail_approve_specimen/{{i.id}}" class="tag_a_btn">
+                                                    <span>detail</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ------------------------ -->
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <strong>Approve send specimen</strong>
+                    </div>
+                    <div class="card-body" style="font-size: 14px;">
+
+                        <div class="table-responsive">
+
+                            <div class="table-responsive">
+                                <table width="100%" class="table table-sm table-striped table-bordered"
+                                    id="table_approve_send_specimen">
+                                    <thead>
+                                        <tr>
+                                            <th>specimen no.</th>
+                                            <th>send name</th>
+                                            <th>send by</th>
+                                            <th>date send</th>
+                                            <th>approve by</th>
+                                            <th>date approve</th>
+                                            <th class="pr-0">detail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in list_send_approve %}
+                                        <tr>
+                                            <td class="text-center">{{ forloop.counter }}</td>
+                                            <td class="text-center">{{ i.send_name }}</td>
+                                            <td class="text-center">{{ i.send_by }}</td>
+                                            <td class="text-center">{{ i.date_send|date:'d/m/Y' }}</td>
+                                            <td class="text-center">{{ i.send_to }}</td>
+                                            <td class="text-center">{{ i.date_action|date:'d/m/Y' }}</td>
+                                            <td class="text-center">
+                                                <a href="/SmsBackEnd/detail_approve_specimen/{{i.id}}" class="tag_a_btn">
+                                                    <span>detail</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- end table last create -->
+</div>
+
+
+{% endblock content %}
+
+{% block script%}
+<script>
+    $(document).ready(function () {
+
+        table = $('#table_list_send_specimen').DataTable({
+            "columnDefs": [
+                { "targets": 4, "orderable": false }
+            ]
+        });
+        $('#table_list_send_specimen_wrapper > .row').css('padding-top', '3px')
+
+        table_approve = $('#table_approve_send_specimen').DataTable({
+            "columnDefs": [
+                { "targets": 6, "orderable": false }
+            ]
+        });
+        $('#table_approve_send_specimen_wrapper > .row').css('padding-top', '3px')
+
+
+    });
+
+</script>
+{% endblock script%}

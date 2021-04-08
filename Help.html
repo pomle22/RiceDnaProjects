@@ -1,0 +1,90 @@
+// Url
+path('get_specimen/',views_brooks.get_specimen,name="get_specimen"),
+
+// Funtion return json
+@csrf_exempt
+def get_specimen(request):
+if request.method == 'POST':
+sm_qrcode = request.POST.get('qr_code')
+response_data = {}
+response_data['result'] = 'Create post successful!'
+#specimen_list = specimen.objects.filter(qr_code=sm_qrcode).select_related().get(user_id=10)
+cursor = connection.cursor()
+cursor.execute('SELECT sm.id , sm.original_code , sm.qr_code , sm.date_create , au.first_name , sm.brooks_status \
+FROM SmsBackEnd_specimen sm INNER JOIN auth_user au ON sm.user_id = au.id WHERE sm.qr_code = %s',
+[sm_qrcode])
+objs = cursor.fetchall()
+json_data = []
+for obj in objs:
+json_data.append({"id" : obj[0], "original_code" : obj[1]})
+return HttpResponse(JsonResponse({'results': json_data }),
+content_type='application/json')
+else:
+return HttpResponse(
+json.dumps({"nothing to see": "this isn't happening"}),
+content_type="application/json"
+)
+
+// Select
+<div class="row form-group">
+    <div class="col col-md-2"><label for="email-input" class=" form-control-label">Tube type</label></div>
+    <div class="col-12 col-md-9">
+        <select name="name_specimen_type" id="id_specimen_type" class="form-control-sm form-control" required>
+            <option value="" hidden selected>Please select</option>
+            <option value="Wild_plant">25 ml.</option>
+            <option value="Crop_plant">50 ml.</option>
+        </select>
+    </div>
+</div>
+
+
+// Jquery validate
+<script>
+    $("#form_create_specimen").validate({
+        rules: {
+            "name_qrcode": {
+                required: true,
+                minlength: 5,
+                remote: { url: '/SmsBackEnd/check_qrcode/' }
+            }
+        },
+        messages: {
+            "name_qrcode": {
+                required: "this field is required",
+                minlength: "this field must contain at least {0} characters",
+                remote: "Duplicate"
+            }
+        }
+
+
+    });
+
+    // Ajax form
+    function get_specimen(item) {
+        $.ajax({
+            url: "/SmsBackEnd/get_specimen/", // the endpoint
+            type: "POST",
+            data: { qr_code: item },
+            success: function (data) {
+                console.log(data)
+                for (i in data.results) {
+                    console.log(data.results[0])
+                }
+            }
+        });
+    }
+</script>
+
+
+//Query cursor
+
+            cursor = connection.cursor()
+            cursor.execute('SELECT * FROM SmsBackEnd_specimen sm RIGHT JOIN SmsBackEnd_raw_code rc ON sm.raw_code_id = rc.id')
+            specimen_list = dictfetchall(cursor)
+            for i in specimen_list:
+                encode_id = encode(i['id'])
+                i['id'] = encode_id
+                print(i)
+
+
+

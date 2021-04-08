@@ -1,0 +1,6 @@
+{% autoescape off %}
+{% load i18n %}
+{% trans "Hello" %} {{ user.get_full_name }},
+{% trans "Click link to comfirm" %} ,
+http://{{ domain }}{% url 'Users:activate_account' uidb64=uid token=token %}
+{% endautoescape %}

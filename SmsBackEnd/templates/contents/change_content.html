@@ -1,0 +1,1061 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+
+<!--  Traffic  -->
+<div class="row">
+   <div class="col-lg-12">
+      <div class="card">
+         <div class="card-body">
+            <h4 class="box-title">Content chang</h4>
+         </div>
+         <div class="row">
+            <div class="col-lg-12">
+               <div class="card-body">
+                  {% if change_value == 0 %}
+                  <form method="post" enctype="multipart/form-data" class="form-horizontal">
+                     <!-- HTTP แบบ Post-->
+                     {% csrf_token %}
+                     <div class="accordion" id="accordionExample">
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingOne">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Home page #1
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 <img src="https://via.placeholder.com/1500x500/" class="img-fluid"
+                                    alt="Responsive image">
+                                 <br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload1" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload1" name="image_HomePage" type="file" style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title_HomePage" placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_HomePage" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="contents">
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="HomePage">Create</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingTwo">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    About page #2
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload2" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload2" name="image_AboutPage" type="file"
+                                          style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title_AboutPage" placeholder="Title">
+                                 <br>
+                                 <textarea type="contents" name="contents_AboutPage" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                    placeholder="contents"></textarea>
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="AboutPage">Create</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingThree">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    News and Events page #3
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload3" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload3" name="image_NewsEvents" type="file"
+                                          style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title_NewsEvents" placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_NewsEvents" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="contents">
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="NewsEvents">Create</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingFour">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Contact page #4
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload4" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload4" name="image_Contact" type="file" style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title_Contact" placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_Contact" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="contents">
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="Contact">Create</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingFive">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    Other page #5
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseFive" class="collapse" aria-labelledby="headingFive  "
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <center>
+                                    <h2 for="">Coming Soon</h2>
+                                 </center>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <br>
+                  </form>
+                  {% elif change_value == 1  %}
+                  <!-- 
+
+                     ข้อมูลชุด ที่ 1
+
+                   -->
+
+                  {% if change_valuein == 1 %}
+                  <form method="post" enctype="multipart/form-data" class="form-horizontal">
+                     <!-- HTTP แบบ Post-->
+                     {% csrf_token %}
+                     <div class="accordion" id="accordionExample">
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingOne">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Home page #1
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 <p class="text-danger">#จำกัด 5 ภาพ</p>
+                                 {% for im in change_homepage %}
+                                 {% for it in im.image_contents  %}
+                                 <br>
+                                 <br>
+                                 <p>ภาพที่ {{forloop.counter}}</p>
+                                 <img src="/media/image_contents/{{it}}" class="img-fluid" alt="Responsive image">
+                                 {% endfor %}
+                                 {% endfor %}
+                                 <br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload1" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload1" name="image_HomePage" type="file" style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 {% for im in change_homepage %}
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" value="{{im.title}}" name="title_HomePage"
+                                    placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_HomePage" class="form-control"
+                                    id="exampleInputEmail1" value="{{im.contents}}" aria-describedby="emailHelp"
+                                    placeholder="contents">
+                                 {% endfor %}
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="up_HomePage">Update</button>
+                                 <button type="submit" class="btn btn-warning" name="type_submit"
+                                    value="clear_HomePage">Clear</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingTwo">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    About page #2
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image">
+                                 <br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload2" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload2" name="image_AboutPage" type="file"
+                                          style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title_AboutPage" placeholder="Title">
+                                 <br>
+                                 {% comment %} <textarea class="form-control" name="detail" rows="5" id="send_detail"
+                                    placeholder="Write about Detail" name="contents_AboutPage"></textarea>
+                                 {% endcomment %}
+
+                                 <textarea type="contents" name="contents_AboutPage" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                    placeholder="contents"></textarea>
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="AboutPage">Create</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingThree">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    News and Events page #3
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload3" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload3" name="image_NewsEvents" type="file"
+                                          style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title_NewsEvents" placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_NewsEvents" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="contents">
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="NewsEvents">Create</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingFour">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Contact page #4
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload4" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload4" name="image_Contact" type="file" style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title_Contact" placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_Contact" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="contents">
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="Contact">Create</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingFive">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    Other page #5
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseFive" class="collapse" aria-labelledby="headingFive  "
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <center>
+                                    <h2 for="">Coming Soon</h2>
+                                 </center>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <br>
+                  </form>
+                  {% elif change_valuein == 2 %}
+                  <!-- 
+
+                     ข้อมูลชุด ที่ 2
+
+                   -->
+                  <form method="post" enctype="multipart/form-data" class="form-horizontal">
+                     <!-- HTTP แบบ Post-->
+                     {% csrf_token %}
+                     <div class="accordion" id="accordionExample">
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingOne">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Home page #1
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 {% for im in change_homepage %}
+                                 {% for it in im.image_contents  %}
+                                 <p>ภาพที่ {{forloop.counter}}</p>
+                                 <img src="/media/image_contents/{{it}}" class="img-fluid" alt="Responsive image">
+                                 {% endfor %}
+                                 {% endfor %}
+                                 <br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload1" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload1" name="image_HomePage" type="file" style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 {% for im in change_homepage %}
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" value="{{im.title}}" name="title_HomePage"
+                                    placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_HomePage" class="form-control"
+                                    id="exampleInputEmail1" value="{{im.contents}}" aria-describedby="emailHelp"
+                                    placeholder="contents">
+                                 {% endfor %}
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="up_HomePage">Update</button>
+                                 <button type="submit" class="btn btn-warning" name="type_submit"
+                                    value="clear_HomePage">Clear</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingTwo">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    About page #2
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 {% for im in change_aboutpage %}
+                                 {% for it in im.image_contents  %}
+                                 <img src="/media/image_contents/{{it}}" class="img-fluid" alt="Responsive image">
+                                 {% endfor %}
+                                 {% endfor %}
+                                 <br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload2" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload2" name="image_AboutPage" type="file"
+                                          style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 {% for im in change_aboutpage %}
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" value="{{im.title}}" name="title_AboutPage"
+                                    placeholder="Title">
+                                 <br>
+
+                                 <textarea type="contents" name="contents_AboutPage" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                    placeholder="contents">{{im.contents}}</textarea>
+                                 {% comment %} <input type="contents" name="contents_AboutPage" class="form-control"
+                                    id="exampleInputEmail1" value="{{im.contents}}" aria-describedby="emailHelp"
+                                    placeholder="contents"> {% endcomment %}
+                                 {% endfor %}
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="up_AboutPage">Update</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingThree">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    News and Events page #3
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload3" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload3" name="image_NewsEvents" type="file"
+                                          style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title_NewsEvents" placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_NewsEvents" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="contents">
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="NewsEvents">Create</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingFour">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Contact page #4
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload4" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload4" name="image_Contact" type="file" style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title_Contact" placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_Contact" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="contents">
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="Contact">Create</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingFive">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    Other page #5
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseFive" class="collapse" aria-labelledby="headingFive  "
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <center>
+                                    <h2 for="">Coming Soon</h2>
+                                 </center>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <br>
+                  </form>
+                  {% elif change_valuein == 3 %}
+                  <!-- 
+
+                     ข้อมูลชุด ที่ 3
+
+                   -->
+                  <form method="post" enctype="multipart/form-data" class="form-horizontal">
+                     <!-- HTTP แบบ Post-->
+                     {% csrf_token %}
+                     <div class="accordion" id="accordionExample">
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingOne">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Home page #1
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 {% for im in change_homepage %}
+                                 {% for it in im.image_contents  %}
+                                 <p>ภาพที่ {{forloop.counter}}</p>
+                                 <img src="/media/image_contents/{{it}}" class="img-fluid" alt="Responsive image">
+                                 {% endfor %}
+                                 {% endfor %}
+                                 <br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload1" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload1" name="image_HomePage" type="file" style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 {% for im in change_homepage %}
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" value="{{im.title}}" name="title_HomePage"
+                                    placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_HomePage" class="form-control"
+                                    id="exampleInputEmail1" value="{{im.contents}}" aria-describedby="emailHelp"
+                                    placeholder="contents">
+                                 {% endfor %}
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="up_HomePage">Update</button>
+                                 <button type="submit" class="btn btn-warning" name="type_submit"
+                                    value="clear_HomePage">Clear</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingTwo">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    About page #2
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 {% for im in change_aboutpage %}
+                                 {% for it in im.image_contents  %}
+                                 <img src="/media/image_contents/{{it}}" class="img-fluid" alt="Responsive image">
+                                 {% endfor %}
+                                 {% endfor %}
+                                 <br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload2" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload2" name="image_AboutPage" type="file"
+                                          style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 {% for im in change_aboutpage %}
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" value="{{im.title}}" name="title_AboutPage"
+                                    placeholder="Title">
+                                 <br>
+                                 <textarea type="contents" name="contents_AboutPage" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                    placeholder="contents">{{im.contents}}</textarea>
+                                 {% endfor %}
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="up_AboutPage">Update</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingThree">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    News and Events page #3
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 {% for im in change_newe %}
+                                 {% for it in im.image_contents  %}
+                                 <img src="/media/image_contents/{{it}}" class="img-fluid" alt="Responsive image">
+                                 {% endfor %}
+                                 {% endfor %}
+                                 <br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload3" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload3" name="image_AboutPage" type="file"
+                                          style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 {% for im in change_newe %}
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" value="{{im.title}}" name="title_AboutPage"
+                                    placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_AboutPage" class="form-control"
+                                    id="exampleInputEmail1" value="{{im.contents}}" aria-describedby="emailHelp"
+                                    placeholder="contents">
+                                 {% endfor %}
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="up_NewsEvents">Update</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingFour">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Contact page #4
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload4" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload4" name="image_Contact" type="file" style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title_Contact" placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_Contact" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="contents">
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="Contact">Create</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingFive">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    Other page #5
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseFive" class="collapse" aria-labelledby="headingFive  "
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <center>
+                                    <h2 for="">Coming Soon</h2>
+                                 </center>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <br>
+                  </form>
+                  {% elif change_valuein == 4 %}
+                  <!-- 
+
+                     ข้อมูลชุด ที่ 4
+
+                   -->
+                  <form method="post" enctype="multipart/form-data" class="form-horizontal">
+                     <!-- HTTP แบบ Post-->
+                     {% csrf_token %}
+                     <div class="accordion" id="accordionExample">
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingOne">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Home page #1
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 {% for im in change_homepage %}
+                                 {% for it in im.image_contents  %}
+                                 <p>ภาพที่ {{forloop.counter}}</p>
+                                 <img src="/media/image_contents/{{it}}" class="img-fluid" alt="Responsive image">
+                                 {% endfor %}
+                                 {% endfor %}
+                                 <br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+                                       <label for="file-upload1" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload1" name="image_HomePage" type="file" style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 {% for im in change_homepage %}
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" value="{{im.title}}" name="title_HomePage"
+                                    placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_HomePage" class="form-control"
+                                    id="exampleInputEmail1" value="{{im.contents}}" aria-describedby="emailHelp"
+                                    placeholder="contents">
+                                 {% endfor %}
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="up_HomePage">Update</button>
+                                 <button type="submit" class="btn btn-warning" name="type_submit"
+                                    value="clear_HomePage">Clear</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingTwo">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    About page #2
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 {% for im in change_aboutpage %}
+                                 {% for it in im.image_contents  %}
+                                 <img src="/media/image_contents/{{it}}" class="img-fluid" alt="Responsive image">
+                                 {% endfor %}
+                                 {% endfor %}
+                                 <br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload2" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload2" name="image_AboutPage" type="file"
+                                          style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 {% for im in change_aboutpage %}
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" value="{{im.title}}" name="title_AboutPage"
+                                    placeholder="Title">
+                                 <br>
+                                 <textarea type="contents" name="contents_AboutPage" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                    placeholder="contents">{{im.contents}}</textarea>
+                                 {% endfor %}
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="up_AboutPage">Update</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingThree">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    News and Events page #3
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 {% for im in change_newe %}
+                                 {% for it in im.image_contents  %}
+                                 <img src="/media/image_contents/{{it}}" class="img-fluid" alt="Responsive image">
+                                 {% endfor %}
+                                 {% endfor %}
+                                 <br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload3" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload3" name="image_NewsEvents" type="file"
+                                          style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 {% for im in change_newe %}
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" value="{{im.title}}" name="title_NewsEvents"
+                                    placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_NewsEvents" class="form-control"
+                                    id="exampleInputEmail1" value="{{im.contents}}" aria-describedby="emailHelp"
+                                    placeholder="contents">
+                                 {% endfor %}
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="up_NewsEvents">Update</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingFour">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Contact page #4
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+                                 {% for im in change_contact %}
+                                 {% for it in im.image_contents  %}
+                                 <img src="/media/image_contents/{{it}}" class="img-fluid" alt="Responsive image">
+                                 {% endfor %}
+                                 {% endfor %}
+                                 <br><br><br>
+                                 <div class="input-group">
+                                    <div class="custom-file">
+                                       <script
+                                          src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                       <label for="file-upload4" class="custom-file-label">
+                                          <i class="fa fa-cloud-upload"></i> Choose file
+                                       </label>
+                                       <input id="file-upload4" name="image_Contact" type="file" style="display:none;">
+                                    </div>
+                                 </div>
+                                 <br>
+                                 {% for im in change_contact %}
+                                 <input type="title" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" value="{{im.title}}" name="title_Contact"
+                                    placeholder="Title">
+                                 <br>
+                                 <input type="contents" name="contents_Contact" class="form-control"
+                                    id="exampleInputEmail1" value="{{im.contents}}" aria-describedby="emailHelp"
+                                    placeholder="contents">
+                                 {% endfor %}
+                                 <br>
+                                 <button type="submit" class="btn btn-success" name="type_submit"
+                                    value="up_Contact">Update</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card z-depth-0 bordered">
+                           <div class="card-header" id="headingFive">
+                              <h5 class="mb-0">
+                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    Other page #5
+                                 </button>
+                              </h5>
+                           </div>
+                           <div id="collapseFive" class="collapse" aria-labelledby="headingFive  "
+                              data-parent="#accordionExample">
+                              <div class="card-body">
+
+                                 <img src="https://via.placeholder.com/1100x200/" class="img-fluid"
+                                    alt="Responsive image"><br><br><br>
+                                 <center>
+                                    <h2 for="">Coming Soon</h2>
+                                 </center>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <br>
+                  </form>
+                  {% endif %}
+                  {% endif %}
+
+               </div>
+            </div>
+         </div> <!-- /.row -->
+         <div class="card-body"></div>
+      </div>
+   </div><!-- /# column -->
+</div>
+<!--  /Traffic -->
+
+
+{% endblock content %}
+
+{% block script%}
+<script>
+   $('#file-upload1').change(function () {
+      var i = $(this).prev('label').clone();
+      var file = $('#file-upload1')[0].files[0].name;
+      $(this).prev('label').text(file);
+   });
+   $('#file-upload2').change(function () {
+      var i = $(this).prev('label').clone();
+      var file = $('#file-upload2')[0].files[0].name;
+      $(this).prev('label').text(file);
+   });
+   $('#file-upload3').change(function () {
+      var i = $(this).prev('label').clone();
+      var file = $('#file-upload3')[0].files[0].name;
+      $(this).prev('label').text(file);
+   });
+   $('#file-upload4').change(function () {
+      var i = $(this).prev('label').clone();
+      var file = $('#file-upload4')[0].files[0].name;
+      $(this).prev('label').text(file);
+   });
+  // $('.file_upload').file_upload();
+</script>
+
+{% endblock script%}

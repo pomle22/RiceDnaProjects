@@ -1,0 +1,58 @@
+{% extends "includes/base_admin.html" %}
+{% load static i18n %} {% load i18n %} {% load staticfiles %}
+{% load crispy_forms_tags %}
+<style>
+  #myProgress {
+    width: 100%;
+    background-color: #ddd;
+  }
+  
+  #myBar {
+    width: 10%;
+    height: 30px;
+    background-color: #4CAF50;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+  }
+  </style>
+  
+{% block content %}
+
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col col-md-12">
+                    <form  method="post" action="" class="container" enctype="multipart/form-data">
+                      {% csrf_token %}
+                     <div class="card mb-3 ">   
+                      <div class="card-header" style="background-color:#91FFAD">
+                        <h2>เพิ่มข่าวสาร</h2>
+                      </div>
+                      <div class="card-body">
+                        {{ form|crispy }}
+                        <button name="submit" type="submit" id="contact-submit" class="btn btn-success" data-submit="...Sending" onclick="myFunction()">Save</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                        <a href="{% url 'SmsBackEnd:manage_news_events' %} "class="btn btn-primary">Cancel</a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+            </div>
+        </div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    function myFunction() {
+      var txt;
+      if (confirm("Are You Sure About This!")) {
+        txt = "You pressed OK!";
+      } else {
+        txt = "You pressed Cancel!";
+      }
+      document.getElementById("demo").innerHTML = txt;
+    }    
+</script> 
+{% endblock scripts %}

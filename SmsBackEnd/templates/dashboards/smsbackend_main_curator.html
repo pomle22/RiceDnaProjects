@@ -1,0 +1,1592 @@
+{% extends "includes/base_admin.html" %}
+
+{% block content %}
+
+<style>
+    .card_head:hover {
+        cursor: pointer;
+        box-shadow: 3px 3px 10px grey;
+        -webkit-transition: box-shadow .6s;
+    }
+
+    .icon_download_canvas {
+        cursor: pointer;
+        color: #545454;
+        /* color: #dadad9; */
+        /* float: right!important; */
+    }
+
+    .text_type,
+    .herder_text {
+        font-weight: 650;
+        color: #545454;
+        display: inline;
+    }
+
+    .add_goal {
+        cursor: pointer;
+        font-size: large;
+        color: #545454;
+        float: right;
+        height: 10px;
+        line-height: 26px;
+    }
+
+    .progress .progress-bar {
+        animation-name: animateBar;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in;
+        animation-duration: .2s;
+    }
+
+    @keyframes animateBar {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    .switch-field {
+        display: inline-flex;
+        /* margin-bottom: 36px; */
+        /* margin-right: 15px; */
+        overflow: hidden;
+        margin-left: -30px;
+    }
+
+    /* map switch */
+    .switch-field input {
+        position: absolute !important;
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        width: 1px;
+        border: 0;
+        overflow: hidden;
+    }
+
+    .switch-field label {
+        background-color: #e4e4e4;
+        color: rgba(0, 0, 0, 0.6);
+        font-size: 14px;
+        line-height: 1;
+        text-align: center;
+        padding: 8px 16px;
+        margin-right: -1px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+        transition: all 0.1s ease-in-out;
+    }
+
+    .switch-field label:hover {
+        cursor: pointer;
+    }
+
+    .switch-field input:checked+label {
+        background-color: #a5dc86;
+        box-shadow: none;
+    }
+
+    .switch-field label:first-of-type {
+        border-radius: 4px 0 0 4px;
+        margin-left: 30px;
+    }
+
+    .switch-field label:last-of-type {
+        border-radius: 0 4px 4px 0;
+        margin-right: 10px;
+    }
+
+    /* map switch */
+
+    /* modal */
+    .modal-header {
+        display: flex !important;
+    }
+
+    .label_modal {
+        font-size: 1em;
+        font-weight: 600;
+        color: #636363;
+    }
+
+    /* modal */
+</style>
+<!-- E Chart -->
+<script src="https://echarts.baidu.com/dist/echarts.min.js"></script>
+<br>
+<!-- Widgets  -->
+
+<input type="hidden" id="type_check">
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="card card_head card_plants">
+            <div class="card-body">
+                <div class="stat-widget-five">
+                    <div class="stat-icon dib flat-color-1">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="text-left dib">
+                            <div class="stat-text"><span class="count">{{count_plant}}</span></div>
+                            <div class="stat-heading">Plants</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card card_head card_microbe">
+            <div class="card-body">
+                <div class="stat-widget-five">
+                    <div class="stat-icon dib flat-color-2">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="text-left dib">
+                            <div class="stat-text"><span class="count">{{count_microbe}}</span></div>
+                            <div class="stat-heading">Microbe</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card card_head card_human">
+            <div class="card-body">
+                <div class="stat-widget-five">
+                    <div class="stat-icon dib flat-color-3">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="text-left dib">
+                            <div class="stat-text"><span class="count">{{count_human}}</span></div>
+                            <div class="stat-heading">Human</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card card_head card_animal">
+            <div class="card-body">
+                <div class="stat-widget-five">
+                    <div class="stat-icon dib flat-color-4">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="text-left dib">
+                            <div class="stat-text"><span class="count">{{count_animal}}</span></div>
+                            <div class="stat-heading">Animal</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Widgets -->
+
+<!--  Traffic  -->
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-11">
+                                <h4 class="text_type"></h4>
+                            </div>
+                            <div class="col-1">
+                                <i class="fas fa-download icon_download_canvas" id_for_download="main_chart"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-body card_main_chart">
+                        <div id="main_chart" style="width: 100%;height:400px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <h4 style="font-weight: 650; color:#545454; display: inline;">Goal Specimen</h4>
+                        <i class="fas fa-cogs add_goal" data-toggle="modal" data-target="#exampleModalCenter"></i>
+                    </div>
+                    <div class="card-body card_percent">
+                        <select class="custom-select" id="year_setGoal">
+                            <option value="" selected>Open this select menu</option>
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                        </select>
+                        <br>
+                        <br>
+
+                        <div class="percent_count">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="class_submit_chart"></div>
+
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-11">
+                                <h4 class="herder_text">Specimen Location</h4>
+                            </div>
+                            <div class="col-1">
+                                <i class="fas fa-download icon_download_canvas" id_for_download="map_country"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body card_map">
+
+                        <!-- <i class="fas fa-download icon_download_canvas" id_for_download="map_country"></i> -->
+
+                        <div class="switch-field">
+                            <input type="radio" id="radio-one" name="switch-one" value="Chart" checked />
+                            <label for="radio-one">Chart</label>
+                            <input type="radio" id="radio-two" name="switch-one" value="Map" />
+                            <label for="radio-two">Map</label>
+                        </div>
+
+                        <div class="back_geo" style="display: inline-flex; float: right; margin-top: 10px;">
+                            <button type="button" style="border: none; border-radius: 5px; height: 26px;">
+                                <i class="fas fa-angle-left" style="float: left; color: #7d7d7d;"> Back</i>
+                            </button>
+                        </div>
+
+                        <div id="map_country">
+                            <div id="map_chart" style="width: 100%;height:400px;"></div>
+
+                            <div id="map_create"></div>
+                            <div id="leaflet_progress">
+                                <div id="leaflet_progress-bar"></div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="herder_text">Sample</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- <div class="row">
+                            <div class="col-6" style="text-align: -webkit-center;">
+                                <div class="stat-widget-five">
+                                    <div class="stat-content" style="margin-left: unset;">
+                                        <div class="text-left dib">
+                                            <div class="stat-heading">sample</div>
+                                            <div class="stat-text" style="text-align: -webkit-center;">
+                                                <span class="count">{{count_sample_all}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="data_region">
+
+                            <div class="row">
+                                <div class="col-6" style="text-align: -webkit-center;">
+                                    <div class="stat-widget-five">
+                                        <div class="stat-content" style="margin-left: unset;">
+                                            <div class="text-left dib">
+                                                <div class="stat-heading">seed</div>
+                                                <div class="stat-text" style="text-align: -webkit-center;">
+                                                    <span class="count count_seed">{{count_seed}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6" style="text-align: -webkit-center;">
+                                    <div class="stat-widget-five">
+                                        <div class="stat-content" style="margin-left: unset;">
+                                            <div class="text-left dib">
+                                                <div class="stat-heading">molecular</div>
+                                                <div class="stat-text" style="text-align: -webkit-center;">
+                                                    <span class="count count_molecular">{{count_molecular}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6" style="text-align: -webkit-center;">
+                                    <div class="stat-widget-five">
+                                        <div class="stat-content" style="margin-left: unset;">
+                                            <div class="text-left dib">
+                                                <div class="stat-heading">tissue</div>
+                                                <div class="stat-text" style="text-align: -webkit-center;">
+                                                    <span class="count count_tissue">{{count_tissue}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6" style="text-align: -webkit-center;">
+                                    <div class="stat-widget-five">
+                                        <div class="stat-content" style="margin-left: unset;">
+                                            <div class="text-left dib">
+                                                <div class="stat-heading">herbarium</div>
+                                                <div class="stat-text" style="text-align: -webkit-center;">
+                                                    <span class="count count_herbarium">{{count_herbarium}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-11">
+                        <h4 class="herder_text">Specimen Compare</h4>
+                    </div>
+                    <div class="col-1">
+                        <i class="fas fa-download icon_download_canvas float-right" id_for_download="time_chart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <!-- <i class="fas fa-download icon_download_canvas" id_for_download="time_chart"></i> -->
+                    </div>
+                    <div class="col-lg-3">
+                        <select class="custom-select" id="select_year">
+                            <option value="" selected>Open this select menu</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <select class="custom-select" id="select_month">
+                            <option value="" selected>Open this select menu</option>
+                            <option value="01">มกราคม</option>
+                            <option value="02">กุมภาพันธ์</option>
+                            <option value="03">มีนาคม</option>
+                            <option value="04">เมษายน</option>
+                            <option value="05">พฤษภาคม</option>
+                            <option value="06">มิถุนายน</option>
+                            <option value="07">กรกฎาคม</option>
+                            <option value="08">สิงหาคม</option>
+                            <option value="09">กันยายน</option>
+                            <option value="10">ตุลาคม</option>
+                            <option value="11">พฤศจิกายน</option>
+                            <option value="12">ธันวาคม</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <!-- <button class="btn btn-sm">Filter</button> -->
+                        <input class="btn btn-primary" id="btn_filter" type="button" value="Filter">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-body">
+                        <div id="time_chart" style="width: 100%;height:400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /# column -->
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="height: 100%;">
+            <div class="card" style="margin-bottom: 0px;">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 class="herder_text">Goal Specimen </h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="goal_modal"></div>
+                            <input type="hidden" class="get_goal_lab_data">
+                            <button class="btn btn-sm btn-info float-right set_goal" data-dismiss="modal">set
+                                goal</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--  /Traffic -->
+
+{% endblock content %}
+
+
+{% block script%}
+
+<!-- canvg -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/stackblur-canvas/1.4.1/stackblur.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script> -->
+<!-- canvg -->
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        console.clear()
+        localStorage.clear()
+        setTimeout(function () {
+            // set data Start ------------------
+            {#year = eval('{{ year }}'.replace(/&#39;/g, ''))#}
+            for (var i = 0; i < year.length; i++) {
+                $('#select_year').append('<option value="' + year[i] + '" selected>' + (year[i] + 543) + '</option>')
+            }
+            var geo_data = eval('{{ plant_geo_data }}'.replace(/&#39;/g, '"'))
+            var province_data = eval('{{ province_data }}'.replace(/&#39;/g, '"'))
+
+            // set data End ------------------
+            $('.back_geo').css('display', 'none')
+
+            var myChart = echarts.init(document.getElementById('main_chart'), 'light');
+            var time_chart = echarts.init(document.getElementById('time_chart'), 'light');
+            var map_chart = echarts.init(document.getElementById('map_chart'), 'light');
+
+            function donut_chart(data) {
+                var data_plot = []
+
+                var count = 0;
+                for (var i = 0; i < data[1].length; i++) {
+                    count += data[1][i]
+                }
+
+                for (var i = 0; i < data[1].length; i++) {
+                    data_plot.push(
+                        {
+                            name: data[0][i],
+                            value: data[1][i],
+                            label: {
+                                color: "#464646"
+                            }
+                        }
+                    )
+                }
+
+
+                var option = {
+                    title: {
+                        text: count,
+                        subtext: 'Sample',
+                        x: 'center',
+                        y: '140',
+                        textStyle: {
+                            fontSize: 30,
+                            fontWeight: 'bold',
+                            color: ['#333']
+                        },
+                        subtextStyle: {
+                            color: '#666',
+                            fontSize: 13,
+                            fontWeight: 500
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        width: '400px',
+                        x: 'center',
+                        y: 'bottom',
+                        data: name
+                    },
+                    series: [
+                        {
+                            name: 'Specimen',
+                            radius: ['35%', '65%'],
+                            center: ['50%', '45%'],
+                            type: 'pie',
+                            data: data_plot,
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ],
+                    label: {
+                        formatter: '{b} : {@2012}'
+                    },
+                };
+                return option
+            }
+
+            function pie_chart(data) {
+                var data_plot = []
+
+                for (var i = 0; i < data[1].length; i++) {
+                    data_plot.push(
+                        {
+                            name: data[0][i],
+                            value: data[1][i],
+                            label: {
+                                color: "#464646"
+                            }
+                        }
+                    )
+                }
+
+
+                var option = {
+                    title: {
+                        text: data[2],
+                        // subtext: '纯属虚构',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        type: 'scroll',
+                        x: 'center',
+                        y: 'bottom',
+                        data: name
+                    },
+                    series: [
+                        {
+                            name: 'Specimen',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '45%'],
+                            data: data_plot,
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ],
+                    label: {
+                        formatter: '{b} : {@2012}'
+                    },
+                };
+                return option
+            }
+
+            function line_chart(data) { // new chart
+                option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    legend: {
+                        data: ['Seed', 'Molecular', 'Tissue', 'Herbarium']
+                    },
+                    grid: {
+                        left: '1%',
+                        right: '3%',
+                        bottom: '1%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'value',
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]
+                    },
+                    series: data,
+                    series: [
+                        {
+                            name: 'Seed',
+                            type: 'bar',
+                            stack: '总量',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'insideLeft'
+                                }
+                            },
+                            data: [320, 302, 301, 334, 390, 330, 320]
+                        },
+                        {
+                            name: 'Molecular',
+                            type: 'bar',
+                            stack: '总量',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'insideLeft'
+                                }
+                            },
+                            data: [120, 132, 101, 134, 90, 230, 210]
+                        },
+                        {
+                            name: 'Tissue',
+                            type: 'bar',
+                            stack: '总量',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'insideLeft'
+                                }
+                            },
+                            data: [220, 182, 191, 234, 290, 330, 310]
+                        },
+                        {
+                            name: 'Herbarium',
+                            type: 'bar',
+                            stack: '总量',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'insideLeft'
+                                }
+                            },
+                            data: [150, 212, 201, 154, 190, 330, 410]
+                        }
+                    ]
+                };
+
+
+                return option
+            }
+
+            function create_line_chart(format, val, text) {
+                $('.class_submit_chart').html('')
+                for (var i = 0; i < format.length; i++) {
+                    var sub_chart_html = '<div class="row">'
+                    for (var l = 0; l < format[i].length; l++) {
+                        sub_chart_html += '<div class="col-lg-6">'
+                        sub_chart_html += '<div class="card">'
+                        sub_chart_html += '<div class="row">'
+                        sub_chart_html += '<div class="col-lg-12">'
+
+                        sub_chart_html += '<div class="card-header">'
+                        sub_chart_html += '<div class="row">'
+                        sub_chart_html += '<div class="col-11">'
+                        sub_chart_html += '<h4 class="herder_text">' + text[i][l] + '</h4>'
+                        sub_chart_html += '</div>'
+                        sub_chart_html += '<div class="col-1">'
+                        sub_chart_html += '<i class="fas fa-download icon_download_canvas" id_for_download="main_chart' + format[i][l] + '"></i>'
+                        sub_chart_html += '</div>'
+                        sub_chart_html += '</div>'
+                        sub_chart_html += '</div>'
+
+                        sub_chart_html += '<div class="card-body">'
+                        sub_chart_html += '<div id="main_chart' + format[i][l] + '" style="width: 100%;height:300px;"></div>'
+                        sub_chart_html += '</div>'
+                        sub_chart_html += '</div>'
+                        sub_chart_html += '</div>'
+                        sub_chart_html += '</div>'
+                        sub_chart_html += '</div>'
+
+                    }
+                    sub_chart_html += '</div>'
+                    $('.class_submit_chart').append(sub_chart_html)
+
+                }
+
+                // Test Data ---------------------------------------------------
+                var text_val = ['Seed', 'Molecular', 'Tissue', 'Herbarium']
+                var j = 0
+                var k = 1
+                for (var t = 0; t < text_val.length; t++) {
+                    var data = []
+                    if (t == 0) {
+                        data.push({ "name": text_val[t], "type": "bar", stack: '总量', label: { normal: { show: true, position: 'insideLeft' } }, "data": val[t] })
+                    } else {
+                        for (var i = 0; i < val.length; i++) {
+                            data.push({ "name": text_val[i], "type": "bar", stack: '总量', label: { normal: { show: true, position: 'insideLeft' } }, "data": val[t][i] })
+                        }
+                    }
+                    var option = line_chart(data);
+                    this["marker" + k] = echarts.init(document.getElementById('main_chart' + k), 'light');
+                    var ff = this["marker" + k]
+                    ff.setOption(option);
+                    k++
+                    j++
+                }
+
+            }
+
+            function bar_chart(data, year, month) {
+                var getDaysInMonth = function (month, year) {
+                    return new Date(year, month, 0).getDate();
+                };
+                if (month) {
+                    var day_count = getDaysInMonth(month, year)
+                    data.length = day_count + 1
+                }
+
+                var option = {
+                    legend: {
+                        x: 'center',
+                        y: 'bottom',
+                        // data: name
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    dataset: {
+                        source: data
+                    },
+                    xAxis: {
+                        type: 'category',
+                        name: data[0][0]
+                    },
+                    yAxis: {},
+                    series: [
+                        {
+                            type: 'bar',
+                            barGap: 0,
+                        },
+                        { type: 'bar' },
+                        { type: 'bar' },
+                        { type: 'bar' }
+                    ]
+                };
+                return option
+            }
+
+            function map_create(data) {
+
+                $('#map_create').html("<div id='map'></div>")
+
+                var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
+                }),
+                    latlng = L.latLng(13.759761, 102.428749);
+
+
+                var map = L.map('map', { center: latlng, zoom: 6, layers: [tiles] });
+
+                var progress = document.getElementById('leaflet_progress');
+                var progressBar = document.getElementById('leaflet_progress-bar');
+
+                var mcgLayerSupportGroup = L.markerClusterGroup.layerSupport({
+                    // disableClusteringAtZoom:8,
+                    showCoverageOnHover: false,
+                    // chunkedLoading: true,
+                    // chunkInterval: 100,
+                    chunkProgress: updateProgressBar
+                }),
+                    control = L.control.layers(null, null, { collapsed: false });
+
+                // var data1 = [
+                //     [12.644, 101.169, "ต. มาบตาพุด", "blue"],
+                //     [10.459, 99.403, "ต. หาดทรายรี", "blue"],
+                //     [10.291, 99.241, "ต. ด่านสวี", "blue"],
+                //     [16.162, 103.484, "ต. ท่าตูม", "blue"],
+                //     [9.708, 99.675, "ต. อ่างทอง", "blue"]
+                // ]
+                // var data2 = [
+                //     [7.033, 99.449, "ต. ตะเสะ", "red"],
+                //     [10.477, 99.369, "ต. หาดทรายรี", "red"],
+                //     [10.862, 99.486, "ต. ปากคลอง", "red"],
+                //     [10.165, 99.176, "ต. ปากตะโก", "red"],
+                //     [10.800, 99.538, "ต. ปากคลอง", "red"]
+                // ]
+
+                var blueIcon = new L.Icon({
+                    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                });
+                var violetIcon = new L.Icon({
+                    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                });
+                var yellowIcon = new L.Icon({
+                    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                });
+                var redIcon = new L.Icon({
+                    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                });
+
+                var group = []
+                var checkIn_group = []
+                var group_name = []
+                for (var i = 0; i < data.length; i++) {
+                    group[i] = L.layerGroup(fillMarkerList(data[i]))
+                    for (var t = 0; t < data[i].length; t++) {
+                        group_name.push(data[i][t][4])
+                    }
+                }
+
+                var uniqueNames = [];
+                $.each(group_name, function (i, el) {
+                    if ($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+                });
+
+                mcgLayerSupportGroup.addTo(map);
+                for (var i = 0; i < group.length; i++) {
+                    checkIn_group.push(group[i])
+                }
+                mcgLayerSupportGroup.checkIn([checkIn_group]);
+                for (var i = 0; i < group.length; i++) {
+                    control.addOverlay(group[i], "" + uniqueNames[i])
+                }
+                control.addTo(map);
+                for (var i = 0; i < group.length; i++) {
+                    group[i].addTo(map);
+                }
+
+
+                // var group1 = L.layerGroup(fillMarkerList(data1));
+                // var group2 = L.layerGroup(fillMarkerList(data2));
+
+                // mcgLayerSupportGroup.addTo(map);
+
+                // mcgLayerSupportGroup.checkIn([group1, group2]);
+
+                // control.addOverlay(group1, 'First quarter');
+                // control.addOverlay(group2, 'Second quarter');
+                // control.addTo(map);
+
+                // group1.addTo(map);
+                // group2.addTo(map);
+
+                // function save png
+                var printer = L.easyPrint({
+                    tileLayer: tiles,
+                    sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
+                    filename: 'dashboard',
+                    exportOnly: true,
+                    hideControlContainer: true
+                }).addTo(map);
+
+                function manualPrint() {
+                    printer.printMap('CurrentSize', 'MyManualPrint')
+                }
+                // function save png
+
+
+                // function group data
+                function updateProgressBar(processed, total, elapsed, layersArray) {
+                    if (elapsed > 200) {
+                        // if it takes more than a second to load, display the progress bar:
+                        progress.style.display = 'block';
+                        progressBar.style.width = Math.round(processed / total * 100) + '%';
+                    }
+                    if (processed === total) {
+                        // all markers processed - hide the progress bar:
+                        progress.style.display = 'none';
+                    }
+                }
+                // function group data
+
+                // function create map
+                function fillMarkerList(addressPointsSource) {
+                    var markerList = [];
+                    for (var i = 0; i < addressPointsSource.length; i++) {
+                        var color = addressPointsSource[i][3]
+                        var a = addressPointsSource[i];
+                        var title = a[2];
+
+                        if (color == 'blue') {
+                            var marker = L.marker(L.latLng(a[0], a[1]), { title: title, icon: blueIcon });
+                        } else if (color == 'red') {
+                            var marker = L.marker(L.latLng(a[0], a[1]), { title: title, icon: redIcon });
+                        } else if (color == 'yellow') {
+                            var marker = L.marker(L.latLng(a[0], a[1]), { title: title, icon: yellowIcon });
+                        } else if (color == 'violet') {
+                            var marker = L.marker(L.latLng(a[0], a[1]), { title: title, icon: violetIcon });
+                        }
+
+                        marker.bindPopup(title);
+                        markerList.push(marker);
+                    }
+                    return markerList;
+                }
+                // function create map
+
+                $('.leaflet-top, .leaflet-left').css('z-index', '500')
+                $('#map').css('width', $('.card_map').width())
+                $('#map').hide()
+            }
+
+            function set_goal(lab_count, goal_lab) {
+                $('.set_goal').click(function () {
+                    // $('.close').trigger('click')
+                    percent_count_data = []
+                    data = []
+                    $.each($('.goal_lab'), function (index, value) {
+                        if ($(value).val() >= 1) {
+                            data.push($(value).val());
+                        } else {
+                            data.push(0);
+                        }
+                    });
+                    $('.get_goal_lab_data').val(data)
+
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            "type_specimen": $('#type_check').val(),
+                            "goal_lab_data": $('.get_goal_lab_data').val(),
+                            "type_chart": "set_goal",
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        url: "/SmsBackEnd/smsbackend_curator/",
+                        success: function (data) {
+                            goal_lab_data = []
+                            goal_lab_name = []
+                            data = JSON.parse(data)
+
+                            $.each(data, function (index, value) {
+                                goal_lab_data.push(value)
+                                goal_lab_name.push(index.slice(9))
+                            })
+
+                            setTimeout(function () {
+                                $.each($('.goal_lab'), function (index, value) {
+                                    $(value).val(goal_lab_data[index])
+                                })
+
+                                $('.percent_count').html('')
+                                for (var i = 0; i < goal_lab_data.length; i++) {
+                                    var count = ((lab_count[i] / goal_lab_data[i]) * 100).toFixed(0)
+                                    percent_count_data.push(count)
+                                }
+
+                                for (var i = 0; i < goal_lab_name.length; i++) {
+                                    var html_percent = '<div class="progress-box progress-1">'
+                                    html_percent += '<h4 class="por-title">' + goal_lab_name[i] + '</h4>'
+                                    html_percent += '<div class="por-txt">' + lab_count[i] + ' Specimen from ' + goal_lab_data[i] + ' Specimen <span style="float: right;">' + percent_count_data[i] + '%</span></div>'
+                                    html_percent += '<div class="progress mb-2" style="height: 5px;">'
+                                    html_percent += '<div class="progress-bar bg-flat-color-' + i + '" role="progressbar" style="width: ' + percent_count_data[i] + '%;"aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>'
+                                    html_percent += '</div>'
+                                    html_percent += '</div>'
+                                    $('.percent_count').append(html_percent)
+
+                                }
+
+                            }, 100)
+
+                        },
+                        error: function (data) {
+                            // alert('An error occurred.');
+                        },
+                    })
+                })
+            }
+
+            function create_html_goal(lab_count, goal_lab, lab) {
+                $('.percent_count').html('')
+                percent_count = []
+
+                for (var i = 0; i < goal_lab.length; i++) {
+                    var count = ((lab_count[i] / goal_lab[i]) * 100).toFixed(0)
+                    percent_count.push(count)
+                }
+
+                for (var i = 0; i < lab.length; i++) {
+                    var html_percent = '<div class="progress-box progress-1">'
+                    html_percent += '<h4 class="por-title">' + lab[i] + '</h4>'
+                    html_percent += '<div class="por-txt">' + lab_count[i] + ' sample from ' + goal_lab[i] + ' sample <span style="float: right;">' + percent_count[i] + '%</span></div>'
+                    html_percent += '<div class="progress mb-2" style="height: 5px;">'
+                    html_percent += '<div class="progress-bar bg-flat-color-' + i + '" role="progressbar" style="width: ' + percent_count[i] + '%;"aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>'
+                    html_percent += '</div>'
+                    html_percent += '</div>'
+                    $('.percent_count').append(html_percent)
+
+                }
+            }
+
+            function create_html_goal_modal(lab, goal_lab) {
+                $('.goal_modal').html('')
+                for (var i = 0; i < lab.length; i++) {
+                    var goal_lap = '<div class="form-group">'
+                    goal_lap += '<label for="lab' + i + '" class="label_modal">' + lab[i] + '</label>'
+                    goal_lap += '<input type="number" min="0" class="form-control form-control-sm goal_lab" id="lab' + i + '" placeholder="goal ' + lab[i] + '"value="' + goal_lab[i] + '">'
+                    goal_lap += '</div>'
+                    $('.goal_modal').append(goal_lap)
+                }
+
+                set_goal(lab_count, lab)
+            }
+
+            function click_download() {
+                $('.icon_download_canvas').click(function () {
+                    var id = $(this).attr('id_for_download')
+                    var scroll_location = document.documentElement.scrollTop;
+
+                    if (id == 'map_country') {
+                        var class_name = $('#map_country').attr('class')
+                        if (class_name == 'map_chart') { // save map
+                            $link = $('.A4Landscape');
+                            $link[0].click()
+                        } else { // save chart map
+                            html2canvas($("#" + id), {
+                                onrendered: function (canvas) {
+                                    saveAs(canvas.toDataURL(), 'dashboard.png');
+                                    window.scrollTo(0, scroll_location);
+                                }
+                            });
+                        }
+                    } else { // save another
+                        html2canvas($("#" + id), {
+                            onrendered: function (canvas) {
+                                saveAs(canvas.toDataURL(), 'dashboard.png');
+                                window.scrollTo(0, scroll_location);
+                            }
+                        });
+                    }
+
+                    function saveAs(uri, filename) {
+                        var link = document.createElement('a');
+                        if (typeof link.download === 'string') {
+                            link.href = uri;
+                            link.download = filename;
+
+                            //Firefox requires the link to be in the body
+                            document.body.appendChild(link);
+
+                            //simulate click
+                            link.click();
+
+                            //remove the link when done
+                            document.body.removeChild(link);
+                        } else {
+                            window.open(uri);
+                        }
+                    }
+
+
+                })
+            }
+
+            function click_pie_chart(lab) {
+                function set_data(main_data) {
+                    var data1 = []
+                    for (var i = 0; i < main_data.length; i++) {
+                        if (i % 2 == 1) {
+                            data2.push(main_data[i])
+                            data1.push(data2)
+                        } else {
+                            var data2 = []
+                            data2.push(main_data[i])
+                        }
+                    }
+                    if (data2.length == 1) {
+                        data1.push(data2)
+                    }
+                    main_data = data1
+                    return main_data
+                }
+                lab = set_data(lab)
+                map_chart.on('click', function (params) {
+                    $('.back_geo').css('display', 'block')
+                    // คลิกภาคไปจังหวัด
+                    if (params.data.name == 'ภาคเหนือ' || params.data.name == 'ภาคกลาง' || params.data.name == 'ภาคตะวันออกเฉียงเหนือ' || params.data.name == 'ภาคตะวันตก' || params.data.name == 'ภาคตะวันออก' || params.data.name == 'ภาคใต้') {
+                        $.ajax({
+                            type: "POST",
+                            data: {
+                                "geo_from_page": params.data.name,
+                                "type_chart": "pie_chart",
+                                "type_check": $("#type_check").val(),
+                                csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            url: "/SmsBackEnd/smsbackend_curator/",
+                            success: function (data) {
+                                map_data = eval(data)
+                                count_lab = map_data[2]
+                                map_data = [map_data[0], map_data[1]]
+                                var option = pie_chart(map_data);
+                                map_chart.setOption(option);
+
+                                count_lab = set_data(count_lab)
+
+                                $('.data_region').html('')
+                                for (var i = 0; i < lab.length; i++) {
+                                    var html_create = '<div class="row">'
+                                    html_create += '<div class="col-6" style="text-align: -webkit-center;">'
+                                    html_create += '<div class="stat-widget-five">'
+                                    html_create += '<div class="stat-content" style="margin-left: unset;">'
+                                    html_create += '<div class="text-left dib">'
+                                    html_create += '<div class="stat-heading">' + lab[i][0] + '</div>'
+                                    html_create += '<div class="stat-text" style="text-align: -webkit-center;">'
+                                    html_create += '<span class="count count_' + lab[i][0] + '">' + count_lab[i][0] + '</span>'
+                                    html_create += '</div>'
+                                    html_create += '</div>'
+                                    html_create += '</div>'
+                                    html_create += '</div>'
+                                    html_create += '</div>'
+                                    if (lab[i][1]) {
+                                        html_create += '<div class="col-6" style="text-align: -webkit-center;">'
+                                        html_create += '<div class="stat-widget-five">'
+                                        html_create += '<div class="stat-content" style="margin-left: unset;">'
+                                        html_create += '<div class="text-left dib">'
+                                        html_create += '<div class="stat-heading">' + lab[i][1] + '</div>'
+                                        html_create += '<div class="stat-text" style="text-align: -webkit-center;">'
+                                        html_create += '<span class="count count_' + lab[i][0] + '">' + count_lab[i][1] + '</span>'
+                                        html_create += '</div>'
+                                        html_create += '</div>'
+                                        html_create += '</div>'
+                                        html_create += '</div>'
+                                        html_create += '</div>'
+                                    }
+                                    html_create += '</div>'
+                                    $('.data_region').append(html_create)
+                                }
+
+                            },
+                            error: function (data) {
+                                // alert('An error occurred.');
+
+                            },
+                        })
+
+                    } else {
+                        $.ajax({
+                            type: "POST",
+                            data: {
+                                "province_from_page": params.data.name,
+                                "type_chart": "pie_chart2",
+                                "type_check": $("#type_check").val(),
+                                csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            url: "/SmsBackEnd/smsbackend_curator/",
+                            success: function (data) {
+                                map_data = eval(data)
+                                count_lab = set_data(map_data)
+                                $('.data_region').html('')
+                                for (var i = 0; i < lab.length; i++) {
+                                    var html_create = '<div class="row">'
+                                    html_create += '<div class="col-6" style="text-align: -webkit-center;">'
+                                    html_create += '<div class="stat-widget-five">'
+                                    html_create += '<div class="stat-content" style="margin-left: unset;">'
+                                    html_create += '<div class="text-left dib">'
+                                    html_create += '<div class="stat-heading">' + lab[i][0] + '</div>'
+                                    html_create += '<div class="stat-text" style="text-align: -webkit-center;">'
+                                    html_create += '<span class="count count_' + lab[i][0] + '">' + count_lab[i][0] + '</span>'
+                                    html_create += '</div>'
+                                    html_create += '</div>'
+                                    html_create += '</div>'
+                                    html_create += '</div>'
+                                    html_create += '</div>'
+                                    if (lab[i][1]) {
+                                        html_create += '<div class="col-6" style="text-align: -webkit-center;">'
+                                        html_create += '<div class="stat-widget-five">'
+                                        html_create += '<div class="stat-content" style="margin-left: unset;">'
+                                        html_create += '<div class="text-left dib">'
+                                        html_create += '<div class="stat-heading">' + lab[i][1] + '</div>'
+                                        html_create += '<div class="stat-text" style="text-align: -webkit-center;">'
+                                        html_create += '<span class="count count_' + lab[i][0] + '">' + count_lab[i][1] + '</span>'
+                                        html_create += '</div>'
+                                        html_create += '</div>'
+                                        html_create += '</div>'
+                                        html_create += '</div>'
+                                        html_create += '</div>'
+                                    }
+                                    html_create += '</div>'
+                                    $('.data_region').append(html_create)
+                                }
+                            },
+                            error: function (data) {
+                                // alert('An error occurred.');
+
+                            },
+                        })
+
+                    }
+
+                })
+            }
+
+
+
+            // click card -----------------------------------------------
+            $('.card_plants').click(function () {
+                $('#type_check').val('plants')
+                $('.text_type').text('Specimen')
+
+                // get data for plant ----------------------
+                var count_seed = parseInt('{{count_seed}}')
+                var count_molecular = parseInt('{{count_molecular}}')
+                var count_tissue = parseInt('{{count_tissue}}')
+                var count_herbarium = parseInt('{{count_herbarium}}')
+                var create_map = eval('{{ create_map }}'.replace(/&#39;/g, '"'))
+                var goal_lab = eval('{{goal_lab_plant}}'.replace(/&#39;/g, '"'))
+                var lab = '{{lab_plant}}'.replace(/&#39;/g, '').replace('[', '').replace(']', '')
+                lab = lab.split(',').map(str => str.replace(/\s/g, ''))
+                var stages = eval('{{stages_plant}}')
+
+                // Goal Specimen create HTML ------------------
+                lab_count = [count_seed, count_molecular, count_tissue, count_herbarium]
+                create_html_goal(lab_count, goal_lab, lab)
+                create_html_goal_modal(lab, goal_lab)
+
+                // donut chart -------------------
+                var data = []
+                data.push(lab, [count_seed, count_molecular, count_tissue, count_herbarium], 'Specimen Chart')
+                var option = donut_chart(data);
+                myChart.setOption(option);
+
+
+
+                // [0, 0, 0, 0, 0, 1, 7, 7, 7, 7, 7, 7]
+                // [0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4]
+                // [0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5]
+                // [0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5]
+                // var seed = [[1, 2, 3, 5, 5, 6, 8, 8, 9, 12, 12, 13], [0, 0, 0, 0, 0, 1, 7, 7, 7, 7, 7, 7], [1, 2, 3, 5, 5, 6, 8, 8, 9, 12, 12, 13], [1, 2, 3, 5, 5, 6, 8, 8, 9, 12, 12, 13]]
+                // var molecular = [[0, 0, 1, 3, 4, 5, 8, 8, 8, 10, 12, 15], [0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4], [0, 0, 1, 3, 4, 5, 8, 8, 8, 10, 12, 15], [0, 0, 1, 3, 4, 5, 8, 8, 8, 10, 12, 15]]
+                // var tissue = [[1, 1, 2, 4, 5, 6, 9, 9, 9, 11, 13, 16], [0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5], [1, 1, 2, 4, 5, 6, 9, 9, 9, 11, 13, 16], [1, 1, 2, 4, 5, 6, 9, 9, 9, 11, 13, 16],]
+                // var herbarium = [[0, 4, 4, 4, 4, 5, 10, 15, 15, 15, 18, 20], [0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5], [0, 4, 4, 4, 4, 5, 10, 15, 15, 15, 18, 20], [0, 4, 4, 4, 4, 5, 10, 15, 15, 15, 18, 20],]
+
+
+                // line chart --------------------
+                var seed = [[1, 2, 3, 5, 5, 6, 8, 8, 9, 12, 12, 13], [1, 2, 3, 5, 5, 6, 8, 8, 9, 12, 12, 13], [1, 2, 3, 5, 5, 6, 8, 8, 9, 12, 12, 13], [1, 2, 3, 5, 5, 6, 8, 8, 9, 12, 12, 13]]
+                var molecular = [[0, 0, 1, 3, 4, 5, 8, 8, 8, 10, 12, 15], [0, 0, 1, 3, 4, 5, 8, 8, 8, 10, 12, 15], [0, 0, 1, 3, 4, 5, 8, 8, 8, 10, 12, 15], [0, 0, 1, 3, 4, 5, 8, 8, 8, 10, 12, 15]]
+                var tissue = [[1, 1, 2, 4, 5, 6, 9, 9, 9, 11, 13, 16], [1, 1, 2, 4, 5, 6, 9, 9, 9, 11, 13, 16], [1, 1, 2, 4, 5, 6, 9, 9, 9, 11, 13, 16], [1, 1, 2, 4, 5, 6, 9, 9, 9, 11, 13, 16],]
+                var herbarium = [[0, 4, 4, 4, 4, 5, 10, 15, 15, 15, 18, 20], [0, 4, 4, 4, 4, 5, 10, 15, 15, 15, 18, 20], [0, 4, 4, 4, 4, 5, 10, 15, 15, 15, 18, 20], [0, 4, 4, 4, 4, 5, 10, 15, 15, 15, 18, 20],]
+
+                var collect_val = [seed, molecular, tissue, herbarium]
+                var lab_val = [seed, molecular, tissue, herbarium]
+                var brooks_val = [seed, molecular, tissue, herbarium]
+                var test_val = [seed, molecular, tissue, herbarium]
+
+                var format = [[1, 2], [3, 4]]
+                var val = [collect_val, lab_val, brooks_val, test_val]
+                var val = stages
+                var text = [['Collect', 'Lab'], ['Brooks', 'Test']]
+                create_line_chart(format, val, text)
+                $('#canvas').hide()
+                click_download()
+
+                // map chart -------------------
+                // pie chart |||||||||||||||||||||||||
+                map_data = geo_data
+                var option = pie_chart(map_data);
+                map_chart.setOption(option);
+                $('#radio-one').trigger('click')
+
+                // map |||||||||||||||||||||||||||||||
+                // format data
+                // [
+                //     [
+                //         [12.644, 101.169, "ต. มาบตาพุด", "blue", "Seed"],
+                //         [10.459, 99.403, "ต. หาดทรายรี", "blue", "Seed"]
+                //     ], [
+                //         [7.033, 99.449, "ต. ตะเสะ", "red", "Molecular"],
+                //     ], [
+                //         [10.222, 99.243, "ต. ด่านสวี", "yellow", "Tissue"],
+                //     ]
+                // ]
+
+                var data = create_map
+                map_create(data)
+
+                // click chart ----------------------
+                click_pie_chart(lab)
+            })
+
+            $('.card_microbe').click(function () {
+                $('#type_check').val('microbe')
+                $('.text_type').text('Microbe')
+
+                // get data ----------------------
+                var count_lab1 = parseInt(10)
+                var count_lab2 = parseInt(10)
+                var count_lab3 = parseInt(10)
+                var count_lab4 = parseInt(10)
+                var count_lab5 = parseInt(10)
+                var create_map = eval('{{ create_map }}'.replace(/&#39;/g, '"'))
+                var goal_lab = eval('{{goal_lab_microbe}}'.replace(/&#39;/g, '"'))
+                var lab = '{{lab_microbe}}'.replace(/&#39;/g, '').replace('[', '').replace(']', '')
+                lab = lab.split(',').map(str => str.replace(/\s/g, ''))
+
+                // Goal Specimen create HTML ------------------
+                lab_count = [count_lab1, count_lab2, count_lab3, count_lab4, count_lab5]
+                create_html_goal(lab_count, goal_lab, lab)
+                create_html_goal_modal(lab, goal_lab)
+
+                // donut chart -------------------
+                var data = []
+                data.push(lab, [10, 10, 10, 10, 10], 'Microbe Chart')
+                var option = donut_chart(data);
+                myChart.setOption(option);
+
+                // line chart --------------------
+                var seed = [[1, 2, 3, 5, 5, 6, 8, 8, 9, 12, 12, 13], [1, 2, 3, 5, 5, 6, 8, 8, 9, 12, 12, 13], [1, 2, 3, 5, 5, 6, 8, 8, 9, 12, 12, 13], [1, 2, 3, 5, 5, 6, 8, 8, 9, 12, 12, 13]]
+                var molecular = [[0, 0, 1, 3, 4, 5, 8, 8, 8, 10, 12, 15], [0, 0, 1, 3, 4, 5, 8, 8, 8, 10, 12, 15], [0, 0, 1, 3, 4, 5, 8, 8, 8, 10, 12, 15], [0, 0, 1, 3, 4, 5, 8, 8, 8, 10, 12, 15]]
+                var tissue = [[1, 1, 2, 4, 5, 6, 9, 9, 9, 11, 13, 16], [1, 1, 2, 4, 5, 6, 9, 9, 9, 11, 13, 16], [1, 1, 2, 4, 5, 6, 9, 9, 9, 11, 13, 16], [1, 1, 2, 4, 5, 6, 9, 9, 9, 11, 13, 16],]
+                var herbarium = [[0, 4, 4, 4, 4, 5, 10, 15, 15, 15, 18, 20], [0, 4, 4, 4, 4, 5, 10, 15, 15, 15, 18, 20], [0, 4, 4, 4, 4, 5, 10, 15, 15, 15, 18, 20], [0, 4, 4, 4, 4, 5, 10, 15, 15, 15, 18, 20],]
+
+                var collect_val = [seed, molecular, tissue, herbarium]
+                var lab_val = [seed, molecular, tissue, herbarium]
+                var brooks_val = [seed, molecular, tissue, herbarium]
+                var test_val = [seed, molecular, tissue, herbarium]
+
+                var format = [[1, 2], [3, 4]]
+                var val = [collect_val, lab_val, brooks_val, test_val]
+                var text = [['Collect', 'Lab'], ['Brooks', 'Test']]
+                create_line_chart(format, val, text)
+                $('#canvas').hide()
+                click_download()
+
+
+                // map chart -------------------
+                map_data = [['ภาคเหนือ', 'ภาคกลาง', 'ภาคตะวันออกเฉียงเหนือ', 'ภาคตะวันตก', 'ภาคตะวันออก', 'ภาคใต้'], [10, 5, 20, 10, 15, 13]]
+                var option = pie_chart(map_data);
+                map_chart.setOption(option);
+
+                $('#radio-one').trigger('click')
+                var data = [
+                    [
+                        ['14.886117', '100.027715', 'สุพรรณบุรี', 'blue', 'Seed'],
+                        ['14.531899', '100.710446', 'พระนครศรีอยุธยา', 'blue', 'Seed']
+                    ],
+                    [
+                        ['12.689805', '100.882562', 'ชลบุรี', 'red', 'molecular'],
+                        ['15.801616', '102.594115', 'ขอนแก่น', 'red', 'molecular'],
+                        ['7.447029', '100.129237', 'พัทลุง', 'red', 'molecular']
+                    ],
+                    [
+                        ['20.288463', '99.811135', 'เชียงราย', 'yellow', 'tissue'],
+                        ['14.378099', '99.894652', 'สุพรรณบุรี', 'yellow', 'tissue'],
+                        ['14.244319', '99.461914', 'กาญจนบุรี', 'yellow', 'tissue'],
+                        ['14.458139', '100.951538', 'สระบุรี', 'yellow', 'tissue']
+                    ]
+                ]
+
+                map_create(data)
+                // map chart -------------------
+            })
+
+            $('.card_plants').trigger('click')
+
+
+
+            // Click Button -----------------------------------------------
+
+            // filter bar chart
+            $('#btn_filter').click(function () {
+
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        "year": $('#select_year').val(),
+                        "month": $('#select_month').val(),
+                        "type_chart": "bar_chart",
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    url: "/SmsBackEnd/smsbackend_curator/",
+                    success: function (data) {
+                        data = eval(data)
+
+                        var year = $('#select_year').val()
+                        var month = $('#select_month').val()
+                        if (year && month) {
+                            var option = bar_chart(data, year, month)
+                            time_chart.setOption(option);
+
+                        } else if (year) {
+                            var option = bar_chart(data, year, month)
+                            time_chart.setOption(option);
+
+                        } else if (month) {
+                            alert('Plese select Year')
+                        } else {
+                            alert('Plese filter')
+                        }
+                    },
+                    error: function (data) {
+                        // alert('An error occurred.');
+
+                    },
+                })
+
+            })
+            $('#btn_filter').trigger('click')
+
+            // back to geo
+            $('.back_geo').click(function () {
+                $('.back_geo').css('display', 'none')
+                map_data = geo_data
+                var option = pie_chart(map_data);
+                map_chart.setOption(option);
+
+                $('.count_seed').text('{{count_seed}}')
+                $('.count_molecular').text('{{ count_molecular }}')
+                $('.count_tissue').text('{{ count_tissue }}')
+                $('.count_herbarium').text('{{ count_herbarium }}')
+
+
+            })
+
+            // click chart
+            $('#radio-one').click(function () {
+                $('#map_chart').show()
+                $('#map').hide()
+                $('#map_country').removeClass('map_chart')
+                if ($('.back_geo').attr('check_display') == 'hide') {
+                    $('.back_geo').attr('check_display', 'show')
+                    $('.back_geo').show()
+                }
+            })
+            // click map
+            $('#radio-two').click(function () {
+                $('#map_chart').hide()
+                $('#map').show()
+                $('#map_country').addClass('map_chart')
+                if ($('.back_geo').css('display') == 'block') {
+                    $('.back_geo').attr('check_display', 'hide')
+                    $('.back_geo').hide()
+                }
+            })
+
+            // year goal
+            $('#year_setGoal').change(function () {
+                console.log('Select Year Goal : #year_setGoal : ' + $(this).val())
+            })
+
+
+            // click bar chart 
+            time_chart.on('click', function (params) {
+                if (params.value[0].length != 2) {
+                    var month_name = params.name
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            "year_name": $('#select_year').val(),
+                            "month_name": month_name,
+                            "type_chart": "bar_chart",
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        url: "/SmsBackEnd/smsbackend_curator/",
+                        success: function (data) {
+                            data = eval(data)
+                            $('#select_month').val(data[data.length - 1])
+
+                            var year = $('#select_year').val()
+                            var month = $('#select_month').val()
+                            if (year && month) {
+                                var option = bar_chart(data, year, month)
+                                time_chart.setOption(option);
+
+                            } else if (year) {
+                                var option = bar_chart(data, year, month)
+                                time_chart.setOption(option);
+
+                            } else if (month) {
+                                alert('Plese select Year')
+                            } else {
+                                alert('Plese filter')
+                            }
+                        },
+                        error: function (data) {
+                            // alert('An error occurred.');
+
+                        },
+                    })
+                }
+
+            });
+
+            $('.card_percent').css('height', $('.card_main_chart').css('height'))
+            // $('.card_percent').css('overflow', 'auto')
+            $('.percent_count').css('height', '335px')
+            $('.percent_count').css('overflow', 'auto')
+        }, 100)
+    })
+
+
+
+</script>
+
+
+
+
+{% endblock script%}

@@ -1,0 +1,105 @@
+{% extends "includes/base_home.html" %}
+{% load static i18n %} {% load i18n %} {% load staticfiles %}
+
+{% block document_container %}
+<section class="pb-4" class="control-mr">
+
+  <div class="container my-10">
+    <div class="row" style="margin-top: 30px;">
+      <div class="col-lg-6 col-md-12 pb-3 ">
+        <div class="text-center">
+          <div id="map" style="width: 500px;height: 500px;" class="rounded z-depth-1-half map-container">
+          </div>
+          <div class="row text-center mt-3">
+            <div class="col-md-4">
+              <a class="btn-floating blue accent-1">
+                <i class="fas fa-map-marker-alt"></i>
+              </a>
+              <p>Pathum Thani, 12120</p>
+              <p class="mb-md-0">Thailand</p>
+            </div>
+            <div class="col-md-4">
+              <a class="btn-floating blue accent-1">
+                <i class="fas fa-phone"></i>
+              </a>
+              <p>025647100 ต่อ 3945</p>
+              <p class="mb-md-0">Mon - Fri, 8:00-22:00</p>
+            </div>
+            <div class="col-md-4">
+              <a class="btn-floating blue accent-1">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <p>Email</p>
+              <p class="mb-0">biobank@biobank.in.th</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="col-lg-6 col-md-12">
+
+        <div class="container ">
+          <form id="contact" action="" method="post">
+            <h3 class="text-center">{% trans "Contact Form" %}</h3>
+            {% csrf_token %}
+            {{ form.as_p}}
+
+            <button onclick="myFunction()" name="submit" type="submit" id="contact-submit"
+              data-submit="...Sending">{% trans "Submit" %}</button>
+            <p id="demo"></p>
+            <script>
+              function myFunction() {
+                var txt;
+                if (confirm("Are You Sure About This!")) {
+                  txt = "You pressed OK!";
+                } else {
+                  txt = "You pressed Cancel!";
+                }
+                document.getElementById("demo").innerHTML = txt;
+              }
+            </script>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+
+
+
+{% endblock document_container %}
+
+{% block script %}
+
+<script>
+  function myMap() {
+    var mapOptions = {
+      center: new google.maps.LatLng(14.0799135, 100.603758),
+      zoom: 18,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    var marker = new google.maps.Marker({
+      position: {
+        lat: 14.0799135,
+        lng: 100.603758
+      },
+      map: map,
+      title: 'Hello World!'
+    });
+  }
+
+</script>
+
+<!-- End map java script -->
+<!-- Setting api key map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMriUa9oiYOXSHNG24igO00izdOo-m8e0&callback=myMap">
+</script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+{% endblock script %}

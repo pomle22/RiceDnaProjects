@@ -1,0 +1,78 @@
+{% extends "includes/base_home.html" %}
+{% load staticfiles %}{% load i18n %}
+
+{% block document_container %}   
+    <section class="banner-about">
+      
+    </section>
+
+    
+    <div class="container " style="padding:30px">
+        <div class="row">
+            <div class="container control-mr "> 
+                <div class="row">
+                    
+                    <div class="col-lg-7 col-md-12" style="border-right: solid 1px rgb(229, 232, 232);">
+                            <h1> {% trans "National Biobank of Thailand" %} </h1>
+                            <!-- {% for items in about %}
+                            {% if items.data != "-"%}
+                            <p class="mt-4" style=" text-indent: 1.5em;">                  
+                                {{ items.data }}                                                    
+                            </p>
+                            {% endif %} 
+                            {% endfor %} -->
+                            <p class="mt-4" style=" text-indent: 1.5em;">{% trans "Thailand is ranked third among ASEAN countries as a biodiversity hotspot with up to 10% of living organisms known thus far. Over 20,000 of plant species found in Thailand represent 8% of all plant species found in the world. Due to high rate of habitat destruction in Thailand causing by human activities or by nature, the resulting habitat loss has continually and greatly reduced the country’s biodiversity in which some species including those that have not been discovered have already been extinct.  It is estimated that the extinction rate causing by habitat loss is 20-70 species per day while only one new species is found each week. This means that the discovery of new species occurs at a much slower rate than the extinction at 100-500 folds, which is at the threatening state. Fostering Thailand Bioeconomy requires efficient conservation and sustainable utilization of Thailand biological resources. " %}</p>
+                            <p class="mt-4" style=" text-indent: 1.5em;">{% trans "In 2018, Thai government saw the importance of the conservation of biological resources. The ministry of higher education science research and innovation (MHESI), formerly the ministry of science and technology (MoST) granted major funding scheme to construct a national-scale Biobanking infrastructure which later became the National Biobank of Thailand (NBT). All biological samples that are brought to NBT will go through standard species identification as well as annotation process to ensure both authenticity and integrity of specimens stored in the Biobank. The annotated information for each specimen includes taxonomical data, information from molecular and genetic studies, and potential functional usage from our functional screening routine.  Thus, these authentic specimens preserved in NBT could serve as important stepping stones for the development of Thailand bioeconomy." %}</p>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-12">
+                        <div class="row mt-5 ml-3">
+                            <div class="pt-3  pb-3">
+                                <h2>{% trans "Vision" %}</h2>                         
+                                <p> 
+                                    {% trans "To become a reference ISO certified Biobank that utilizes advanced research and development in our long-term conservation program and promote the sustainable use of the nation’s biological resources." %}   
+                                </p>
+                            </div>
+                        
+                            <div class="pt-4">
+                                <h2>{% trans "Mission" %}</h2>
+                                <p>
+                                    {% trans "1. Serving as a Biobanking national infrastructure for long-term conservation of biological resources. <br> 2.	Creating and fostering of Thailand biological resource conservation network. <br> 3.	Promoting advanced biotechnological research with insight information of nation biological specimens stored in NBT. <br> 4.	Serving as a reference national biological resource portal." %}
+                                </p>
+                            
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="row">
+                        <div class="container control-mr "> 
+                            <div class="row">
+                                <h1> {% trans "Highlights" %} </h1>
+                                <p class="mt-4" style=" text-indent: 1.5em;">{% trans "March 26, 2019 – The Genomics Thailand Initiative program (2020 - 2025) was approved by the Cabinet with a gross budget of 4,470 million baht to implement genomics medicine in Thailand. NBT was appointed to serve as a national genomics data center for managing and processing genomic data of 50,000 Thai volunteers." %}</p>
+                                <p class="mt-4" style=" text-indent: 1.5em;">{% trans "April 26, 2019 – The National Biobank of Thailand: Seed banking Project was awarded in the honor of the Royal Coronation of King Rama X to continue the Royal-initiated plan for conservation of natural resources. " %}</p>
+                                <p class="mt-4" style=" text-indent: 1.5em;">{% trans "2019 – NBT joined the plant genetic conservation project under the Royal initiation of Her Royal Highness Princess Maha Chakri Sirindhorn (RSGD). NBT activities comprise collection and identification of biological specimens, development of efficient long-term conservation techniques and collaboration with community aiming to increase income as well as to conserve local biological resources." %}</p>
+                                <p class="mt-4" style=" text-indent: 1.5em;">{% trans "May 17, 2019 – Satinee Suetrong, NBT researcher, along with other international marine fungi curators published an article on the “Fungal Diversity” journal, entitled “An online resource for marine fungi” (www.marinefungi.org)" %}</p>                   
+                            </div>      
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+<!-- end section 1 -->
+
+
+
+<!-- {% for items in about %}
+    {% if items.mission != "-" %}
+        {{ items.mission }}
+    {% endif %}
+{% endfor %} -->
+
+{% endblock document_container %}
+
+{% block scripts %}
+
+{% endblock scripts %}

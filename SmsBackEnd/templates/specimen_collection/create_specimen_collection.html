@@ -1,0 +1,427 @@
+{% extends "includes/base_admin.html" %}
+
+
+{% block content %}
+    <!--  Traffic  -->
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header f-16">
+                    <b>Create specimen collection</b>
+                </div>
+                <form method="post" id="form_create_specimen">
+                    <div class="card-body f-14">
+                        {% csrf_token %}
+                        <label>ID / QR Code / Original code </label>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <!-- input -->
+                                <div class="form-group">
+                                    <label for="id_qrcode" class=" form-control-label"><i class="fas fa-qrcode"></i>
+                                        QR Ccode : &nbsp;&nbsp;&nbsp;
+                                        <div class="form-check-inline form-check">
+                                            <label for="inline-checkbox1" class="form-check-label ">
+                                                <input type="checkbox" id="checkbox_qr_code" name="checkbox_qr_code"
+                                                       value="qr_code" class="form-check-input" checked>Check QRcode
+                                                &nbsp;
+                                            </label>
+                                        </div>
+                                    </label>
+
+                                    <input type="text" id="input_qrcode" name="input_qrcode"
+                                           placeholder="Please scan barcode or qrcode"
+                                           class="form-control form-control-sm"
+                                           required>
+                                </div>
+                            </div>
+                            <!-- input -->
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="id_original_code" class=" form-control-label">Collection No. :</label>
+                                    <input type="text" id="input_original_code" name="input_original_code" placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="id_collect_date" class=" form-control-label">Others No. :
+                                    </label>
+                                    <input type="text" id="id_other_code" name="name_other_code" placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- input -->
+                                <div class="form-group">
+                                    <label for="select_collector" class=" form-control-label">Curator :</label>
+                                    <select data-placeholder="Choose a collector..." multiple="" class="standardSelect"
+                                            style="display: none;" name="select_collector" id="select_collector">
+                                        <option value="" label="default">please select</option>
+                                        {% for item in collector_list  %}
+                                                  <option value="{{ item.collector_name }}">{{ item.collector_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="chosen-container chosen-container-multi" title="" style="width: 100%;">
+                                        <div class="chosen-drop">
+
+                                            <ul class="chosen-results">
+                                                     {% for item in collector_list  %}
+                                                <li class="active-result" data-option-array-index="{{ forloop.counter }}" style="">{{ item.collector_name }}
+                                                </li>
+                                                {% endfor %}
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="id_collect_date" class=" form-control-label">Collect date :
+                                        <small><i>(D/M/YYYY)</i></small>
+                                    </label>
+                                    <input type="text" id="input_collect_date" name="input_collect_date" placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="" class=" form-control-label">Province :</label>
+                                    <select name="select_province" id="select_province"
+                                            class="form-control-sm form-control"
+                                            required>
+                                        <option value="0">Please select</option>
+                                        {% for item in province_list %}
+                                            <option value="{{ item.id }}">{{ item.name_th }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="" class=" form-control-label">Amphures :</label>
+                                    <select name="select_amphure" id="select_amphure"
+                                            class="form-control-sm form-control"
+                                            required>
+                                        <option value="" hidden selected>Please select</option>
+                                        sdvdvdvdvdv</option>
+
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="" class=" form-control-label">District :</label>
+                                    <select name="select_district" id="select_district"
+                                            class="form-control-sm form-control"
+                                            required>
+                                        <option value="" hidden selected>Please select</option>
+                                        sdvdvdvdvdv</option>
+
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- input -->
+                                <div class="form-group">
+                                    <label for="select_site" class=" form-control-label">Site :</label>
+                                    <select name="select_site" id="select_site" class="form-control-sm form-control"
+                                            required>
+                                        <option value="" hidden selected>Please select</option>
+                                        {% for item in site_list %}
+                                            <option value="{{ item.id }}">{{ item.site_name }} {{ item.province.name_th }}
+                                                {{ item.amphure.name_th }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <!-- /input -->
+
+                            </div>
+                            <div class="col-sm-3">
+                                <!-- input -->
+                                <div class="form-group">
+                                    <label for="select_subsite" class=" form-control-label">Sub Site :</label>
+                                    <select name="select_subsite" id="select_subsite" class="form-control-sm form-control"
+                                            required>
+                                        <option value="" hidden selected>Please select</option>
+                                        {% for item in site_list %}
+                                            <option value="{{ item.id }}">{{ item.subsite_name_th }} {{ item.province.name_th }}
+                                                {{ item.amphure.name_th }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <!-- /input -->
+
+                            </div>
+                        </div>
+
+                        <label>Taxonomy</label>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" form-control-label">Kingdom :</label>
+                                    <input type="text" id="input_kingdom" name="input_kingdom"
+                                           placeholder="" class="form-control-sm form-control" required>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" form-control-label">Subkingdom :</label>
+                                    <input type="text" id="input_subkingdom" name="input_subkingdom" placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="id_family_coll" class=" form-control-label">Infrakingdom :</label>
+                                    <input type="text" id="input_infrakingdom" name="input_infrakingdom" placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" form-control-label">Super division :</label>
+                                    <input type="text" id="input_superdivision" name="input_superdivision" placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label  class=" form-control-label">Division
+                                        :</label>
+                                    <input type="text" id="input_division" name="input_division"
+                                           placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" form-control-label">Subdivision :</label>
+                                    <input type="text" id="input_subdivision" name="input_subdivision" placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" form-control-label">Class :</label>
+                                    <input type="text" id="input_class" name="input_class" placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="id_family_coll" class=" form-control-label">Superorder :</label>
+                                    <input type="text" id="input_subclass" name="input_subclass" placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" form-control-label">Order
+                                        :</label>
+                                    <input type="text" id="input_order" name="input_order"
+                                           placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" form-control-label">Family :</label>
+                                    <input type="text" id="input_family" name="input_family" placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" form-control-label">Genus :</label>
+                                    <input type="text" id="input_genus" name="input_genus" placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" form-control-label">Species :</label>
+                                    <input type="text" id="input_species" name="input_species" placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+                            </div>
+
+                        </div>
+                    <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" form-control-label">Scientific name
+                                        :</label>
+                                    <input type="text" id="input_scientific_name" name="input_scientific_name"
+                                           placeholder=""
+                                           class="form-control-sm form-control" required>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="float-right">
+                                    <button class="btn btn-sm btn-primary ml-1" type="submit">Create</button>
+                                    <button class="btn btn-sm btn-secondary" type="reset">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--  /Traffic -->
+
+{% endblock content %}
+{% block script %}
+     <script>
+        jQuery(function () {
+            $('#select_province').change(function () {
+                item = $(this).val()
+                type = 'province'
+                var sel_amp = document.getElementById('select_amphure');
+                var sel_dis = document.getElementById('select_district');
+                removeAllOptions(sel_amp, true)
+                removeAllOptions(sel_dis, true)
+                get_address(type, item)
+
+            })
+
+            $('#select_amphure').change(function () {
+                item = $(this).val()
+                type = 'amphure'
+                var sel = document.getElementById('select_district');
+                removeAllOptions(sel, true)
+
+                get_address(type, item)
+
+            })
+
+
+        })
+
+        // Ajax form
+        function get_address(type, item) {
+            var type_adr = type
+            $.ajax({
+                url: "/SmsBackEnd/get_address/", // the endpoint
+                type: "POST",
+                data: {type: type_adr, item: item},
+                success: function (data) {
+
+                    for (i in data.results) {
+                        console.log(data.results[i])
+                        if (type_adr == "province") {
+                            console.log("data province")
+                            $('#select_amphure').append("<option value='" + data.results[i].id + "'>" + data.results[i].name_th + "</option>")
+                        } else if (type_adr == "amphure") {
+                            console.log("data amphure")
+                            $('#select_district').append("<option value='" + data.results[i].id + "'>" + data.results[i].name_th + "</option>")
+                        }
+                    }
+                }
+            });
+        }
+
+        function removeAllOptions(sel, removeGrp) {
+            var len, groups, par;
+            if (removeGrp) {
+
+                groups = sel.getElementsByTagName('optgroup');
+                len = groups.length;
+                for (var i = len; i; i--) {
+                    sel.removeChild(groups[i - 1]);
+                }
+
+            }
+
+            len = sel.options.length;
+            for (var i = len; i; i--) {
+                par = sel.options[i - 1].parentNode;
+                par.removeChild(sel.options[i - 1]);
+            }
+        }
+
+    </script>
+    <script>
+        $(function () {
+
+            var today = moment().format('DD/MM/YYYY');
+            $('#id_create_date').val(today)
+
+            $("#input_collect_date").datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+        });
+        $("#form_create_specimen").validate({
+            rules: {
+                "input_qrcode": {
+                    required: true,
+                    minlength: 5,
+                    remote: {url: '/SmsBackEnd/check_qrcode/'}
+                },
+                "input_original_code": {
+                    required: true,
+                    remote: {url: '/SmsBackEnd/check_original_code/'}
+                },
+                "input_other_code": {
+                    required: true,
+                    remote: {url: '/SmsBackEnd/check_other_code/'}
+                },
+            },
+            messages: {
+                "input_qrcode": {
+                    required: "this field is required",
+                    remote: "QR Code นี้ได้ถูกใช้ไปแล้ว"
+                },
+                "input_original_code": {
+                    required: "this field is required",
+                    remote: "Original code นี้ได้ถูกใช้ไปแล้ว"
+                },
+                "input_other_code": {
+                    required: "this field is required",
+                    remote: "Other code นี้ได้ถูกใช้ไปแล้ว"
+                }
+            }
+
+
+        });
+
+
+    </script>
+{% endblock script %}

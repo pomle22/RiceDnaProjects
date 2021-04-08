@@ -1,0 +1,51 @@
+{% extends "includes/base_admin.html" %}
+{% load static i18n %} {% load i18n %} {% load staticfiles %}
+
+{% block document_container %}
+
+<main class="mx-5 py-3">
+<div class="tab-content pt-0">
+
+        <!-- contact -->
+        <div class="card my-3">
+          <div class="card-header" style="background-color:#91FFAD">
+            <h2>ข้อมูล ​About</h2>
+          </div>
+          <div class="card-body">
+            <div class="container" style="overflow:auto;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Data</th>
+                  <th scope="col">Vision</th>
+                  <th scope="col">Mision</th>
+                  <th scope="col">edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for items in about %}
+                <tr>
+                  <th scope="row">{{ forloop.counter}}</th>
+                  <td>{{ items.data }}</td>
+                  <td>{{ items.vision }}</td>
+                  <td>{{ items.mission }}</td>
+                  <td><a href="{% url 'SmsBackEnd:edit_about' pk=items.pk %}"><i class="fas fa-edit "></i></a></td>
+
+                  
+                </tr>
+                
+                {% endfor %}
+                
+              </tbody>
+            </table> 
+            </div>
+          </div>
+      </div>
+
+</div>
+</main>
+<!--Main layout-->
+
+
+{% endblock document_container %}
